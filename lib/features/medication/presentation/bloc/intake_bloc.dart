@@ -53,8 +53,8 @@ class IntakeBloc extends Bloc<IntakeEvent, IntakeState> {
     final tasksResult = await getTodayIntakeTasks(const NoParams());
     final summaryResult = await getIntakeSummary(const NoParams());
 
-    tasksResult.fold(
-      (failure) => emit(IntakeFailure(message: failure.message)),
+    await tasksResult.fold(
+      (failure) async => emit(IntakeFailure(message: failure.message)),
       (tasks) async {
         // Interaction = App open = cancel all pending repeats for tasks that are already handled
         for (final task in tasks) {
@@ -84,8 +84,8 @@ class IntakeBloc extends Bloc<IntakeEvent, IntakeState> {
       ),
     );
 
-    result.fold(
-      (failure) => emit(IntakeFailure(message: failure.message)),
+    await result.fold(
+      (failure) async => emit(IntakeFailure(message: failure.message)),
       (_) async {
         // Cancel reminders for this specific task immediately
         await cancelReminder(event.taskId);

@@ -17,6 +17,7 @@ import 'package:flutter_test_ai/features/auth/domain/usecases/get_current_user_u
 import 'package:flutter_test_ai/features/auth/domain/usecases/update_profile_usecase.dart';
 import 'package:flutter_test_ai/features/auth/domain/usecases/delete_account_usecase.dart';
 import 'package:flutter_test_ai/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:flutter_test_ai/core/services/logger_service.dart';
 import 'package:flutter_test_ai/core/services/notification_service.dart';
 import 'package:flutter_test_ai/core/storage/hive_utils.dart';
 import 'package:flutter_test_ai/core/constants/hive_boxes.dart';
@@ -54,9 +55,12 @@ import 'package:flutter_test_ai/features/medication/domain/usecases/generate_dai
 import 'package:flutter_test_ai/features/medication/domain/usecases/get_today_intake_tasks.dart';
 import 'package:flutter_test_ai/features/medication/domain/usecases/mark_intake_task.dart';
 import 'package:flutter_test_ai/features/medication/domain/usecases/get_intake_summary.dart';
+import 'package:flutter_test_ai/features/medication/domain/usecases/get_medication_tasks.dart';
 import 'package:flutter_test_ai/features/medication/domain/usecases/schedule_all_reminders.dart';
 import 'package:flutter_test_ai/features/medication/domain/usecases/reschedule_on_snooze.dart';
 import 'package:flutter_test_ai/features/medication/domain/usecases/cancel_reminder.dart';
+import 'package:flutter_test_ai/features/medication/domain/services/reminder_service_interface.dart';
+import 'package:flutter_test_ai/features/medication/data/services/medication_reminder_service_impl.dart';
 import 'package:flutter_test_ai/features/medication/presentation/bloc/intake_bloc.dart';
 
 import 'package:flutter_test_ai/features/medication/data/datasources/insulin_local_data_source.dart';
@@ -81,6 +85,9 @@ import 'package:flutter_test_ai/core/localization/bloc/locale_cubit.dart';
 final sl = GetIt.instance;
 
 Future<void> init() async {
+  // Step 0: Logger Service
+  sl.registerLazySingleton<LoggerService>(() => LoggerService());
+
   // Core Services
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton<SharedPreferences>(() => sharedPreferences);
@@ -209,6 +216,19 @@ Future<void> init() async {
     ),
   );
 
+  // -- STEP 3: Reminder Service (Safety Check Added) --
+  assert(sl.isRegistered<NotificationService>(), 'NotificationService must be registered before ReminderServiceInterface');
+  assert(sl.isRegistered<IntakeRepository>(), 'IntakeRepository must be registered before ReminderServiceInterface');
+
+  sl.registerLazySingleton<ReminderServiceInterface>(
+    () => MedicationReminderServiceImpl(
+      notificationService: sl(),
+      intakeRepository: sl(),
+      getMedicationTasksUseCase: sl(),
+      logger: sl(),
+    ),
+  );
+
   // Use cases
   sl.registerLazySingleton(() => LoginUseCase(sl()));
   sl.registerLazySingleton(() => RegisterUseCase(sl()));
@@ -230,6 +250,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GenerateDailyIntakeTasksUseCase(sl()));
   sl.registerLazySingleton(() => GetTodayIntakeTasksUseCase(sl()));
   sl.registerLazySingleton(() => MarkIntakeTaskUseCase(sl()));
+  sl.registerLazySingleton(() => GetMedicationTasksUseCase(sl()));
   sl.registerLazySingleton(() => GetIntakeSummaryUseCase(sl()));
   sl.registerLazySingleton(() => ScheduleAllRemindersUseCase(sl(), sl()));
   sl.registerLazySingleton(() => RescheduleOnSnoozeUseCase(sl(), sl()));

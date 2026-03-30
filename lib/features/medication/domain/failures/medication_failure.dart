@@ -19,3 +19,7 @@ class MedicationValidationFailure extends MedicationFailure {
 class MedicationSyncFailure extends MedicationFailure {
   const MedicationSyncFailure(super.message);
 }
+
+class ReminderFailure extends MedicationFailure {
+  const ReminderFailure(super.message);
+}
