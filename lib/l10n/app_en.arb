@@ -1,0 +1,594 @@
+{
+    "@@locale": "en",
+    "appTitle": "GlucoCare",
+    "@appTitle": {
+        "description": "The title of the application"
+    },
+    "dashboardTitle": "Today''s Medications",
+    "@dashboardTitle": {
+        "description": "Title for the dashboard page showing today''s schedule"
+    },
+    "addMedication": "Add Medication",
+    "@addMedication": {
+        "description": "Button text to add a new medication"
+    },
+    "editMedication": "Edit Medication",
+    "@editMedication": {
+        "description": "Title for the edit medication page"
+    },
+    "medicationHistory": "Medication History",
+    "@medicationHistory": {
+        "description": "Title for the medication history page"
+    },
+    "noMedicationsScheduled": "No medications scheduled for today.",
+    "@noMedicationsScheduled": {
+        "description": "Message shown when there are no medications for the day"
+    },
+    "taken": "Taken",
+    "@taken": {
+        "description": "Status text indicating a medication was taken"
+    },
+    "take": "Take",
+    "@take": {
+        "description": "Button text to mark a medication as taken"
+    },
+    "medicationName": "Medication Name",
+    "@medicationName": {
+        "description": "Label for the medication name input field"
+    },
+    "dosageExample": "Dosage (e.g., 500mg, 1 tablet)",
+    "@dosageExample": {
+        "description": "Label for the medication dosage input field"
+    },
+    "type": "Type",
+    "@type": {
+        "description": "Label for the medication type dropdown"
+    },
+    "scheduleTime": "Schedule Time",
+    "@scheduleTime": {
+        "description": "Label for selecting the medication schedule time"
+    },
+    "saveMedication": "Save Medication",
+    "@saveMedication": {
+        "description": "Button text to save the new medication"
+    },
+    "pickTime": "Pick Time",
+    "@pickTime": {
+        "description": "Button text to open the time picker"
+    },
+    "noTimeSelected": "No time selected",
+    "@noTimeSelected": {
+        "description": "Message shown when no schedule time is selected"
+    },
+    "pleaseSelectTime": "Please select a schedule time",
+    "@pleaseSelectTime": {
+        "description": "Validation message when trying to save without a time"
+    },
+    "enterMedicationName": "Enter medication name",
+    "@enterMedicationName": {
+        "description": "Validation message when name is empty"
+    },
+    "enterDosage": "Enter dosage",
+    "@enterDosage": {
+        "description": "Validation message when dosage is empty"
+    },
+    "login": "Login",
+    "@login": {
+        "description": "Button text for login action"
+    },
+    "createAccount": "Create Account",
+    "@createAccount": {
+        "description": "Title and button text for creating a new account"
+    },
+    "email": "Email",
+    "@email": {
+        "description": "Label for email input field"
+    },
+    "password": "Password",
+    "@password": {
+        "description": "Label for password input field"
+    },
+    "name": "Name",
+    "@name": {
+        "description": "Label for name input field"
+    },
+    "showingHistoryFor": "Showing history for:",
+    "@showingHistoryFor": {
+        "description": "Header text showing the selected date for history"
+    },
+    "noMedicationsRecorded": "No medications recorded on this date.",
+    "@noMedicationsRecorded": {
+        "description": "Message shown when no history is found for the date"
+    },
+    "medicationId": "Medication ID:",
+    "@medicationId": {
+        "description": "Label prefix for the medication ID"
+    },
+    "takenAt": "Taken at:",
+    "@takenAt": {
+        "description": "Label prefix for the time the medication was taken"
+    },
+    "onTime": "On Time",
+    "@onTime": {
+        "description": "Status indicating medication was taken on time"
+    },
+    "late": "Late",
+    "@late": {
+        "description": "Status indicating medication was taken late"
+    },
+    "failedToLoadHistory": "Failed to load history",
+    "@failedToLoadHistory": {
+        "description": "Error message when history fails to load"
+    },
+    "goodMorning": "Good Morning",
+    "@goodMorning": {
+        "description": "Greeting message"
+    },
+    "dailyProgress": "Daily Progress",
+    "@dailyProgress": {
+        "description": "Label for daily progress"
+    },
+    "todaysDoses": "Today's Doses",
+    "@todaysDoses": {
+        "description": "Label for today's doses"
+    },
+    "viewAll": "View All",
+    "@viewAll": {
+        "description": "Button text to view all items"
+    },
+    "labTests": "Lab Tests",
+    "@labTests": {
+        "description": "Title for lab tests section"
+    },
+    "noLabTests": "No lab tests yet",
+    "@noLabTests": {
+        "description": "Message shown when no lab tests are available"
+    },
+    "tapToRecordTest": "Tap + to add your first test result",
+    "@tapToRecordTest": {
+        "description": "Instruction to add the first lab test"
+    },
+    "addLabTest": "Add Lab Test",
+    "@addLabTest": {
+        "description": "Button text to add a lab test"
+    },
+    "testName": "Test Name",
+    "@testName": {
+        "description": "Label for test name"
+    },
+    "result": "Result",
+    "@result": {
+        "description": "Label for test result"
+    },
+    "unit": "Unit",
+    "@unit": {
+        "description": "Label for test unit"
+    },
+    "referenceRange": "Reference Range",
+    "@referenceRange": {
+        "description": "Label for test reference range"
+    },
+    "category": "Category",
+    "@category": {
+        "description": "Label for test category"
+    },
+    "labTestAdded": "Lab test added successfully.",
+    "@labTestAdded": {
+        "description": "Success message when a lab test is added"
+    },
+    "cancel": "Cancel",
+    "@cancel": {
+        "description": "Button text to cancel an action"
+    },
+    "add": "Add",
+    "@add": {
+        "description": "Button text to add an item"
+    },
+    "errorOccurred": "An error occurred",
+    "@errorOccurred": {
+        "description": "Generic error message"
+    },
+    "retry": "Retry",
+    "@retry": {
+        "description": "Button text to retry an action"
+    },
+    "myMedications": "My Medications",
+    "@myMedications": {
+        "description": "Title for the medications section"
+    },
+    "setupMedicationSchedule": "Setup your medication schedule",
+    "@setupMedicationSchedule": {
+        "description": "Subtext for medication schedule setup"
+    },
+    "intakeTiming": "Intake Timing",
+    "@intakeTiming": {
+        "description": "Label for intake timing"
+    },
+    "unitHint": "Unit (e.g., mg, ml)",
+    "@unitHint": {
+        "description": "Hint text for unit input"
+    },
+    "enterUnit": "Please enter unit",
+    "@enterUnit": {
+        "description": "Validation message for missing unit"
+    },
+    "notes": "Notes",
+    "@notes": {
+        "description": "Label for notes field"
+    },
+    "medicationUpdated": "Medication updated!",
+    "@medicationUpdated": {
+        "description": "Success message when medication is updated"
+    },
+    "updateMedicationDetails": "Update your medication details",
+    "@updateMedicationDetails": {
+        "description": "Title for updating medication details"
+    },
+    "settings": "Settings",
+    "@settings": {
+        "description": "Title for the settings page"
+    },
+    "accountInformation": "Account Information",
+    "@accountInformation": {
+        "description": "Label for account information section"
+    },
+    "notifications": "Notifications",
+    "@notifications": {
+        "description": "Label for notifications settings"
+    },
+    "privacySecurity": "Privacy & Security",
+    "@privacySecurity": {
+        "description": "Label for privacy and security settings"
+    },
+    "language": "Language",
+    "@language": {
+        "description": "Label for language selection"
+    },
+    "logout": "Logout",
+    "@logout": {
+        "description": "Button text to log out"
+    },
+    "userName": "User Name",
+    "@userName": {
+        "description": "Label for user name"
+    },
+    "english": "English",
+    "@english": {
+        "description": "Label for English language"
+    },
+    "confirmLogout": "Are you sure you want to log out?",
+    "@confirmLogout": {
+        "description": "Dialog text to confirm logging out"
+    },
+    "theme": "Theme",
+    "@theme": {
+        "description": "Label for theme settings"
+    },
+    "selectTheme": "Select Theme",
+    "@selectTheme": {
+        "description": "Label for selecting a theme"
+    },
+    "systemDefault": "System Default",
+    "@systemDefault": {
+        "description": "Label for system default theme"
+    },
+    "light": "Light",
+    "@light": {
+        "description": "Label for light theme"
+    },
+    "dark": "Dark",
+    "@dark": {
+        "description": "Label for dark theme"
+    },
+    "arabic": "Arabic",
+    "@arabic": {
+        "description": "Label for Arabic language"
+    },
+    "hey": "Hey, {name}!",
+    "@hey": {
+        "description": "Greeting message with name",
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "catAllHealth": "All Health",
+    "@catAllHealth": {
+        "description": "Label for all health category"
+    },
+    "catGlucose": "Glucose",
+    "@catGlucose": {
+        "description": "Label for glucose category"
+    },
+    "catMedication": "Medication",
+    "@catMedication": {
+        "description": "Label for medication category"
+    },
+    "catDiet": "Diet",
+    "@catDiet": {
+        "description": "Label for diet category"
+    },
+    "stable": "Stable",
+    "@stable": {
+        "description": "Status label for stable condition"
+    },
+    "glucoseNormal": "Glucose Level, Normal",
+    "@glucoseNormal": {
+        "description": "Status label for normal glucose level"
+    },
+    "glucose": "Glucose",
+    "@glucose": {
+        "description": "Label for glucose"
+    },
+    "insulin": "Insulin",
+    "@insulin": {
+        "description": "Label for insulin"
+    },
+    "insulinIntake": "Insulin Intake",
+    "@insulinIntake": {
+        "description": "Label for insulin intake"
+    },
+    "last4Hours": "Last 4 hours",
+    "@last4Hours": {
+        "description": "Label for the last 4 hours period"
+    },
+    "statusLogged": "LOGGED",
+    "@statusLogged": {
+        "description": "Status label for logged items"
+    },
+    "statusPending": "PENDING",
+    "@statusPending": {
+        "description": "Status label for pending items"
+    },
+    "medication": "Medication",
+    "@medication": {
+        "description": "Label for medication"
+    },
+    "statusRemain": "REMAIN",
+    "@statusRemain": {
+        "description": "Status label for remaining items"
+    },
+    "statusTaken": "TAKEN",
+    "@statusTaken": {
+        "description": "Status label for taken items"
+    },
+    "dailyDiet": "Daily Diet",
+    "@dailyDiet": {
+        "description": "Label for daily diet"
+    },
+    "statusOff": "OFF",
+    "@statusOff": {
+        "description": "Status label for off state"
+    },
+    "heartRate": "Heart Rate",
+    "@heartRate": {
+        "description": "Label for heart rate"
+    },
+    "bpmAvg": "72 bpm avg",
+    "@bpmAvg": {
+        "description": "Label for average heart rate"
+    },
+    "kcal1200": "Kcal 1,200",
+    "@kcal1200": {
+        "description": "Label for calorie intake"
+    },
+    "allTaken": "All taken",
+    "@allTaken": {
+        "description": "Status label when all doses are taken"
+    },
+    "remainingCount": "{count} remaining",
+    "@remainingCount": {
+        "description": "Label showing remaining items count",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "noMedicationsToday": "No medications for today",
+    "@noMedicationsToday": {
+        "description": "Message when no medications are scheduled"
+    },
+    "welcomeBack": "Welcome back, {name}!",
+    "@welcomeBack": {
+        "description": "Welcome message for returning user",
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "resetEmailSent": "Password reset email sent!",
+    "@resetEmailSent": {
+        "description": "Success message for password reset email"
+    },
+    "loginTitle": "Welcome Back",
+    "@loginTitle": {
+        "description": "Title for the login page"
+    },
+    "loginSubtitle": "Login to your account to continue",
+    "@loginSubtitle": {
+        "description": "Subtitle for the login page"
+    },
+    "emailLabel": "Email Address",
+    "@emailLabel": {
+        "description": "Label for email field"
+    },
+    "passwordLabel": "Password",
+    "@passwordLabel": {
+        "description": "Label for password field"
+    },
+    "enterEmail": "Please enter your email",
+    "@enterEmail": {
+        "description": "Validation message for email"
+    },
+    "enterValidEmail": "Please enter a valid email",
+    "@enterValidEmail": {
+        "description": "Validation message for invalid email"
+    },
+    "enterPassword": "Please enter your password",
+    "@enterPassword": {
+        "description": "Validation message for password"
+    },
+    "minPasswordLength": "Password must be at least 6 characters",
+    "@minPasswordLength": {
+        "description": "Validation message for short password"
+    },
+    "forgotPassword": "Forgot Password?",
+    "@forgotPassword": {
+        "description": "Link text for forgotten password"
+    },
+    "loginButton": "Login",
+    "@loginButton": {
+        "description": "Text for the login button"
+    },
+    "noAccount": "Don't have an account? ",
+    "@noAccount": {
+        "description": "Text asking if user has an account"
+    },
+    "signUpButton": "Sign Up",
+    "@signUpButton": {
+        "description": "Text for the sign up button"
+    },
+    "createAccountButton": "Create Account",
+    "@createAccountButton": {
+        "description": "Text for the create account button"
+    },
+    "joinTitle": "Join GlucoCare",
+    "@joinTitle": {
+        "description": "Title for the join/sign up page"
+    },
+    "joinSubtitle": "Start your personalized health journey",
+    "@joinSubtitle": {
+        "description": "Subtitle for the join/sign up page"
+    },
+    "fullNameLabel": "Full Name",
+    "@fullNameLabel": {
+        "description": "Label for full name field"
+    },
+    "enterFullName": "Please enter your full name",
+    "@enterFullName": {
+        "description": "Validation message for full name"
+    },
+    "accountCreated": "Account created successfully!",
+    "@accountCreated": {
+        "description": "Success message for account creation"
+    },
+    "alreadyHaveAccount": "Already have an account? ",
+    "@alreadyHaveAccount": {
+        "description": "Text asking if user already has an account"
+    },
+    "recoveryTitle": "Password Recovery",
+    "@recoveryTitle": {
+        "description": "Title for the password recovery page"
+    },
+    "recoverySubtitle": "Enter your email to reset your password",
+    "@recoverySubtitle": {
+        "description": "Subtitle for the password recovery page"
+    },
+    "resetLinkSent": "Password reset link sent!",
+    "@resetLinkSent": {
+        "description": "Success message for password reset link"
+    },
+    "sendRecoveryLink": "Send Recovery Link",
+    "@sendRecoveryLink": {
+        "description": "Button text to send recovery link"
+    },
+    "saveChanges": "Save Changes",
+    "@saveChanges": {
+        "description": "Button text to save profile changes"
+    },
+    "deleteAccount": "Delete Account",
+    "@deleteAccount": {
+        "description": "Button text to delete account"
+    },
+    "newPassword": "New Password",
+    "@newPassword": {
+        "description": "Label for new password input field"
+    },
+    "profileUpdated": "Profile updated",
+    "@profileUpdated": {
+        "description": "Success message when profile is updated"
+    },
+    "accountDeleted": "Account deleted",
+    "@accountDeleted": {
+        "description": "Success message when account is deleted"
+    },
+    "bloodSugarReading": "Blood Sugar Reading",
+    "@bloodSugarReading": {
+        "description": "Title for a single blood sugar reading"
+    },
+    "bloodSugarReadings": "Blood Sugar Readings",
+    "@bloodSugarReadings": {
+        "description": "Title for the blood sugar readings history page"
+    },
+    "readingType": "Reading Type",
+    "@readingType": {
+        "description": "Label for the type of blood sugar reading (e.g., Fasting)"
+    },
+    "readingValue": "Reading value",
+    "@readingValue": {
+        "description": "Label for the numerical value of the blood sugar reading"
+    },
+    "saveReading": "Save Reading",
+    "@saveReading": {
+        "description": "Button text to save a blood sugar reading"
+    },
+    "noReadingsRecordedYet": "No readings recorded yet",
+    "@noReadingsRecordedYet": {
+        "description": "Message shown when there are no blood sugar readings"
+    },
+    "tapToAddFirstReading": "Tap + to add your first reading",
+    "@tapToAddFirstReading": {
+        "description": "Instructions to add the first blood sugar reading"
+    },
+    "errorLoadingReadings": "Error loading readings",
+    "@errorLoadingReadings": {
+        "description": "Error message when blood sugar readings fail to load"
+    },
+    "fasting": "Fasting",
+    "@fasting": {
+        "description": "Label for fasting blood sugar reading type"
+    },
+    "postprandial": "2h Postprandial",
+    "@postprandial": {
+        "description": "Label for postprandial blood sugar reading type"
+    },
+    "beforeSleep": "Before Sleep",
+    "@beforeSleep": {
+        "description": "Label for before sleep blood sugar reading type"
+    },
+    "hba1c": "HbA1c",
+    "@hba1c": {
+        "description": "Label for HbA1c blood sugar reading type"
+    },
+    "statusNormalLevel": "Normal",
+    "@statusNormalLevel": {
+        "description": "Health status label for normal blood sugar levels"
+    },
+    "statusPrediabetes": "Prediabetes",
+    "@statusPrediabetes": {
+        "description": "Health status label for prediabetes blood sugar levels"
+    },
+    "statusDiabetes": "Diabetes",
+    "@statusDiabetes": {
+        "description": "Health status label for diabetes blood sugar levels"
+    },
+    "statusLowLevel": "Low",
+    "@statusLowLevel": {
+        "description": "Health status label for low blood sugar levels"
+    },
+    "statusHighLevel": "High",
+    "@statusHighLevel": {
+        "description": "Health status label for high blood sugar levels"
+    },
+    "statusVeryHigh": "Very High",
+    "@statusVeryHigh": {
+        "description": "Health status label for very high blood sugar levels"
+    },
+    "statusDangerous": "Dangerous",
+    "@statusDangerous": {
+        "description": "Health status label for dangerous blood sugar levels"
+    }
+}

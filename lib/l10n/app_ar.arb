@@ -1,0 +1,204 @@
+{
+    "@@locale": "ar",
+    "appTitle": "جلوكو كير",
+    "dashboardTitle": "أدوية اليوم",
+    "addMedication": "إضافة دواء",
+    "editMedication": "تعديل الدواء",
+    "medicationHistory": "سجل الأدوية",
+    "noMedicationsScheduled": "لا توجد أدوية مجدولة لهذا اليوم.",
+    "taken": "تم التناول",
+    "take": "تناول",
+    "medicationName": "اسم الدواء",
+    "dosageExample": "الجرعة (مثال: 500 ملغ، 1 قرص)",
+    "type": "النوع",
+    "scheduleTime": "وقت الجدولة",
+    "saveMedication": "حفظ الدواء",
+    "pickTime": "اختيار الوقت",
+    "noTimeSelected": "لم يتم اختيار وقت",
+    "pleaseSelectTime": "يرجى اختيار وقت الجدولة",
+    "enterMedicationName": "أدخل اسم الدواء",
+    "enterDosage": "أدخل الجرعة",
+    "login": "تسجيل الدخول",
+    "createAccount": "إنشاء حساب",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "name": "الاسم",
+    "showingHistoryFor": "عرض سجل التاريخ:",
+    "noMedicationsRecorded": "لم يتم تسجيل أي أدوية في هذا التاريخ.",
+    "medicationId": "معرف الدواء:",
+    "takenAt": "تم تناوله في:",
+    "onTime": "في الموعد",
+    "late": "متأخر",
+    "failedToLoadHistory": "فشل في تحميل السجل",
+    "goodMorning": "صباح الخير",
+    "dailyProgress": "التقدم اليومي",
+    "todaysDoses": "جرعات اليوم",
+    "viewAll": "عرض الكل",
+    "labTests": "الفحوصات المخبرية",
+    "noLabTests": "لا توجد فحوصات مخبرية بعد",
+    "tapToRecordTest": "اضغط على + لإضافة أول نتيجة فحص",
+    "addLabTest": "إضافة فحص مخبري",
+    "testName": "اسم الفحص",
+    "result": "النتيجة",
+    "unit": "الوحدة",
+    "referenceRange": "المجال المرجعي",
+    "category": "الفئة",
+    "labTestAdded": "تم إضافة الفحص المخبري بنجاح.",
+    "errorOccurred": "حدث خطأ ما",
+    "retry": "إعادة المحاولة",
+    "cancel": "إلغاء",
+    "add": "إضافة",
+    "settings": "الإعدادات",
+    "accountInformation": "معلومات الحساب",
+    "notifications": "التنبيهات",
+    "privacySecurity": "الخصوصية والأمان",
+    "language": "اللغة",
+    "logout": "تسجيل الخروج",
+    "userName": "اسم المستخدم",
+    "english": "الإنجليزية",
+    "confirmLogout": "هل أنت متأكد أنك تريد تسجيل الخروج؟",
+    "theme": "الثيم",
+    "selectTheme": "اختر الثيم",
+    "systemDefault": "الوضع التلقائي",
+    "light": "فاتح",
+    "dark": "داكن",
+    "arabic": "العربية",
+    "myMedications": "أدويتي",
+    "setupMedicationSchedule": "إعداد جدول الأدوية",
+    "intakeTiming": "وقت التناول",
+    "unitHint": "الوحدة (مثال: ملغ، مل)",
+    "enterUnit": "يرجى إدخال الوحدة",
+    "notes": "ملاحظات",
+    "medicationUpdated": "تم تحديث الدواء!",
+    "updateMedicationDetails": "تحديث تفاصيل الدواء",
+    "hey": "أهلاً، {name}!",
+    "catAllHealth": "كل الصحة",
+    "catGlucose": "الجلوكوز",
+    "catMedication": "الأدوية",
+    "catDiet": "نظام غذائي",
+    "stable": "مستقر",
+    "glucoseNormal": "مستوى الجلوكوز، طبيعي",
+    "glucose": "الجلوكوز",
+    "insulin": "الأنسولين",
+    "insulinIntake": "تناول الأنسولين",
+    "last4Hours": "آخر 4 ساعات",
+    "statusLogged": "مسجل",
+    "statusPending": "قيد الانتظار",
+    "medication": "دواء",
+    "statusRemain": "يتبقى",
+    "statusTaken": "تم أخذها",
+    "dailyDiet": "النظام الغذائي اليومي",
+    "statusOff": "إيقاف",
+    "heartRate": "معدل ضربات القلب",
+    "bpmAvg": "متوسط 72 نبضة في الدقيقة",
+    "kcal1200": "1,200 سعرة حرارية",
+    "allTaken": "تم أخذ الكل",
+    "remainingCount": "يتبقى {count}",
+    "noMedicationsToday": "لا توجد أدوية اليوم",
+    "welcomeBack": "مرحباً بعودتك، {name}!",
+    "resetEmailSent": "تم إرسال بريد إعادة تعيين كلمة المرور!",
+    "loginTitle": "مرحباً بعودتك",
+    "loginSubtitle": "قم بتسجيل الدخول إلى حسابك للمتابعة",
+    "emailLabel": "البريد الإلكتروني",
+    "passwordLabel": "كلمة المرور",
+    "enterEmail": "يرجى إدخال البريد الإلكتروني",
+    "enterValidEmail": "يرجى إدخال بريد إلكتروني صحيح",
+    "enterPassword": "يرجى إدخال كلمة المرور",
+    "minPasswordLength": "يجب أن تكون كلمة المرور 6 أحرف على الأقل",
+    "forgotPassword": "نسيت كلمة المرور؟",
+    "loginButton": "تسجيل الدخول",
+    "noAccount": "ليس لديك حساب؟ ",
+    "signUpButton": "إنشاء حساب",
+    "createAccountButton": "إنشاء حساب",
+    "joinTitle": "انضم إلى جلوكو كير",
+    "joinSubtitle": "ابدأ رحلتك الصحية الشخصية",
+    "fullNameLabel": "الاسم الكامل",
+    "enterFullName": "يرجى إدخال اسمك الكامل",
+    "accountCreated": "تم إنشاء الحساب بنجاح!",
+    "alreadyHaveAccount": "لديك حساب بالفعل؟ ",
+    "recoveryTitle": "استعادة كلمة المرور",
+    "recoverySubtitle": "أدخل بريدك الإلكتروني لإعادة تعيين كلمة المرور",
+    "resetLinkSent": "تم إرسال رابط إعادة تعيين كلمة المرور!",
+    "sendRecoveryLink": "إرسال رابط الاستعادة",
+    "saveChanges": "حفظ التعديلات",
+    "deleteAccount": "حذف الحساب",
+    "newPassword": "كلمة المرور الجديدة",
+    "profileUpdated": "تم تحديث الملف الشخصي",
+    "accountDeleted": "تم حذف الحساب",
+    "bloodSugarReading": "قراءة السكر",
+    "@bloodSugarReading": {
+        "description": "Title for a single blood sugar reading"
+    },
+    "bloodSugarReadings": "قراءات السكر",
+    "@bloodSugarReadings": {
+        "description": "Title for the blood sugar readings history page"
+    },
+    "readingType": "نوع القراءة",
+    "@readingType": {
+        "description": "Label for the type of blood sugar reading (e.g., Fasting)"
+    },
+    "readingValue": "قيمة القراءة",
+    "@readingValue": {
+        "description": "Label for the numerical value of the blood sugar reading"
+    },
+    "saveReading": "حفظ القراءة",
+    "@saveReading": {
+        "description": "Button text to save a blood sugar reading"
+    },
+    "noReadingsRecordedYet": "لم يتم تسجيل أي قراءات بعد",
+    "@noReadingsRecordedYet": {
+        "description": "Message shown when there are no blood sugar readings"
+    },
+    "tapToAddFirstReading": "اضغط على + لإضافة أول قراءة",
+    "@tapToAddFirstReading": {
+        "description": "Instructions to add the first blood sugar reading"
+    },
+    "errorLoadingReadings": "خطأ في تحميل القراءات",
+    "@errorLoadingReadings": {
+        "description": "Error message when blood sugar readings fail to load"
+    },
+    "fasting": "صائم",
+    "@fasting": {
+        "description": "Label for fasting blood sugar reading type"
+    },
+    "postprandial": "بعد الأكل بساعتين",
+    "@postprandial": {
+        "description": "Label for postprandial blood sugar reading type"
+    },
+    "beforeSleep": "قبل النوم",
+    "@beforeSleep": {
+        "description": "Label for before sleep blood sugar reading type"
+    },
+    "hba1c": "السكر التراكمي (HbA1c)",
+    "@hba1c": {
+        "description": "Label for HbA1c blood sugar reading type"
+    },
+    "statusNormalLevel": "طبيعي",
+    "@statusNormalLevel": {
+        "description": "Health status label for normal blood sugar levels"
+    },
+    "statusPrediabetes": "ما قبل السكري",
+    "@statusPrediabetes": {
+        "description": "Health status label for prediabetes blood sugar levels"
+    },
+    "statusDiabetes": "سكري",
+    "@statusDiabetes": {
+        "description": "Health status label for diabetes blood sugar levels"
+    },
+    "statusLowLevel": "منخفض",
+    "@statusLowLevel": {
+        "description": "Health status label for low blood sugar levels"
+    },
+    "statusHighLevel": "مرتفع",
+    "@statusHighLevel": {
+        "description": "Health status label for high blood sugar levels"
+    },
+    "statusVeryHigh": "مرتفع جدًا",
+    "@statusVeryHigh": {
+        "description": "Health status label for very high blood sugar levels"
+    },
+    "statusDangerous": "خطير جدًا",
+    "@statusDangerous": {
+        "description": "Health status label for dangerous blood sugar levels"
+    }
+}

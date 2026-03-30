@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "974562949244",
+    "project_id": "glucocare-62eb2",
+    "storage_bucket": "glucocare-62eb2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:974562949244:android:a5254d7811f5aa43b6f1f9",
+        "android_client_info": {
+          "package_name": "com.example.flutter_test_ai"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "974562949244-1qkmshkiag3nujluroi2s91gtomacq7k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAG6_KRbJiFiZafsUZ6HWf_RQCJDmtMSyw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "974562949244-1qkmshkiag3nujluroi2s91gtomacq7k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
