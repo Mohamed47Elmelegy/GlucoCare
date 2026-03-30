@@ -24,7 +24,6 @@ import 'package:flutter_test_ai/core/constants/hive_boxes.dart';
 import 'package:flutter_test_ai/features/medication/data/datasources/medication_local_data_source.dart';
 import 'package:flutter_test_ai/features/medication/data/datasources/medication_local_data_source_impl.dart';
 import 'package:flutter_test_ai/features/medication/data/models/medication_model.dart';
-import 'package:flutter_test_ai/features/medication/data/models/medication_schedule_model.dart';
 import 'package:flutter_test_ai/features/medication/data/models/dose_history_model.dart';
 import 'package:flutter_test_ai/features/medication/data/models/user_model.dart'
     as med;
@@ -93,9 +92,6 @@ Future<void> init() async {
   final medicationBox = await HiveUtils.openBoxSafely<MedicationModel>(
     HiveBoxes.medications,
   );
-  final scheduleBox = await HiveUtils.openBoxSafely<MedicationScheduleModel>(
-    HiveBoxes.schedules,
-  );
   final userBox = await HiveUtils.openBoxSafely<med.UserModel>(HiveBoxes.users);
   final doseHistoryBox = await HiveUtils.openBoxSafely<DoseHistoryModel>(
     HiveBoxes.doseHistory,
@@ -108,7 +104,6 @@ Future<void> init() async {
   );
 
   sl.registerLazySingleton<Box<MedicationModel>>(() => medicationBox);
-  sl.registerLazySingleton<Box<MedicationScheduleModel>>(() => scheduleBox);
   sl.registerLazySingleton<Box<med.UserModel>>(() => userBox);
   sl.registerLazySingleton<Box<DoseHistoryModel>>(() => doseHistoryBox);
   sl.registerLazySingleton<Box<InsulinReadingModel>>(() => insulinBox);
@@ -128,7 +123,6 @@ Future<void> init() async {
     () => AuthLocalDataSourceImpl(
       secureStorage: sl(),
       medicationsBox: sl<Box<MedicationModel>>(),
-      schedulesBox: sl<Box<MedicationScheduleModel>>(),
       doseHistoryBox: sl<Box<DoseHistoryModel>>(),
       userBox: sl<Box<med.UserModel>>(),
       insulinReadingsBox: sl<Box<InsulinReadingModel>>(),
@@ -141,7 +135,6 @@ Future<void> init() async {
   sl.registerLazySingleton<MedicationLocalDataSource>(
     () => MedicationLocalDataSourceImpl(
       medicationBox: sl(),
-      scheduleBox: sl(),
       doseHistoryBox: sl(),
     ),
   );

@@ -14,8 +14,9 @@ import 'package:flutter_test_ai/features/medication/domain/usecases/get_history_
 import 'package:flutter_test_ai/features/medication/domain/usecases/record_medication_history.dart';
 import 'package:flutter_test_ai/features/medication/domain/entities/dose_history.dart';
 import 'package:flutter_test_ai/features/medication/domain/entities/medication_type.dart';
-import 'package:flutter_test_ai/features/medication/domain/entities/intake_timing.dart';
-import 'package:flutter_test_ai/features/medication/domain/entities/time_value.dart';
+import 'package:flutter_test_ai/features/medication/domain/entities/meal_slot.dart';
+import 'package:flutter_test_ai/features/medication/domain/entities/schedule_type.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test_ai/features/medication/domain/usecases/sync_medications.dart';
 import 'package:flutter_test_ai/features/medication/presentation/bloc/medication_bloc.dart';
 import 'package:flutter_test_ai/features/medication/presentation/bloc/medication_event.dart';
@@ -43,6 +44,15 @@ class DummyMedicationRepository implements MedicationRepository {
       right(null);
   @override
   Future<Either<Failure, void>> syncMedications() async => right(null);
+
+  @override
+  Future<Either<Failure, void>> completeMedicationCourse(String id) async =>
+      right(null);
+
+  @override
+  Future<Either<Failure, List<Medication>>> getTodayMedications(
+    DateTime date,
+  ) async => right([]);
 }
 
 class DummyReminderService implements ReminderServiceInterface {
@@ -208,9 +218,12 @@ void main() {
       type: MedicationType.pill,
       dosage: '10mg',
       unit: 'mg',
-      intakeTiming: IntakeTiming.beforeMeal,
+      mealSlots: [MealSlot.breakfast],
+      customTimes: {MealSlot.breakfast: const TimeOfDay(hour: 8, minute: 0)},
+      scheduleType: ScheduleType.daily,
+      startDate: DateTime(2024, 1, 1),
+      isActive: true,
       notes: '',
-      scheduleTimes: const [TimeValue(hour: 8, minute: 0)],
     );
 
     test(

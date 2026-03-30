@@ -41,8 +41,10 @@ class NotificationService implements ReminderServiceInterface {
 
   @override
   Future<void> scheduleMedicationAlarms(Medication medication) async {
-    for (int i = 0; i < medication.scheduleTimes.length; i++) {
-      final time = medication.scheduleTimes[i];
+    for (final slot in medication.mealSlots) {
+      final time = medication.customTimes[slot];
+      if (time == null) continue;
+
       final now = DateTime.now();
 
       // Calculate next occurrence
@@ -59,9 +61,9 @@ class NotificationService implements ReminderServiceInterface {
       }
 
       await _scheduleAlarm(
-        id: medication.id.hashCode + i,
+        id: medication.id.hashCode + slot.index,
         title: 'Medication: ${medication.name}',
-        body: 'Time to take ${medication.dosage} ${medication.unit}',
+        body: 'Time to take ${medication.dosage} ${medication.unit} (${slot.label})',
         scheduledDate: scheduledDate,
       );
     }

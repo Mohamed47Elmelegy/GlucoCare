@@ -16,29 +16,35 @@ class PremiumTimelineSection extends StatelessWidget {
     if (medState is TodayScheduleLoaded) {
       final state = medState as TodayScheduleLoaded;
       final locale = Localizations.localeOf(context).toString();
-      return state.activeMedications.map((med) {
-        final isTaken = state.takenHistory.any((h) => h.medicationId == med.id);
-        final timeStr = med.scheduleTimes.isNotEmpty
-            ? DateFormat.jm(locale).format(
-                DateTime(
-                  2024,
-                  1,
-                  1,
-                  med.scheduleTimes.first.hour,
-                  med.scheduleTimes.first.minute,
-                ),
-              )
-            : "--:--";
+      final List<MedicationTimelineItem> items = [];
 
-        return MedicationTimelineItem(
-          label: med.name,
-          time: timeStr,
-          icon: med.type.name.toLowerCase().contains('injection')
-              ? PhosphorIcons.syringe()
-              : PhosphorIcons.pill(),
-          status: isTaken ? TimelineStatus.done : TimelineStatus.upcoming,
-        );
-      }).toList();
+      for (final med in state.activeMedications) {
+        final isTaken = state.takenHistory.any((h) => h.medicationId == med.id);
+        
+        for (final slot in med.mealSlots) {
+          final timeStr = med.customTimes[slot] != null
+              ? DateFormat.jm(locale).format(
+                  DateTime(
+                    2024,
+                    1,
+                    1,
+                    med.customTimes[slot]!.hour,
+                    med.customTimes[slot]!.minute,
+                  ),
+                )
+              : "--:--";
+
+          items.add(MedicationTimelineItem(
+            label: '${med.name} (${slot.label})',
+            time: timeStr,
+            icon: med.type.name.toLowerCase().contains('injection')
+                ? PhosphorIcons.syringe()
+                : PhosphorIcons.pill(),
+            status: isTaken ? TimelineStatus.done : TimelineStatus.upcoming,
+          ));
+        }
+      }
+      return items;
     }
     return [];
   }

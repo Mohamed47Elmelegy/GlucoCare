@@ -44,4 +44,36 @@ class DoseHistoryModel extends HiveObject {
       notes: notes,
     );
   }
+
+  factory DoseHistoryModel.fromJson(Map<String, dynamic> json) {
+    return DoseHistoryModel(
+      id: json['id'] as String? ?? '',
+      medicationId: json['medicationId'] as String? ?? '',
+      dateTime: _parseDateTime(json['dateTime']),
+      statusIndex: json['statusIndex'] as int? ?? 0,
+      notes: json['notes'] as String? ?? '',
+    );
+  }
+
+  static DateTime _parseDateTime(dynamic value) {
+    if (value == null) return DateTime.now();
+    if (value is String) return DateTime.parse(value);
+    if (value is DateTime) return value;
+    try {
+      if (value.runtimeType.toString().contains('Timestamp')) {
+        return (value as dynamic).toDate() as DateTime;
+      }
+    } catch (_) {}
+    return DateTime.now();
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'medicationId': medicationId,
+      'dateTime': dateTime.toIso8601String(),
+      'statusIndex': statusIndex,
+      'notes': notes,
+    };
+  }
 }

@@ -12,7 +12,6 @@ abstract class AuthLocalDataSource {
 class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   final FlutterSecureStorage secureStorage;
   final Box medicationsBox;
-  final Box schedulesBox;
   final Box doseHistoryBox;
   final Box userBox;
   final Box insulinReadingsBox;
@@ -23,7 +22,6 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   AuthLocalDataSourceImpl({
     required this.secureStorage,
     required this.medicationsBox,
-    required this.schedulesBox,
     required this.doseHistoryBox,
     required this.userBox,
     required this.insulinReadingsBox,
@@ -51,7 +49,6 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
     // Clearing all local Hive boxes instead of deleting from disk to keep them open for reuse
     try {
       await medicationsBox.clear();
-      await schedulesBox.clear();
       await doseHistoryBox.clear();
       await userBox.clear();
       await insulinReadingsBox.clear();

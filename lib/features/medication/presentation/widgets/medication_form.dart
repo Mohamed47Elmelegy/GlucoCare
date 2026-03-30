@@ -7,8 +7,8 @@ import '../../../../core/widgets/app_button.dart';
 import '../../../../core/widgets/app_text_field.dart';
 import '../../../../core/widgets/premium_card.dart';
 import '../../domain/entities/medication_type.dart';
-import '../../domain/entities/intake_timing.dart';
-import 'time_picker_field.dart';
+import '../../domain/entities/meal_slot.dart';
+import '../../domain/entities/schedule_type.dart';
 
 class MedicationForm extends StatefulWidget {
   final GlobalKey<FormState> formKey;
@@ -17,11 +17,17 @@ class MedicationForm extends StatefulWidget {
   final TextEditingController unitController;
   final TextEditingController notesController;
   final MedicationType selectedType;
-  final IntakeTiming selectedIntake;
-  final TimeOfDay? selectedTime;
+  final ScheduleType selectedScheduleType;
+  final Set<MealSlot> selectedMealSlots;
+  final Map<MealSlot, TimeOfDay> customTimes;
+  final DateTime startDate;
+  final int? durationDays;
   final Function(MedicationType) onTypeChanged;
-  final Function(IntakeTiming) onIntakeChanged;
-  final VoidCallback onPickTime;
+  final Function(ScheduleType) onScheduleTypeChanged;
+  final Function(MealSlot) onMealSlotToggled;
+  final Function(MealSlot, TimeOfDay) onTimeChanged;
+  final Function(DateTime) onStartDateChanged;
+  final Function(String) onDurationChanged;
   final VoidCallback onSave;
 
   const MedicationForm({
@@ -32,11 +38,17 @@ class MedicationForm extends StatefulWidget {
     required this.unitController,
     required this.notesController,
     required this.selectedType,
-    required this.selectedIntake,
-    required this.selectedTime,
+    required this.selectedScheduleType,
+    required this.selectedMealSlots,
+    required this.customTimes,
+    required this.startDate,
+    this.durationDays,
     required this.onTypeChanged,
-    required this.onIntakeChanged,
-    required this.onPickTime,
+    required this.onScheduleTypeChanged,
+    required this.onMealSlotToggled,
+    required this.onTimeChanged,
+    required this.onStartDateChanged,
+    required this.onDurationChanged,
     required this.onSave,
   });
 
@@ -72,8 +84,20 @@ class _MedicationFormState extends State<MedicationForm> {
             _buildDropdownLabel(context, l10n.type),
             _buildTypeDropdown(context),
             const SizedBox(height: 20),
-            _buildDropdownLabel(context, l10n.intakeTiming),
-            _buildIntakeDropdown(context),
+            _buildDropdownLabel(context, 'Schedule Type'),
+            _buildScheduleTypeDropdown(context),
+            const SizedBox(height: 20),
+            if (widget.selectedScheduleType == ScheduleType.fixedDuration) ...[
+              AppTextField(
+                controller: TextEditingController(text: widget.durationDays?.toString() ?? ''),
+                label: 'Duration (Days)',
+                icon: PhosphorIcons.calendarCheck(PhosphorIconsStyle.bold),
+                keyboardType: TextInputType.number,
+                onChanged: widget.onDurationChanged,
+              ),
+              const SizedBox(height: 20),
+            ],
+            _buildMealSlotsSection(context),
             const SizedBox(height: 20),
             AppTextField(
               controller: widget.unitController,
@@ -86,11 +110,6 @@ class _MedicationFormState extends State<MedicationForm> {
               controller: widget.notesController,
               label: l10n.notes,
               icon: PhosphorIcons.notePencil(PhosphorIconsStyle.bold),
-            ),
-            const SizedBox(height: 24),
-            TimePickerField(
-              selectedTime: widget.selectedTime,
-              onPickTime: widget.onPickTime,
             ),
             const SizedBox(height: 40),
             AppButton(
@@ -131,18 +150,62 @@ class _MedicationFormState extends State<MedicationForm> {
     );
   }
 
-  Widget _buildIntakeDropdown(BuildContext context) {
-    return DropdownButtonFormField<IntakeTiming>(
-      initialValue: widget.selectedIntake,
+  Widget _buildScheduleTypeDropdown(BuildContext context) {
+    return DropdownButtonFormField<ScheduleType>(
+      initialValue: widget.selectedScheduleType,
       style: context.textTheme.bodyLarge?.copyWith(color: context.colorScheme.onSurface),
-      decoration: _getInputDecoration(context, Icons.access_time_filled_rounded),
-      items: IntakeTiming.values
-          .map((timing) => DropdownMenuItem(
-                value: timing,
-                child: Text(timing.name.capitalize()),
+      decoration: _getInputDecoration(context, Icons.calendar_today_rounded),
+      items: ScheduleType.values
+          .map((type) => DropdownMenuItem(
+                value: type,
+                child: Text(type.name.capitalize()),
               ))
           .toList(),
-      onChanged: (val) => widget.onIntakeChanged(val!),
+      onChanged: (val) => widget.onScheduleTypeChanged(val!),
+    );
+  }
+
+  Widget _buildMealSlotsSection(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildDropdownLabel(context, 'Meal Slots & Times'),
+        const SizedBox(height: 8),
+        ...MealSlot.values.map((slot) {
+          final isSelected = widget.selectedMealSlots.contains(slot);
+          final time = widget.customTimes[slot];
+          
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 12.0),
+            child: Row(
+              children: [
+                Checkbox(
+                  value: isSelected,
+                  onChanged: (_) => widget.onMealSlotToggled(slot),
+                  activeColor: context.colorScheme.primary,
+                ),
+                Expanded(
+                  child: Text(slot.label, style: context.textTheme.bodyLarge),
+                ),
+                if (isSelected)
+                  TextButton.icon(
+                    onPressed: () async {
+                      final picked = await showTimePicker(
+                        context: context,
+                        initialTime: time ?? const TimeOfDay(hour: 8, minute: 0),
+                      );
+                      if (picked != null) {
+                        widget.onTimeChanged(slot, picked);
+                      }
+                    },
+                    icon: const Icon(Icons.access_time, size: 18),
+                    label: Text(time?.format(context) ?? 'Set Time'),
+                  ),
+              ],
+            ),
+          );
+        }),
+      ],
     );
   }
 

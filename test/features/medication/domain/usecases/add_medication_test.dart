@@ -1,8 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_test_ai/features/medication/domain/entities/dose_history.dart';
 import 'package:flutter_test_ai/features/medication/domain/entities/medication_type.dart';
-import 'package:flutter_test_ai/features/medication/domain/entities/intake_timing.dart';
-import 'package:flutter_test_ai/features/medication/domain/entities/time_value.dart';
+import 'package:flutter_test_ai/features/medication/domain/entities/meal_slot.dart';
+import 'package:flutter_test_ai/features/medication/domain/entities/schedule_type.dart';
+import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:flutter_test_ai/core/errors/failures.dart';
 import 'package:flutter_test_ai/features/medication/domain/entities/medication.dart';
@@ -46,6 +47,15 @@ class MockMedicationRepository implements MedicationRepository {
 
   @override
   Future<Either<Failure, void>> syncMedications() async => right(null);
+
+  @override
+  Future<Either<Failure, void>> completeMedicationCourse(String id) async =>
+      right(null);
+
+  @override
+  Future<Either<Failure, List<Medication>>> getTodayMedications(
+    DateTime date,
+  ) async => right([]);
 }
 
 class MockReminderService implements ReminderServiceInterface {
@@ -97,9 +107,12 @@ void main() {
     type: MedicationType.pill,
     dosage: '500mg',
     unit: 'mg',
-    intakeTiming: IntakeTiming.afterMeal,
+    mealSlots: [MealSlot.breakfast],
+    customTimes: {MealSlot.breakfast: const TimeOfDay(hour: 8, minute: 0)},
+    scheduleType: ScheduleType.daily,
+    startDate: DateTime(2024, 1, 1),
+    isActive: true,
     notes: '',
-    scheduleTimes: [const TimeValue(hour: 8, minute: 0)],
   );
 
   test(

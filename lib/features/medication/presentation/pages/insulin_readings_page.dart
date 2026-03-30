@@ -93,7 +93,7 @@ class _InsulinReadingsPageState extends State<InsulinReadingsPage> {
                 ),
                 const SizedBox(height: 24),
                 DropdownButtonFormField<ReadingType>(
-                  value: _selectedReadingType,
+                  initialValue: _selectedReadingType,
                   decoration: InputDecoration(
                     labelText: context.l10n.readingType,
                     prefixIcon: const Icon(Icons.category),

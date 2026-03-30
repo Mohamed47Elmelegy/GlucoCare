@@ -1,8 +1,10 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:flutter_test_ai/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:flutter_test_ai/l10n/app_localizations.dart';
+import '../../../../core/routes/route_constants.dart';
 import '../bloc/medication_bloc.dart';
 import '../bloc/medication_event.dart';
 import '../bloc/medication_state.dart';
@@ -388,7 +390,7 @@ class _DashboardContent extends StatelessWidget {
                       ),
                     ),
                     subtitle: Text(
-                      '${med.dosage} ${med.unit} • ${med.scheduleTimes.isNotEmpty ? TimeOfDay(hour: med.scheduleTimes.first.hour, minute: med.scheduleTimes.first.minute).format(context) : ""}',
+                      '${med.dosage} ${med.unit} • ${med.mealSlots.map((slot) => '${slot.label} (${med.customTimes[slot]?.format(context) ?? ""})').join(", ")}',
                       style: textTheme.bodySmall?.copyWith(
                         color: colorScheme.onSurfaceVariant,
                         fontWeight: FontWeight.w500,
@@ -428,6 +430,9 @@ class _DashboardContent extends StatelessWidget {
                               },
                             ),
                           ),
+                    onTap: () {
+                      context.push(RouteConstants.editMedication, extra: med);
+                    },
                   ),
                 );
               }, childCount: medications.length),

@@ -61,7 +61,7 @@ class MedicationListPageBody extends StatelessWidget {
               ),
             ),
             subtitle: Text(
-              '${med.dosage} ${med.unit} • ${med.intakeTiming.name}',
+              '${med.dosage} ${med.unit} • ${med.mealSlots.map((s) => s.label).join(", ")}',
               style: context.textTheme.bodySmall,
             ),
             trailing: Icon(

@@ -1,17 +1,14 @@
 import 'package:hive/hive.dart';
 import '../models/medication_model.dart';
-import '../models/medication_schedule_model.dart';
 import '../models/dose_history_model.dart';
 import 'medication_local_data_source.dart';
 
 class MedicationLocalDataSourceImpl implements MedicationLocalDataSource {
   final Box<MedicationModel> medicationBox;
-  final Box<MedicationScheduleModel> scheduleBox;
   final Box<DoseHistoryModel> doseHistoryBox;
 
   MedicationLocalDataSourceImpl({
     required this.medicationBox,
-    required this.scheduleBox,
     required this.doseHistoryBox,
   });
 
@@ -36,20 +33,6 @@ class MedicationLocalDataSourceImpl implements MedicationLocalDataSource {
   }
 
   @override
-  Future<void> saveSchedule(MedicationScheduleModel schedule) async {
-    await scheduleBox.put(schedule.id, schedule);
-  }
-
-  @override
-  Future<List<MedicationScheduleModel>> getSchedules(
-    String medicationId,
-  ) async {
-    return scheduleBox.values
-        .where((s) => s.medicationId == medicationId)
-        .toList();
-  }
-
-  @override
   Future<void> saveDoseHistory(DoseHistoryModel history) async {
     await doseHistoryBox.put(history.id, history);
   }
@@ -62,16 +45,8 @@ class MedicationLocalDataSourceImpl implements MedicationLocalDataSource {
   }
 
   @override
-  Future<List<DoseHistoryModel>> getHistoryForDate(DateTime date) async {
-    final startOfDay = DateTime(date.year, date.month, date.day);
-    final endOfDay = startOfDay.add(const Duration(days: 1));
-
-    return doseHistoryBox.values
-        .where(
-          (h) =>
-              h.dateTime.isAfter(startOfDay) && h.dateTime.isBefore(endOfDay),
-        )
-        .toList();
+  Future<List<DoseHistoryModel>> getAllDoseHistory() async {
+    return doseHistoryBox.values.toList();
   }
 
   @override

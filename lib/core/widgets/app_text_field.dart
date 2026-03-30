@@ -10,6 +10,7 @@ class AppTextField extends StatelessWidget {
   final TextInputType? keyboardType;
   final Widget? suffixIcon;
   final String? Function(String?)? validator;
+  final Function(String)? onChanged;
   final Color? iconColor;
 
   const AppTextField({
@@ -21,6 +22,7 @@ class AppTextField extends StatelessWidget {
     this.keyboardType,
     this.suffixIcon,
     this.validator,
+    this.onChanged,
     this.iconColor,
   });
 
@@ -86,6 +88,7 @@ class AppTextField extends StatelessWidget {
             ),
           ),
           validator: validator,
+          onChanged: onChanged,
         ),
       ],
     );

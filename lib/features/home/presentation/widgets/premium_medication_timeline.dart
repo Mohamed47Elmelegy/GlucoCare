@@ -29,14 +29,19 @@ class PremiumMedicationTimeline extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 16),
-        SizedBox(
-          height: 100,
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          padding: const EdgeInsets.symmetric(horizontal: 4),
           child: Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
               for (int i = 0; i < items.length; i++) ...[
                 _buildTimelineItem(context, items[i]),
                 if (i < items.length - 1)
-                  Expanded(child: _buildConnector(context, items[i].status)),
+                  SizedBox(
+                    width: 32,
+                    child: _buildConnector(context, items[i].status),
+                  ),
               ],
             ],
           ),
