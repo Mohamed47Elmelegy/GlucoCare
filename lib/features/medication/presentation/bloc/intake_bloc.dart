@@ -46,6 +46,9 @@ class IntakeBloc extends Bloc<IntakeEvent, IntakeState> {
       return;
     }
 
+    // NEW: Request permissions first
+    await scheduleAllReminders.notificationService.requestPermissions();
+
     // NEW: Schedule all reminders for today
     await scheduleAllReminders(const NoParams());
 

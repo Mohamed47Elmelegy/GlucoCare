@@ -1,11 +1,9 @@
 import 'dart:io';
 import 'dart:developer';
-import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import '../../features/medication/domain/entities/intake_task.dart';
-import '../../features/medication/domain/entities/intake_status.dart';
 import 'notification_action_handler.dart';
 
 class NotificationService {
@@ -85,7 +83,12 @@ class NotificationService {
     tz.TZDateTime scheduledTZ = tz.TZDateTime.from(baseDateTime, tz.local);
 
     // If time is in the past, don't schedule old reminders
-    if (scheduledTZ.isBefore(now)) return;
+    if (scheduledTZ.isBefore(now)) {
+      log('WARNING: Skipping reminder for task ${task.id} because time $scheduledTZ is in the past.');
+      return;
+    }
+
+    log('Scheduling reminder for task ${task.id} at $scheduledTZ');
 
     // 1. First Notification
     await _scheduleInternal(
@@ -99,15 +102,39 @@ class NotificationService {
     // 2. Repeats (10, 20, 30 mins) if not snoozed (repeats only for original tasks)
     if (task.snoozeUntil == null) {
       for (int i = 1; i <= 3; i++) {
+        final repeatTZ = scheduledTZ.add(Duration(minutes: 10 * i));
         await _scheduleInternal(
           id: task.id.hashCode + i,
           title: 'REPEAT: ${task.medicationName}',
           body: 'Persistent reminder: Have you taken your dose?',
-          scheduledDate: scheduledTZ.add(Duration(minutes: 10 * i)),
+          scheduledDate: repeatTZ,
           payload: task.id,
         );
       }
     }
+  }
+
+  Future<void> showInstantNotification({
+    required String title,
+    required String body,
+  }) async {
+    const AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
+      'instant_test_channel',
+      'Test Notifications',
+      importance: Importance.max,
+      priority: Priority.high,
+    );
+
+    const NotificationDetails details = NotificationDetails(
+      android: androidDetails,
+    );
+
+    await _notificationsPlugin.show(
+      888,
+      title,
+      body,
+      details,
+    );
   }
 
   Future<void> cancelTaskReminder(String taskId) async {
@@ -204,7 +231,14 @@ class NotificationService {
       final androidUtils = _notificationsPlugin
           .resolvePlatformSpecificImplementation<
               AndroidFlutterLocalNotificationsPlugin>();
-      return await androidUtils?.requestNotificationsPermission() ?? false;
+      
+      // Request standard notification permission (Android 13+)
+      final bool? notificationsGranted = await androidUtils?.requestNotificationsPermission();
+      
+      // Request exact alarm permission (Android 14+)
+      final bool? exactAlarmsGranted = await androidUtils?.requestExactAlarmsPermission();
+      
+      return (notificationsGranted ?? false) && (exactAlarmsGranted ?? true);
     }
     return false;
   }

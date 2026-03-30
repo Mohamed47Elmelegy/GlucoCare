@@ -10,6 +10,7 @@ import '../../domain/entities/meal_slot.dart';
 import '../../domain/entities/schedule_type.dart';
 import '../bloc/medication_bloc.dart';
 import '../bloc/medication_event.dart';
+import '../bloc/medication_state.dart';
 import '../widgets/add_medication_header.dart';
 import '../widgets/medication_form.dart';
 
@@ -46,7 +47,6 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
     super.dispose();
   }
 
-  // Helper methods for state updates
   void _onMealSlotToggled(MealSlot slot) {
     setState(() {
       if (_selectedMealSlots.contains(slot)) {
@@ -92,7 +92,6 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
       context.read<MedicationBloc>().add(
         AddMedicationEvent(medication: newMed),
       );
-      context.pop();
     }
   }
 
@@ -102,36 +101,50 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
       appBar: PremiumAppBar(
         title: context.l10n.addMedication,
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            children: [
-              const AddMedicationHeader(),
-              const SizedBox(height: 24),
-              MedicationForm(
-                formKey: _formKey,
-                nameController: _nameController,
-                dosageController: _dosageController,
-                unitController: _unitController,
-                notesController: _notesController,
-                selectedType: _selectedType,
-                selectedScheduleType: _selectedScheduleType,
-                selectedMealSlots: _selectedMealSlots,
-                customTimes: _customTimes,
-                startDate: _startDate,
-                durationDays: _durationDays,
-                onTypeChanged: (type) => setState(() => _selectedType = type),
-                onScheduleTypeChanged: (type) =>
-                    setState(() => _selectedScheduleType = type),
-                onMealSlotToggled: _onMealSlotToggled,
-                onTimeChanged: _onTimeChanged,
-                onStartDateChanged: (date) => setState(() => _startDate = date),
-                onDurationChanged: (val) =>
-                    setState(() => _durationDays = int.tryParse(val)),
-                onSave: _onSave,
+      body: BlocListener<MedicationBloc, MedicationState>(
+        listener: (context, state) {
+          if (state is MedicationActionSuccess) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.message),
+                backgroundColor: context.colorScheme.primary,
+                behavior: SnackBarBehavior.floating,
               ),
-            ],
+            );
+            context.pop();
+          }
+        },
+        child: SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              children: [
+                const AddMedicationHeader(),
+                const SizedBox(height: 24),
+                MedicationForm(
+                  formKey: _formKey,
+                  nameController: _nameController,
+                  dosageController: _dosageController,
+                  unitController: _unitController,
+                  notesController: _notesController,
+                  selectedType: _selectedType,
+                  selectedScheduleType: _selectedScheduleType,
+                  selectedMealSlots: _selectedMealSlots,
+                  customTimes: _customTimes,
+                  startDate: _startDate,
+                  durationDays: _durationDays,
+                  onTypeChanged: (type) => setState(() => _selectedType = type),
+                  onScheduleTypeChanged: (type) =>
+                      setState(() => _selectedScheduleType = type),
+                  onMealSlotToggled: _onMealSlotToggled,
+                  onTimeChanged: _onTimeChanged,
+                  onStartDateChanged: (date) => setState(() => _startDate = date),
+                  onDurationChanged: (val) =>
+                      setState(() => _durationDays = int.tryParse(val)),
+                  onSave: _onSave,
+                ),
+              ],
+            ),
           ),
         ),
       ),

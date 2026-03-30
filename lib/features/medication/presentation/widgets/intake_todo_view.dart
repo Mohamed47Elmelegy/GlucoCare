@@ -27,59 +27,66 @@ class IntakeTodoView extends StatelessWidget {
           final lunchTasks = state.tasks.where((t) => t.slot == MealSlot.lunch).toList();
           final dinnerTasks = state.tasks.where((t) => t.slot == MealSlot.dinner).toList();
 
-          return CustomScrollView(
-            physics: const BouncingScrollPhysics(),
-            slivers: [
-              SliverToBoxAdapter(
-                child: IntakeProgressBannerWidget(summary: state.summary),
-              ),
-              SliverToBoxAdapter(
-                child: MealSlotSectionWidget(
-                  title: AppStrings.breakfast,
-                  tasks: breakfastTasks,
-                  onStatusChanged: (taskId, status, {takenAt, snoozeUntil}) => 
-                      context.read<IntakeBloc>().add(
-                        IntakeTaskStatusChanged(
-                          taskId: taskId, 
-                          status: status, 
-                          takenAt: takenAt, 
-                          snoozeUntil: snoozeUntil
-                        )
-                      ),
+          return RefreshIndicator(
+            onRefresh: () async {
+              context.read<IntakeBloc>().add(
+                IntakeTasksLoadRequested(date: DateTime.now()),
+              );
+            },
+            child: CustomScrollView(
+              physics: const BouncingScrollPhysics(),
+              slivers: [
+                SliverToBoxAdapter(
+                  child: IntakeProgressBannerWidget(summary: state.summary),
                 ),
-              ),
-              SliverToBoxAdapter(
-                child: MealSlotSectionWidget(
-                  title: AppStrings.lunch,
-                  tasks: lunchTasks,
-                  onStatusChanged: (taskId, status, {takenAt, snoozeUntil}) => 
-                      context.read<IntakeBloc>().add(
-                        IntakeTaskStatusChanged(
-                          taskId: taskId, 
-                          status: status, 
-                          takenAt: takenAt, 
-                          snoozeUntil: snoozeUntil
-                        )
-                      ),
+                SliverToBoxAdapter(
+                  child: MealSlotSectionWidget(
+                    title: AppStrings.breakfast,
+                    tasks: breakfastTasks,
+                    onStatusChanged: (taskId, status, {takenAt, snoozeUntil}) => 
+                        context.read<IntakeBloc>().add(
+                          IntakeTaskStatusChanged(
+                            taskId: taskId, 
+                            status: status, 
+                            takenAt: takenAt, 
+                            snoozeUntil: snoozeUntil
+                          )
+                        ),
+                  ),
                 ),
-              ),
-              SliverToBoxAdapter(
-                child: MealSlotSectionWidget(
-                  title: AppStrings.dinner,
-                  tasks: dinnerTasks,
-                  onStatusChanged: (taskId, status, {takenAt, snoozeUntil}) => 
-                      context.read<IntakeBloc>().add(
-                        IntakeTaskStatusChanged(
-                          taskId: taskId, 
-                          status: status, 
-                          takenAt: takenAt, 
-                          snoozeUntil: snoozeUntil
-                        )
-                      ),
+                SliverToBoxAdapter(
+                  child: MealSlotSectionWidget(
+                    title: AppStrings.lunch,
+                    tasks: lunchTasks,
+                    onStatusChanged: (taskId, status, {takenAt, snoozeUntil}) => 
+                        context.read<IntakeBloc>().add(
+                          IntakeTaskStatusChanged(
+                            taskId: taskId, 
+                            status: status, 
+                            takenAt: takenAt, 
+                            snoozeUntil: snoozeUntil
+                          )
+                        ),
+                  ),
                 ),
-              ),
-              const SliverPadding(padding: EdgeInsets.only(bottom: 40)),
-            ],
+                SliverToBoxAdapter(
+                  child: MealSlotSectionWidget(
+                    title: AppStrings.dinner,
+                    tasks: dinnerTasks,
+                    onStatusChanged: (taskId, status, {takenAt, snoozeUntil}) => 
+                        context.read<IntakeBloc>().add(
+                          IntakeTaskStatusChanged(
+                            taskId: taskId, 
+                            status: status, 
+                            takenAt: takenAt, 
+                            snoozeUntil: snoozeUntil
+                          )
+                        ),
+                  ),
+                ),
+                const SliverPadding(padding: EdgeInsets.only(bottom: 40)),
+              ],
+            ),
           );
         }
         return const SizedBox.shrink();

@@ -44,15 +44,35 @@ class IntakeRepositoryImpl implements IntakeRepository {
         }
 
         for (var slotName in med.mealSlots) {
-          final exists = existingTasks.any(
-            (t) => t.medicationId == med.id && t.slot == slotName
-          );
-          if (exists) continue;
-
           final timeStr = med.customTimes[slotName] ?? 
             (slotName == MealSlot.breakfast.name ? "08:00" : 
              slotName == MealSlot.lunch.name ? "14:00" : "20:00");
-          
+
+          final existingTask = existingTasks.cast<IntakeTaskModel?>().firstWhere(
+            (t) => t?.medicationId == med.id && t?.slot == slotName,
+            orElse: () => null,
+          );
+
+          if (existingTask != null) {
+            // Check if updates needed for existing tasks
+            if (existingTask.medicationName != med.name || 
+                existingTask.scheduledTime != timeStr) {
+              final updatedTask = IntakeTaskModel(
+                id: existingTask.id,
+                medicationId: existingTask.medicationId,
+                medicationName: med.name,
+                slot: existingTask.slot,
+                scheduledTime: timeStr,
+                date: existingTask.date,
+                status: existingTask.status,
+                takenAt: existingTask.takenAt,
+                snoozeUntil: existingTask.snoozeUntil,
+              );
+              newTasks.add(updatedTask);
+            }
+            continue;
+          }
+
           final newTask = IntakeTaskModel(
             id: '${med.id}_${dateOnly.millisecondsSinceEpoch}_$slotName',
             medicationId: med.id,

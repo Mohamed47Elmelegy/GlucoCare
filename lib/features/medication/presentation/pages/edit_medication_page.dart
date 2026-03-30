@@ -98,7 +98,6 @@ class _EditMedicationPageState extends State<EditMedicationPage> {
       context.read<MedicationBloc>().add(
         UpdateMedicationEvent(medication: updated),
       );
-      context.pop();
     }
   }
 
@@ -118,6 +117,7 @@ class _EditMedicationPageState extends State<EditMedicationPage> {
                 behavior: SnackBarBehavior.floating,
               ),
             );
+            context.pop();
           }
         },
         child: SafeArea(
