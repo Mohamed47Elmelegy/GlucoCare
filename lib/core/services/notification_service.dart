@@ -1,148 +1,151 @@
 import 'dart:io';
+import 'dart:developer';
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
+import '../../features/medication/domain/entities/intake_task.dart';
+import '../../features/medication/domain/entities/intake_status.dart';
+import 'notification_action_handler.dart';
 
-import '../../features/medication/domain/entities/medication.dart';
-import '../../features/medication/domain/services/reminder_service_interface.dart';
-
-class NotificationService implements ReminderServiceInterface {
-  final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
+class NotificationService {
+  final FlutterLocalNotificationsPlugin _notificationsPlugin =
       FlutterLocalNotificationsPlugin();
+
+  static const String channelId = 'medication_reminder_channel';
+  static const String channelName = 'Medication Reminders';
+  static const String channelDescription = 'Reminders for taking your medication';
+
+  // Configurable sumary time (21:00)
+  static const int summaryHour = 21;
+  static const int summaryMinute = 0;
 
   NotificationService();
 
   Future<void> initialize() async {
     tz.initializeTimeZones();
 
-    const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+    // 1. Android Setup
+    const AndroidInitializationSettings androidSettings =
+        AndroidInitializationSettings('ic_notification'); 
 
-    const DarwinInitializationSettings initializationSettingsDarwin =
-        DarwinInitializationSettings(
-          requestAlertPermission: true,
-          requestBadgePermission: true,
-          requestSoundPermission: true,
-        );
+    // 2. iOS Setup
+    final List<DarwinNotificationCategory> categories = [
+      DarwinNotificationCategory(
+        'medication_actions',
+        actions: <DarwinNotificationAction>[
+          DarwinNotificationAction.plain(
+            'action_taken',
+            '✅ Taken',
+            options: <DarwinNotificationActionOption>{
+              DarwinNotificationActionOption.foreground,
+            },
+          ),
+          DarwinNotificationAction.plain(
+            'action_snooze',
+            '⏰ Snooze',
+            options: <DarwinNotificationActionOption>{
+              DarwinNotificationActionOption.foreground,
+            },
+          ),
+        ],
+      ),
+    ];
 
-    const InitializationSettings initializationSettings =
-        InitializationSettings(
-          android: initializationSettingsAndroid,
-          iOS: initializationSettingsDarwin,
-        );
+    final DarwinInitializationSettings iosSettings = DarwinInitializationSettings(
+      requestAlertPermission: true,
+      requestBadgePermission: true,
+      requestSoundPermission: true,
+      notificationCategories: categories,
+    );
 
-    await _flutterLocalNotificationsPlugin.initialize(
-      initializationSettings,
+    final InitializationSettings settings = InitializationSettings(
+      android: androidSettings,
+      iOS: iosSettings,
+    );
+
+    await _notificationsPlugin.initialize(
+      settings,
       onDidReceiveNotificationResponse: (NotificationResponse response) {
-        // Handle notification tap
+        log('Notification Action: ${response.actionId}');
+        // Optional: Local handling if app is already open
       },
+      onDidReceiveBackgroundNotificationResponse:
+          NotificationActionHandler.onNotificationTapBackground,
     );
   }
 
-  @override
-  Future<void> scheduleMedicationAlarms(Medication medication) async {
-    for (final slot in medication.mealSlots) {
-      final time = medication.customTimes[slot];
-      if (time == null) continue;
+  Future<void> scheduleTaskReminder(IntakeTask task) async {
+    final now = tz.TZDateTime.now(tz.local);
+    
+    // Scheduled time (either original or snoozeUntil)
+    DateTime baseDateTime = task.snoozeUntil ?? 
+      DateTime(task.date.year, task.date.month, task.date.day, task.scheduledTime.hour, task.scheduledTime.minute);
+    
+    tz.TZDateTime scheduledTZ = tz.TZDateTime.from(baseDateTime, tz.local);
 
-      final now = DateTime.now();
+    // If time is in the past, don't schedule old reminders
+    if (scheduledTZ.isBefore(now)) return;
 
-      // Calculate next occurrence
-      DateTime scheduledDate = DateTime(
-        now.year,
-        now.month,
-        now.day,
-        time.hour,
-        time.minute,
-      );
+    // 1. First Notification
+    await _scheduleInternal(
+      id: task.id.hashCode,
+      title: 'Medication: ${task.medicationName}',
+      body: 'Time to take your ${task.slot.name} dose',
+      scheduledDate: scheduledTZ,
+      payload: task.id,
+    );
 
-      if (scheduledDate.isBefore(now)) {
-        scheduledDate = scheduledDate.add(const Duration(days: 1));
-      }
-
-      await _scheduleAlarm(
-        id: medication.id.hashCode + slot.index,
-        title: 'Medication: ${medication.name}',
-        body: 'Time to take ${medication.dosage} ${medication.unit} (${slot.label})',
-        scheduledDate: scheduledDate,
-      );
-    }
-  }
-
-  @override
-  Future<bool> requestPermissions() async {
-    if (Platform.isIOS || Platform.isMacOS) {
-      return await _flutterLocalNotificationsPlugin
-              .resolvePlatformSpecificImplementation<
-                IOSFlutterLocalNotificationsPlugin
-              >()
-              ?.requestPermissions(alert: true, badge: true, sound: true) ??
-          false;
-    } else if (Platform.isAndroid) {
-      final AndroidFlutterLocalNotificationsPlugin? androidImplementation =
-          _flutterLocalNotificationsPlugin
-              .resolvePlatformSpecificImplementation<
-                AndroidFlutterLocalNotificationsPlugin
-              >();
-
-      final bool? granted = await androidImplementation
-          ?.requestNotificationsPermission();
-      return granted ?? false;
-    }
-    return false;
-  }
-
-  @override
-  Future<void> cancelMedicationAlarms(String medicationId) async {
-    for (int i = 0; i < 10; i++) {
-      await _flutterLocalNotificationsPlugin.cancel(medicationId.hashCode + i);
-    }
-  }
-
-  @override
-  Future<void> handleMissedDose(
-    String medicationId,
-    String reason,
-    DateTime? rescheduleTime,
-  ) async {
-    if (rescheduleTime != null) {
-      final newId = medicationId.hashCode + 999;
-      await _scheduleAlarm(
-        id: newId,
-        title: 'Rescheduled Medication',
-        body: 'It is time for your rescheduled dose.',
-        scheduledDate: rescheduleTime,
-      );
-    }
-  }
-
-  Future<void> _scheduleAlarm({
-    required int id,
-    required String title,
-    required String body,
-    required DateTime scheduledDate,
-  }) async {
-    const AndroidNotificationDetails androidPlatformChannelSpecifics =
-        AndroidNotificationDetails(
-          'medication_channel',
-          'Medication Reminders',
-          channelDescription: 'Reminders for taking medication',
-          importance: Importance.max,
-          priority: Priority.high,
-          playSound: true,
+    // 2. Repeats (10, 20, 30 mins) if not snoozed (repeats only for original tasks)
+    if (task.snoozeUntil == null) {
+      for (int i = 1; i <= 3; i++) {
+        await _scheduleInternal(
+          id: task.id.hashCode + i,
+          title: 'REPEAT: ${task.medicationName}',
+          body: 'Persistent reminder: Have you taken your dose?',
+          scheduledDate: scheduledTZ.add(Duration(minutes: 10 * i)),
+          payload: task.id,
         );
+      }
+    }
+  }
 
-    const NotificationDetails platformChannelSpecifics = NotificationDetails(
-      android: androidPlatformChannelSpecifics,
-      iOS: DarwinNotificationDetails(presentSound: true),
+  Future<void> cancelTaskReminder(String taskId) async {
+    final int id = taskId.hashCode;
+    await _notificationsPlugin.cancel(id);
+    for (int i = 1; i <= 3; i++) {
+        await _notificationsPlugin.cancel(id + i);
+    }
+  }
+
+  Future<void> scheduleDailySummary(int missedCount) async {
+    final now = tz.TZDateTime.now(tz.local);
+    tz.TZDateTime summaryTime = tz.TZDateTime(
+      tz.local,
+      now.year,
+      now.month,
+      now.day,
+      summaryHour,
+      summaryMinute,
     );
 
-    await _flutterLocalNotificationsPlugin.zonedSchedule(
-      id,
-      title,
-      body,
-      tz.TZDateTime.from(scheduledDate, tz.local),
-      platformChannelSpecifics,
+    if (summaryTime.isBefore(now)) {
+      summaryTime = summaryTime.add(const Duration(days: 1));
+    }
+
+    await _notificationsPlugin.zonedSchedule(
+      999, // Static ID for daily summary
+      'Daily Summary',
+      'You have $missedCount missed doses today',
+      summaryTime,
+      const NotificationDetails(
+        android: AndroidNotificationDetails(
+          'summary_channel',
+          'Daily Summary',
+          importance: Importance.low,
+          priority: Priority.low,
+        ),
+      ),
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
@@ -150,8 +153,59 @@ class NotificationService implements ReminderServiceInterface {
     );
   }
 
-  // Generic cancel
-  Future<void> cancelNotification(int id) async {
-    await _flutterLocalNotificationsPlugin.cancel(id);
+  Future<void> _scheduleInternal({
+    required int id,
+    required String title,
+    required String body,
+    required tz.TZDateTime scheduledDate,
+    required String payload,
+  }) async {
+    const AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
+      channelId,
+      channelName,
+      channelDescription: channelDescription,
+      importance: Importance.max,
+      priority: Priority.high,
+      ticker: 'ticker',
+      actions: <AndroidNotificationAction>[
+        AndroidNotificationAction('action_taken', '✅ Taken'),
+        AndroidNotificationAction('action_snooze', '⏰ Snooze'),
+      ],
+    );
+
+    const NotificationDetails details = NotificationDetails(
+      android: androidDetails,
+      iOS: DarwinNotificationDetails(
+        categoryIdentifier: 'medication_actions',
+      ),
+    );
+
+    await _notificationsPlugin.zonedSchedule(
+      id,
+      title,
+      body,
+      scheduledDate,
+      details,
+      payload: payload,
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+    );
+  }
+
+  Future<bool> requestPermissions() async {
+    if (Platform.isIOS || Platform.isMacOS) {
+      return await _notificationsPlugin
+              .resolvePlatformSpecificImplementation<
+                  IOSFlutterLocalNotificationsPlugin>()
+              ?.requestPermissions(alert: true, badge: true, sound: true) ??
+          false;
+    } else if (Platform.isAndroid) {
+      final androidUtils = _notificationsPlugin
+          .resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin>();
+      return await androidUtils?.requestNotificationsPermission() ?? false;
+    }
+    return false;
   }
 }

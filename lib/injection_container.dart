@@ -18,7 +18,6 @@ import 'package:flutter_test_ai/features/auth/domain/usecases/update_profile_use
 import 'package:flutter_test_ai/features/auth/domain/usecases/delete_account_usecase.dart';
 import 'package:flutter_test_ai/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:flutter_test_ai/core/services/notification_service.dart';
-import 'package:flutter_test_ai/features/medication/domain/services/reminder_service_interface.dart';
 import 'package:flutter_test_ai/core/storage/hive_utils.dart';
 import 'package:flutter_test_ai/core/constants/hive_boxes.dart';
 import 'package:flutter_test_ai/features/medication/data/datasources/medication_local_data_source.dart';
@@ -55,6 +54,9 @@ import 'package:flutter_test_ai/features/medication/domain/usecases/generate_dai
 import 'package:flutter_test_ai/features/medication/domain/usecases/get_today_intake_tasks.dart';
 import 'package:flutter_test_ai/features/medication/domain/usecases/mark_intake_task.dart';
 import 'package:flutter_test_ai/features/medication/domain/usecases/get_intake_summary.dart';
+import 'package:flutter_test_ai/features/medication/domain/usecases/schedule_all_reminders.dart';
+import 'package:flutter_test_ai/features/medication/domain/usecases/reschedule_on_snooze.dart';
+import 'package:flutter_test_ai/features/medication/domain/usecases/cancel_reminder.dart';
 import 'package:flutter_test_ai/features/medication/presentation/bloc/intake_bloc.dart';
 
 import 'package:flutter_test_ai/features/medication/data/datasources/insulin_local_data_source.dart';
@@ -89,11 +91,8 @@ Future<void> init() async {
   sl.registerLazySingleton<firebase.FirebaseAuth>(
     () => firebase.FirebaseAuth.instance,
   );
-  sl.registerLazySingleton<ReminderServiceInterface>(
-    () => NotificationService(),
-  );
-  sl.registerLazySingleton<NotificationService>(
-    () => sl<ReminderServiceInterface>() as NotificationService,
+  sl.registerSingleton<NotificationService>(
+    NotificationService(),
   );
 
   // FORCE WIPE old data to solve the Hive schema mismatch TypeErrors.
@@ -232,6 +231,9 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetTodayIntakeTasksUseCase(sl()));
   sl.registerLazySingleton(() => MarkIntakeTaskUseCase(sl()));
   sl.registerLazySingleton(() => GetIntakeSummaryUseCase(sl()));
+  sl.registerLazySingleton(() => ScheduleAllRemindersUseCase(sl(), sl()));
+  sl.registerLazySingleton(() => RescheduleOnSnoozeUseCase(sl(), sl()));
+  sl.registerLazySingleton(() => CancelReminderUseCase(sl()));
 
   // Insulin Use Cases
   sl.registerLazySingleton(() => GetInsulinReadings(sl()));
@@ -283,6 +285,8 @@ Future<void> init() async {
       getTodayIntakeTasks: sl(),
       markIntakeTask: sl(),
       getIntakeSummary: sl(),
+      scheduleAllReminders: sl(),
+      cancelReminder: sl(),
     ),
   );
 }

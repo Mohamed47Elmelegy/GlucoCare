@@ -5,6 +5,8 @@ import '../../domain/usecases/generate_daily_intake_tasks.dart';
 import '../../domain/usecases/get_intake_summary.dart';
 import '../../domain/usecases/get_today_intake_tasks.dart';
 import '../../domain/usecases/mark_intake_task.dart';
+import '../../domain/usecases/schedule_all_reminders.dart';
+import '../../domain/usecases/cancel_reminder.dart';
 import 'intake_event.dart';
 import 'intake_state.dart';
 
@@ -13,12 +15,16 @@ class IntakeBloc extends Bloc<IntakeEvent, IntakeState> {
   final GetTodayIntakeTasksUseCase getTodayIntakeTasks;
   final MarkIntakeTaskUseCase markIntakeTask;
   final GetIntakeSummaryUseCase getIntakeSummary;
+  final ScheduleAllRemindersUseCase scheduleAllReminders;
+  final CancelReminderUseCase cancelReminder;
 
   IntakeBloc({
     required this.generateDailyIntakeTasks,
     required this.getTodayIntakeTasks,
     required this.markIntakeTask,
     required this.getIntakeSummary,
+    required this.scheduleAllReminders,
+    required this.cancelReminder,
   }) : super(IntakeInitial()) {
     on<IntakeTasksLoadRequested>(_onLoadTasks);
     on<IntakeTaskStatusChanged>(_onStatusChanged);
@@ -40,13 +46,23 @@ class IntakeBloc extends Bloc<IntakeEvent, IntakeState> {
       return;
     }
 
+    // NEW: Schedule all reminders for today
+    await scheduleAllReminders(const NoParams());
+
     // 2. Load tasks and summary
     final tasksResult = await getTodayIntakeTasks(const NoParams());
     final summaryResult = await getIntakeSummary(const NoParams());
 
     tasksResult.fold(
       (failure) => emit(IntakeFailure(message: failure.message)),
-      (tasks) {
+      (tasks) async {
+        // Interaction = App open = cancel all pending repeats for tasks that are already handled
+        for (final task in tasks) {
+          if (!task.status.isPending) {
+             await cancelReminder(task.id);
+          }
+        }
+
         summaryResult.fold(
           (failure) => emit(IntakeFailure(message: failure.message)),
           (summary) => emit(IntakeLoaded(tasks: tasks, summary: summary)),
@@ -70,7 +86,10 @@ class IntakeBloc extends Bloc<IntakeEvent, IntakeState> {
 
     result.fold(
       (failure) => emit(IntakeFailure(message: failure.message)),
-      (_) {
+      (_) async {
+        // Cancel reminders for this specific task immediately
+        await cancelReminder(event.taskId);
+
         final message = event.status.name[0].toUpperCase() + event.status.name.substring(1);
         emit(IntakeActionSuccess(message: 'Task marked as $message'));
         add(IntakeTasksLoadRequested(date: DateTime.now())); // Refresh
