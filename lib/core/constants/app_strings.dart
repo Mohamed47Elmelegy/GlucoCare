@@ -80,4 +80,15 @@ class AppStrings {
   static const String sendRecoveryLink = "Send Recovery Link";
   static const String resetLinkSent = "Reset link sent to your email!";
   static const String appName = "GlucoCare";
+
+  // Medication Intake
+  static const String dailyMedicationTodo = "Daily Medication";
+  static const String intakeProgress = "Intake Progress";
+  static const String markAsTaken = "Mark as Taken";
+  static const String markAsSkipped = "Mark as Skipped";
+  static const String snooze = "Snooze";
+  static const String snoozeUntilLabel = "Snooze until";
+  static const String allTasksDone = "All tasks completed for today!";
+  static const String tasksCount = "tasks taken today";
+  static const String medicationReminder = "Medication Reminder";
 }

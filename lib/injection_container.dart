@@ -45,6 +45,17 @@ import 'package:flutter_test_ai/features/medication/domain/usecases/update_medic
 import 'package:flutter_test_ai/features/medication/domain/usecases/reschedule_medication.dart';
 import 'package:flutter_test_ai/features/medication/domain/usecases/sync_medications.dart';
 import 'package:flutter_test_ai/features/medication/presentation/bloc/medication_bloc.dart';
+import 'package:flutter_test_ai/features/medication/data/models/intake_task_model.dart';
+import 'package:flutter_test_ai/features/medication/data/datasources/intake_local_data_source.dart';
+import 'package:flutter_test_ai/features/medication/data/datasources/intake_local_data_source_impl.dart';
+import 'package:flutter_test_ai/features/medication/data/datasources/intake_remote_data_source.dart';
+import 'package:flutter_test_ai/features/medication/data/repositories/intake_repository_impl.dart';
+import 'package:flutter_test_ai/features/medication/domain/repositories/intake_repository.dart';
+import 'package:flutter_test_ai/features/medication/domain/usecases/generate_daily_intake_tasks.dart';
+import 'package:flutter_test_ai/features/medication/domain/usecases/get_today_intake_tasks.dart';
+import 'package:flutter_test_ai/features/medication/domain/usecases/mark_intake_task.dart';
+import 'package:flutter_test_ai/features/medication/domain/usecases/get_intake_summary.dart';
+import 'package:flutter_test_ai/features/medication/presentation/bloc/intake_bloc.dart';
 
 import 'package:flutter_test_ai/features/medication/data/datasources/insulin_local_data_source.dart';
 import 'package:flutter_test_ai/features/medication/data/repositories/insulin_repository_impl.dart';
@@ -102,12 +113,16 @@ Future<void> init() async {
   final labTestBox = await HiveUtils.openBoxSafely<LabTestModel>(
     HiveBoxes.labTests,
   );
+  final intakeBox = await HiveUtils.openBoxSafely<IntakeTaskModel>(
+    HiveBoxes.intakeTasks,
+  );
 
   sl.registerLazySingleton<Box<MedicationModel>>(() => medicationBox);
   sl.registerLazySingleton<Box<med.UserModel>>(() => userBox);
   sl.registerLazySingleton<Box<DoseHistoryModel>>(() => doseHistoryBox);
   sl.registerLazySingleton<Box<InsulinReadingModel>>(() => insulinBox);
   sl.registerLazySingleton<Box<LabTestModel>>(() => labTestBox);
+  sl.registerLazySingleton<Box<IntakeTaskModel>>(() => intakeBox);
 
   // Data sources
   sl.registerLazySingleton<FirebaseFirestore>(() => FirebaseFirestore.instance);
@@ -150,6 +165,12 @@ Future<void> init() async {
   sl.registerLazySingleton<LabTestLocalDataSource>(
     () => LabTestLocalDataSourceImpl(box: sl()),
   );
+  sl.registerLazySingleton<IntakeRemoteDataSource>(
+    () => IntakeRemoteDataSourceImpl(firestoreService: sl()),
+  );
+  sl.registerLazySingleton<IntakeLocalDataSource>(
+    () => IntakeLocalDataSourceImpl(intakeBox: sl()),
+  );
 
   // Repositories
   sl.registerLazySingleton<AuthRepository>(
@@ -180,6 +201,14 @@ Future<void> init() async {
       authLocalDataSource: sl(),
     ),
   );
+  sl.registerLazySingleton<IntakeRepository>(
+    () => IntakeRepositoryImpl(
+      localDataSource: sl(),
+      remoteDataSource: sl(),
+      medicationLocalDataSource: sl(),
+      authLocalDataSource: sl(),
+    ),
+  );
 
   // Use cases
   sl.registerLazySingleton(() => LoginUseCase(sl()));
@@ -199,6 +228,10 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetHistoryForDate(sl()));
   sl.registerLazySingleton(() => RecordMedicationHistory(sl()));
   sl.registerLazySingleton(() => SyncMedications(sl()));
+  sl.registerLazySingleton(() => GenerateDailyIntakeTasksUseCase(sl()));
+  sl.registerLazySingleton(() => GetTodayIntakeTasksUseCase(sl()));
+  sl.registerLazySingleton(() => MarkIntakeTaskUseCase(sl()));
+  sl.registerLazySingleton(() => GetIntakeSummaryUseCase(sl()));
 
   // Insulin Use Cases
   sl.registerLazySingleton(() => GetInsulinReadings(sl()));
@@ -243,5 +276,13 @@ Future<void> init() async {
   );
   sl.registerLazySingleton(
     () => LabTestBloc(getLabTests: sl(), addLabTest: sl(), syncLabTests: sl()),
+  );
+  sl.registerLazySingleton(
+    () => IntakeBloc(
+      generateDailyIntakeTasks: sl(),
+      getTodayIntakeTasks: sl(),
+      markIntakeTask: sl(),
+      getIntakeSummary: sl(),
+    ),
   );
 }

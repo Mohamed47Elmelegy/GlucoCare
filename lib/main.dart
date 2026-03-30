@@ -14,7 +14,10 @@ import 'features/medication/data/models/medication_schedule_model.dart';
 import 'features/medication/data/models/dose_history_model.dart';
 import 'features/medication/data/models/insulin_reading_model.dart';
 import 'features/lab_tests/data/models/lab_test_model.dart';
+import 'features/medication/data/models/intake_task_model.dart';
 import 'features/lab_tests/presentation/bloc/lab_test_bloc.dart';
+import 'features/medication/presentation/bloc/intake_bloc.dart';
+import 'features/medication/presentation/bloc/intake_event.dart';
 
 import 'features/medication/presentation/bloc/medication_bloc.dart';
 import 'features/medication/presentation/bloc/insulin_bloc.dart';
@@ -42,6 +45,7 @@ void main() async {
   Hive.registerAdapter(TimeValueModelAdapter());
   Hive.registerAdapter(InsulinReadingModelAdapter());
   Hive.registerAdapter(LabTestModelAdapter());
+  Hive.registerAdapter(IntakeTaskModelAdapter());
 
   // Dependencies
   await di.init();
@@ -65,6 +69,10 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => di.sl<LabTestBloc>()),
         BlocProvider(create: (_) => di.sl<ThemeCubit>()),
         BlocProvider(create: (_) => di.sl<LocaleCubit>()),
+        BlocProvider(
+          create: (_) => di.sl<IntakeBloc>()
+            ..add(IntakeTasksLoadRequested(date: DateTime.now())),
+        ),
       ],
       child: BlocBuilder<ThemeCubit, ThemeMode>(
         builder: (context, themeMode) {

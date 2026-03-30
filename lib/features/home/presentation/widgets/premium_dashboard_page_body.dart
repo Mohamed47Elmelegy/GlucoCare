@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter_test_ai/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:flutter_test_ai/features/medication/presentation/bloc/medication_state.dart';
 import 'package:flutter_test_ai/features/medication/presentation/bloc/insulin_state.dart';
+import 'package:flutter_test_ai/features/medication/presentation/bloc/intake_state.dart';
 import '../../../../core/extensions/context_extension.dart';
 import '../widgets/premium_header.dart';
 import '../widgets/premium_summary_card.dart';
@@ -14,12 +15,14 @@ class PremiumDashboardPageBody extends StatefulWidget {
   final AuthState authState;
   final MedicationState medState;
   final InsulinState insulinState;
+  final IntakeState intakeState;
 
   const PremiumDashboardPageBody({
     super.key,
     required this.authState,
     required this.medState,
     required this.insulinState,
+    required this.intakeState,
   });
 
   @override
@@ -62,7 +65,10 @@ class _PremiumDashboardPageBodyState extends State<PremiumDashboardPageBody> {
     }
 
     int medsRemaining = 0;
-    if (widget.medState is TodayScheduleLoaded) {
+    if (widget.intakeState is IntakeLoaded) {
+      final loadedState = widget.intakeState as IntakeLoaded;
+      medsRemaining = loadedState.summary.remaining;
+    } else if (widget.medState is TodayScheduleLoaded) {
       final loadedState = widget.medState as TodayScheduleLoaded;
       medsRemaining =
           loadedState.activeMedications.length - loadedState.takenHistory.length;

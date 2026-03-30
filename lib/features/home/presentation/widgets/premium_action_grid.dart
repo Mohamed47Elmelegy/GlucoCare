@@ -43,7 +43,7 @@ class PremiumActionGrid extends StatelessWidget {
           icon: PhosphorIcons.pill(),
           isActive: medsRemaining > 0,
           statusText: medsRemaining > 0 ? l10n.statusRemain : l10n.statusTaken,
-          onAction: () => context.push(RouteConstants.addMedication),
+          onAction: () => context.push(RouteConstants.intakeTodo),
         ),
         PremiumActionCard(
           title: l10n.dailyDiet,

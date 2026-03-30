@@ -11,4 +11,5 @@ class RouteConstants {
   static const String insulinReadings = '/insulin-readings';
   static const String labTests = '/lab-tests';
   static const String editProfile = '/edit-profile';
+  static const String intakeTodo = '/intake-todo';
 }

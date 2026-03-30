@@ -12,6 +12,7 @@ import '../../features/medication/presentation/pages/insulin_readings/insulin_re
 import '../../features/lab_tests/presentation/pages/lab_tests/lab_tests_page.dart';
 import '../../injection_container.dart';
 import '../../features/auth/presentation/pages/edit_profile/edit_profile_page.dart';
+import '../../features/medication/presentation/pages/intake_todo_page.dart';
 
 import '../utils/go_router_refresh_stream.dart';
 import '../../features/auth/presentation/bloc/auth_bloc.dart';
@@ -94,6 +95,10 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: RouteConstants.editProfile,
       builder: (context, state) => const EditProfilePage(),
+    ),
+    GoRoute(
+      path: RouteConstants.intakeTodo,
+      builder: (context, state) => const IntakeTodoPage(),
     ),
   ],
 );
