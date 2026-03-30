@@ -12,7 +12,8 @@ class NotificationService {
 
   static const String channelId = 'medication_reminder_channel';
   static const String channelName = 'Medication Reminders';
-  static const String channelDescription = 'Reminders for taking your medication';
+  static const String channelDescription =
+      'Reminders for taking your medication';
 
   // Configurable sumary time (21:00)
   static const int summaryHour = 21;
@@ -25,7 +26,7 @@ class NotificationService {
 
     // 1. Android Setup
     const AndroidInitializationSettings androidSettings =
-        AndroidInitializationSettings('ic_notification'); 
+        AndroidInitializationSettings('ic_notification');
 
     // 2. iOS Setup
     final List<DarwinNotificationCategory> categories = [
@@ -50,12 +51,13 @@ class NotificationService {
       ),
     ];
 
-    final DarwinInitializationSettings iosSettings = DarwinInitializationSettings(
-      requestAlertPermission: true,
-      requestBadgePermission: true,
-      requestSoundPermission: true,
-      notificationCategories: categories,
-    );
+    final DarwinInitializationSettings iosSettings =
+        DarwinInitializationSettings(
+          requestAlertPermission: true,
+          requestBadgePermission: true,
+          requestSoundPermission: true,
+          notificationCategories: categories,
+        );
 
     final InitializationSettings settings = InitializationSettings(
       android: androidSettings,
@@ -75,16 +77,25 @@ class NotificationService {
 
   Future<void> scheduleTaskReminder(IntakeTask task) async {
     final now = tz.TZDateTime.now(tz.local);
-    
+
     // Scheduled time (either original or snoozeUntil)
-    DateTime baseDateTime = task.snoozeUntil ?? 
-      DateTime(task.date.year, task.date.month, task.date.day, task.scheduledTime.hour, task.scheduledTime.minute);
-    
+    DateTime baseDateTime =
+        task.snoozeUntil ??
+        DateTime(
+          task.date.year,
+          task.date.month,
+          task.date.day,
+          task.scheduledTime.hour,
+          task.scheduledTime.minute,
+        );
+
     tz.TZDateTime scheduledTZ = tz.TZDateTime.from(baseDateTime, tz.local);
 
     // If time is in the past, don't schedule old reminders
     if (scheduledTZ.isBefore(now)) {
-      log('WARNING: Skipping reminder for task ${task.id} because time $scheduledTZ is in the past.');
+      log(
+        'WARNING: Skipping reminder for task ${task.id} because time $scheduledTZ is in the past.',
+      );
       return;
     }
 
@@ -114,34 +125,11 @@ class NotificationService {
     }
   }
 
-  Future<void> showInstantNotification({
-    required String title,
-    required String body,
-  }) async {
-    const AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
-      'instant_test_channel',
-      'Test Notifications',
-      importance: Importance.max,
-      priority: Priority.high,
-    );
-
-    const NotificationDetails details = NotificationDetails(
-      android: androidDetails,
-    );
-
-    await _notificationsPlugin.show(
-      888,
-      title,
-      body,
-      details,
-    );
-  }
-
   Future<void> cancelTaskReminder(String taskId) async {
     final int id = taskId.hashCode;
     await _notificationsPlugin.cancel(id);
     for (int i = 1; i <= 3; i++) {
-        await _notificationsPlugin.cancel(id + i);
+      await _notificationsPlugin.cancel(id + i);
     }
   }
 
@@ -187,24 +175,23 @@ class NotificationService {
     required tz.TZDateTime scheduledDate,
     required String payload,
   }) async {
-    const AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
-      channelId,
-      channelName,
-      channelDescription: channelDescription,
-      importance: Importance.max,
-      priority: Priority.high,
-      ticker: 'ticker',
-      actions: <AndroidNotificationAction>[
-        AndroidNotificationAction('action_taken', '✅ Taken'),
-        AndroidNotificationAction('action_snooze', '⏰ Snooze'),
-      ],
-    );
+    const AndroidNotificationDetails androidDetails =
+        AndroidNotificationDetails(
+          channelId,
+          channelName,
+          channelDescription: channelDescription,
+          importance: Importance.max,
+          priority: Priority.high,
+          ticker: 'ticker',
+          actions: <AndroidNotificationAction>[
+            AndroidNotificationAction('action_taken', '✅ Taken'),
+            AndroidNotificationAction('action_snooze', '⏰ Snooze'),
+          ],
+        );
 
     const NotificationDetails details = NotificationDetails(
       android: androidDetails,
-      iOS: DarwinNotificationDetails(
-        categoryIdentifier: 'medication_actions',
-      ),
+      iOS: DarwinNotificationDetails(categoryIdentifier: 'medication_actions'),
     );
 
     await _notificationsPlugin.zonedSchedule(
@@ -224,20 +211,24 @@ class NotificationService {
     if (Platform.isIOS || Platform.isMacOS) {
       return await _notificationsPlugin
               .resolvePlatformSpecificImplementation<
-                  IOSFlutterLocalNotificationsPlugin>()
+                IOSFlutterLocalNotificationsPlugin
+              >()
               ?.requestPermissions(alert: true, badge: true, sound: true) ??
           false;
     } else if (Platform.isAndroid) {
       final androidUtils = _notificationsPlugin
           .resolvePlatformSpecificImplementation<
-              AndroidFlutterLocalNotificationsPlugin>();
-      
+            AndroidFlutterLocalNotificationsPlugin
+          >();
+
       // Request standard notification permission (Android 13+)
-      final bool? notificationsGranted = await androidUtils?.requestNotificationsPermission();
-      
+      final bool? notificationsGranted = await androidUtils
+          ?.requestNotificationsPermission();
+
       // Request exact alarm permission (Android 14+)
-      final bool? exactAlarmsGranted = await androidUtils?.requestExactAlarmsPermission();
-      
+      final bool? exactAlarmsGranted = await androidUtils
+          ?.requestExactAlarmsPermission();
+
       return (notificationsGranted ?? false) && (exactAlarmsGranted ?? true);
     }
     return false;
