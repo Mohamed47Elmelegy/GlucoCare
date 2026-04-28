@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+
+<html class="light" dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&amp;family=Manrope:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary": "#ffffff",
+                    "inverse-on-surface": "#eff0fa",
+                    "tertiary": "#924700",
+                    "on-primary-container": "#fefcff",
+                    "surface-container-high": "#e6e7f2",
+                    "primary-fixed": "#d8e2ff",
+                    "on-tertiary-container": "#fffbff",
+                    "status-taken-bg": "#D1FAE5",
+                    "text-primary": "#1E293B",
+                    "inverse-primary": "#adc6ff",
+                    "on-tertiary-fixed": "#311400",
+                    "on-error": "#ffffff",
+                    "error": "#ba1a1a",
+                    "status-upcoming-text": "#1E40AF",
+                    "inverse-surface": "#2e3038",
+                    "secondary": "#006c49",
+                    "status-upcoming-bg": "#DBEAFE",
+                    "surface": "#FFFFFF",
+                    "primary-container": "#2170e4",
+                    "on-surface": "#191b23",
+                    "surface-container-highest": "#e1e2ec",
+                    "on-surface-variant": "#424754",
+                    "on-secondary-fixed-variant": "#005236",
+                    "danger": "#EF4444",
+                    "on-background": "#191b23",
+                    "secondary-fixed": "#6ffbbe",
+                    "secondary-fixed-dim": "#4edea3",
+                    "surface-variant": "#e1e2ec",
+                    "status-taken-text": "#065F46",
+                    "outline-variant": "#c2c6d6",
+                    "on-secondary-container": "#00714d",
+                    "surface-bright": "#f9f9ff",
+                    "primary-fixed-dim": "#adc6ff",
+                    "dark-border": "#334155",
+                    "on-secondary": "#ffffff",
+                    "background": "#F8FAFC",
+                    "surface-container": "#ecedf7",
+                    "tertiary-fixed-dim": "#ffb786",
+                    "border": "#E2E8F0",
+                    "status-missed-text": "#991B1B",
+                    "surface-dim": "#d8d9e3",
+                    "primary": "#0058be",
+                    "secondary-container": "#6cf8bb",
+                    "on-error-container": "#93000a",
+                    "dark-surface": "#1E293B",
+                    "dark-text": "#F1F5F9",
+                    "on-tertiary": "#ffffff",
+                    "text-secondary": "#64748B",
+                    "surface-tint": "#005ac2",
+                    "on-tertiary-fixed-variant": "#723600",
+                    "on-secondary-fixed": "#002113",
+                    "status-missed-bg": "#FEE2E2",
+                    "tertiary-container": "#b75b00",
+                    "warning": "#F59E0B",
+                    "on-primary-fixed": "#001a42",
+                    "on-primary-fixed-variant": "#004395",
+                    "dark-background": "#0F172A",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-low": "#f2f3fd",
+                    "tertiary-fixed": "#ffdcc6",
+                    "error-container": "#ffdad6",
+                    "outline": "#727785"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "card-padding": "16px",
+                    "gap": "12px",
+                    "base": "8px",
+                    "screen-edge": "20px"
+            },
+            "fontFamily": {
+                    "h2": ["Cairo"],
+                    "caption": ["Cairo"],
+                    "body": ["Cairo"],
+                    "h1": ["Cairo"],
+                    "h3": ["Cairo"],
+                    "manrope": ["Manrope"]
+            },
+            "fontSize": {
+                    "h2": ["22px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "caption": ["13px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                    "body": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "h1": ["28px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "h3": ["18px", {"lineHeight": "1.4", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        body { font-family: 'Cairo', sans-serif; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-text-primary min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-5 h-16 bg-white dark:bg-gray-950 border-b border-slate-100 dark:border-slate-800 transition-colors duration-200">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-fixed">
+<img alt="Profile" class="w-full h-full object-cover" data-alt="Close-up portrait of a professional male doctor smiling, soft natural lighting, medical setting background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeCwpUhCDVgNroYKxTtq25opsTjY9uLYHqGq6Zz93xWRa8v23tJ0bv9c2EaLXx--DZp7IU3OEBwX9DdbVPyI6r5N_8Y8CmHqk_mGgA6Rzkw85Uu9mqx0uWIfQD2YfQerPUhWpD7ALwrLJTSeoqQvILsBMaFetH8Ub9DLsmSWAO2xgA9Qtse_LF1CucmZUTNF2nZQuHYqDCBQvZDBUgvUd1DIogf4M35g46LutCmMnVNhOf3ZZ0cegRzSIDyIERCfAGF7cL6Qw1Nog"/>
+</div>
+<span class="text-xl font-bold text-blue-600 dark:text-blue-400">صحتي</span>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full text-slate-500 hover:bg-slate-50 transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</header>
+<main class="mt-20 px-screen-edge space-y-6">
+<!-- Header & Stats Bento -->
+<section class="grid grid-cols-2 gap-3">
+<div class="col-span-2 bg-white p-4 rounded-xl shadow-[0_2px_12px_rgba(0,0,0,0.05)] flex items-center justify-between overflow-hidden relative">
+<div>
+<h1 class="font-h1 text-h1 text-text-primary">مرحباً، أحمد</h1>
+<p class="font-caption text-caption text-text-secondary">لديك 6 جرعات اليوم</p>
+</div>
+<div class="h-16 w-16 bg-blue-50 rounded-full flex items-center justify-center relative">
+<svg class="w-12 h-12 transform -rotate-90">
+<circle class="text-slate-100" cx="24" cy="24" fill="transparent" r="20" stroke="currentColor" stroke-width="4"></circle>
+<circle class="text-primary" cx="24" cy="24" fill="transparent" r="20" stroke="currentColor" stroke-dasharray="125.6" stroke-dashoffset="40" stroke-width="4"></circle>
+</svg>
+<span class="absolute text-[10px] font-bold text-primary">66%</span>
+</div>
+</div>
+</section>
+<!-- Horizontal Calendar Strip -->
+<section class="relative">
+<div class="flex items-center justify-between mb-3">
+<h2 class="font-h3 text-h3 text-text-primary">نوفمبر 2024</h2>
+<button class="text-primary font-body text-body font-semibold">تغيير</button>
+</div>
+<div class="flex gap-3 overflow-x-auto no-scrollbar py-2 -mx-5 px-5">
+<!-- Day Pills -->
+<div class="min-w-[56px] flex flex-col items-center py-4 px-2 rounded-2xl bg-white border border-slate-100">
+<span class="font-caption text-[12px] text-text-secondary">الأحد</span>
+<span class="font-h3 text-h3">10</span>
+</div>
+<div class="min-w-[56px] flex flex-col items-center py-4 px-2 rounded-2xl bg-primary text-white shadow-lg shadow-blue-200">
+<span class="font-caption text-[12px] opacity-80">الإثنين</span>
+<span class="font-h3 text-h3">11</span>
+<div class="w-1.5 h-1.5 bg-white rounded-full mt-1"></div>
+</div>
+<div class="min-w-[56px] flex flex-col items-center py-4 px-2 rounded-2xl bg-white border border-slate-100">
+<span class="font-caption text-[12px] text-text-secondary">الثلاثاء</span>
+<span class="font-h3 text-h3">12</span>
+</div>
+<div class="min-w-[56px] flex flex-col items-center py-4 px-2 rounded-2xl bg-white border border-slate-100">
+<span class="font-caption text-[12px] text-text-secondary">الأربعاء</span>
+<span class="font-h3 text-h3">13</span>
+</div>
+<div class="min-w-[56px] flex flex-col items-center py-4 px-2 rounded-2xl bg-white border border-slate-100">
+<span class="font-caption text-[12px] text-text-secondary">الخميس</span>
+<span class="font-h3 text-h3">14</span>
+</div>
+<div class="min-w-[56px] flex flex-col items-center py-4 px-2 rounded-2xl bg-white border border-slate-100">
+<span class="font-caption text-[12px] text-text-secondary">الجمعة</span>
+<span class="font-h3 text-h3">15</span>
+</div>
+</div>
+</section>
+<!-- Missed Dose Retrieval CTA -->
+<section class="bg-status-missed-bg border border-red-100 p-4 rounded-xl flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-white flex items-center justify-center text-red-600">
+<span class="material-symbols-outlined" data-icon="history_edu">history_edu</span>
+</div>
+<div>
+<h3 class="font-body font-bold text-status-missed-text">فاتتك جرعة الصباح!</h3>
+<p class="text-[12px] text-status-missed-text/80">انسولين - 08:00 صباحاً</p>
+</div>
+</div>
+<button class="bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-red-700 transition-colors">
+                استرجاع
+            </button>
+</section>
+<!-- Schedule Sections -->
+<div class="space-y-8">
+<!-- Morning Group -->
+<div class="space-y-4">
+<div class="flex items-center gap-2 text-text-secondary">
+<span class="material-symbols-outlined text-[20px]" data-icon="wb_sunny">wb_sunny</span>
+<h2 class="font-h3 text-h3">الصباح</h2>
+</div>
+<!-- Medication Card 1 -->
+<div class="bg-white p-4 rounded-xl shadow-[0_2px_12px_rgba(0,0,0,0.05)] flex items-center gap-4">
+<div class="w-14 h-14 rounded-xl bg-blue-50 flex items-center justify-center">
+<span class="material-symbols-outlined text-blue-600 text-3xl" data-icon="medication">medication</span>
+</div>
+<div class="flex-1">
+<h4 class="font-h3 text-h3 leading-tight">باراسيتامول</h4>
+<p class="font-caption text-caption text-text-secondary">500mg • بعد الإفطار</p>
+<div class="mt-2 flex items-center gap-2">
+<span class="px-3 py-1 rounded-full bg-status-taken-bg text-status-taken-text text-[12px] font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="check_circle">check_circle</span>
+                                تم تناولها
+                            </span>
+<span class="text-[12px] text-text-secondary">08:15 ص</span>
+</div>
+</div>
+</div>
+<!-- Medication Card 2 (Missed) -->
+<div class="bg-white p-4 rounded-xl shadow-[0_2px_12px_rgba(0,0,0,0.05)] flex items-center gap-4 border-r-4 border-red-500">
+<div class="w-14 h-14 rounded-xl bg-red-50 flex items-center justify-center">
+<span class="material-symbols-outlined text-red-600 text-3xl" data-icon="bloodtype">bloodtype</span>
+</div>
+<div class="flex-1">
+<h4 class="font-h3 text-h3 leading-tight text-status-missed-text">أنسولين جلارجين</h4>
+<p class="font-caption text-caption text-text-secondary">12 وحدة • قبل الأكل</p>
+<div class="mt-2 flex items-center gap-2">
+<span class="px-3 py-1 rounded-full bg-status-missed-bg text-status-missed-text text-[12px] font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="cancel">cancel</span>
+                                لم يتم تناولها
+                            </span>
+<span class="text-[12px] text-text-secondary">08:00 ص</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Afternoon Group -->
+<div class="space-y-4">
+<div class="flex items-center gap-2 text-text-secondary">
+<span class="material-symbols-outlined text-[20px]" data-icon="light_mode">light_mode</span>
+<h2 class="font-h3 text-h3">الظهيرة</h2>
+</div>
+<!-- Medication Card 3 (Upcoming) -->
+<div class="bg-white p-4 rounded-xl shadow-[0_2px_12px_rgba(0,0,0,0.05)] flex items-center gap-4">
+<div class="w-14 h-14 rounded-xl bg-slate-50 flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-400 text-3xl" data-icon="pill">pill</span>
+</div>
+<div class="flex-1">
+<h4 class="font-h3 text-h3 leading-tight">أوميبرازول</h4>
+<p class="font-caption text-caption text-text-secondary">20mg • قبل الغداء</p>
+<div class="mt-2 flex items-center gap-2">
+<span class="px-3 py-1 rounded-full bg-status-upcoming-bg text-status-upcoming-text text-[12px] font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="schedule">schedule</span>
+                                قادمة
+                            </span>
+<span class="text-[12px] text-text-secondary">02:00 م</span>
+</div>
+</div>
+<button class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center shadow-md">
+<span class="material-symbols-outlined" data-icon="done">done</span>
+</button>
+</div>
+</div>
+<!-- Evening Group -->
+<div class="space-y-4">
+<div class="flex items-center gap-2 text-text-secondary">
+<span class="material-symbols-outlined text-[20px]" data-icon="nights_stay">nights_stay</span>
+<h2 class="font-h3 text-h3">المساء</h2>
+</div>
+<!-- Medication Card 4 -->
+<div class="bg-white p-4 rounded-xl shadow-[0_2px_12px_rgba(0,0,0,0.05)] flex items-center gap-4 opacity-70">
+<div class="w-14 h-14 rounded-xl bg-slate-50 flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-400 text-3xl" data-icon="medication_liquid">medication_liquid</span>
+</div>
+<div class="flex-1">
+<h4 class="font-h3 text-h3 leading-tight">شراب السعال</h4>
+<p class="font-caption text-caption text-text-secondary">10ml • قبل النوم</p>
+<div class="mt-2 flex items-center gap-2">
+<span class="px-3 py-1 rounded-full bg-slate-100 text-slate-500 text-[12px] font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="bedtime">bedtime</span>
+                                مجدولة
+                            </span>
+<span class="text-[12px] text-text-secondary">10:30 م</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 pb-safe bg-white/90 backdrop-blur-md border-t border-slate-100 dark:border-slate-800 shadow-[0_-2px_12px_rgba(0,0,0,0.05)]">
+<div class="flex flex-col items-center justify-center text-blue-600 dark:text-blue-400 scale-105 transition-transform">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-manrope text-[10px] font-medium">الرئيسية</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-blue-500 active:scale-95 transition-all duration-200">
+<span class="material-symbols-outlined" data-icon="medication">medication</span>
+<span class="font-manrope text-[10px] font-medium">الأدوية</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-blue-500 active:scale-95 transition-all duration-200">
+<span class="material-symbols-outlined" data-icon="bloodtype">bloodtype</span>
+<span class="font-manrope text-[10px] font-medium">الأنسولين</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-blue-500 active:scale-95 transition-all duration-200">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+<span class="font-manrope text-[10px] font-medium">المواعيد</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-blue-500 active:scale-95 transition-all duration-200">
+<span class="material-symbols-outlined" data-icon="folder_open">folder_open</span>
+<span class="font-manrope text-[10px] font-medium">الملف</span>
+</div>
+</nav>
+<!-- FAB for adding new dose -->
+<button class="fixed bottom-24 left-6 w-14 h-14 bg-primary text-white rounded-full shadow-2xl flex items-center justify-center z-40 active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-3xl" data-icon="add">add</span>
+</button>
+</body></html>

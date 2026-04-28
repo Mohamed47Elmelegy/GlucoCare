@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>إضافة موعد طبي - DoseTrack</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary": "#ffffff",
+                      "inverse-on-surface": "#eff0fa",
+                      "tertiary": "#924700",
+                      "on-primary-container": "#fefcff",
+                      "surface-container-high": "#e6e7f2",
+                      "primary-fixed": "#d8e2ff",
+                      "on-tertiary-container": "#fffbff",
+                      "status-taken-bg": "#D1FAE5",
+                      "text-primary": "#1E293B",
+                      "inverse-on-surface": "#eff0fa",
+                      "primary-container": "#2170e4",
+                      "on-surface": "#191b23",
+                      "danger": "#EF4444",
+                      "on-background": "#191b23",
+                      "status-taken-text": "#065F46",
+                      "on-secondary": "#ffffff",
+                      "background": "#F8FAFC",
+                      "border": "#E2E8F0",
+                      "status-missed-text": "#991B1B",
+                      "primary": "#0058be",
+                      "dark-surface": "#1E293B",
+                      "on-tertiary": "#ffffff",
+                      "text-secondary": "#64748B",
+                      "status-missed-bg": "#FEE2E2",
+                      "status-upcoming-bg": "#DBEAFE",
+                      "status-upcoming-text": "#1E40AF",
+                      "warning": "#F59E0B",
+                      "dark-background": "#0F172A",
+                      "surface": "#FFFFFF",
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "card-padding": "16px",
+                      "gap": "12px",
+                      "base": "8px",
+                      "screen-edge": "20px"
+              },
+              "fontFamily": {
+                      "h2": ["Cairo"],
+                      "caption": ["Cairo"],
+                      "body": ["Cairo"],
+                      "h1": ["Cairo"],
+                      "h3": ["Cairo"]
+              },
+              "fontSize": {
+                      "h2": ["22px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                      "caption": ["13px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                      "body": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                      "h1": ["28px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                      "h3": ["18px", {"lineHeight": "1.4", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+      </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Cairo', sans-serif; background-color: #F8FAFC; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-text-primary antialiased">
+<!-- Top Navigation Shell - Task Focused (Sub-page logic applied) -->
+<!-- Suppressing Avatar/Notifications for Close/Action flow -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-5 h-16 bg-white border-b border-slate-100">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-50 transition-colors">
+<span class="material-symbols-outlined text-slate-500">arrow_forward</span>
+</button>
+<h1 class="font-manrope text-base font-semibold text-blue-600">إضافة موعد جديد</h1>
+<button class="px-4 py-2 text-primary font-bold text-caption hover:bg-blue-50 rounded-lg transition-colors">
+            حفظ
+        </button>
+</header>
+<main class="pt-20 pb-10 px-screen-edge max-w-md mx-auto">
+<!-- Doctor & Specialty Section -->
+<section class="mb-gap">
+<label class="block font-h3 text-text-primary mb-3">اختر التخصص</label>
+<div class="flex gap-3 overflow-x-auto no-scrollbar pb-2">
+<!-- Specialty Card 1 -->
+<div class="flex-shrink-0 w-24 h-28 bg-primary text-on-primary rounded-xl flex flex-col items-center justify-center gap-2 shadow-lg scale-105 transition-transform border-2 border-primary">
+<span class="material-symbols-outlined text-[32px]">cardiology</span>
+<span class="text-caption font-semibold">القلب</span>
+</div>
+<!-- Specialty Card 2 -->
+<div class="flex-shrink-0 w-24 h-28 bg-white border border-border rounded-xl flex flex-col items-center justify-center gap-2 hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-text-secondary text-[32px]">dentistry</span>
+<span class="text-caption font-semibold text-text-secondary">الأسنان</span>
+</div>
+<!-- Specialty Card 3 -->
+<div class="flex-shrink-0 w-24 h-28 bg-white border border-border rounded-xl flex flex-col items-center justify-center gap-2 hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-text-secondary text-[32px]">ophthalmology</span>
+<span class="text-caption font-semibold text-text-secondary">العيون</span>
+</div>
+<!-- Specialty Card 4 -->
+<div class="flex-shrink-0 w-24 h-28 bg-white border border-border rounded-xl flex flex-col items-center justify-center gap-2 hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-text-secondary text-[32px]">pediatrics</span>
+<span class="text-caption font-semibold text-text-secondary">الأطفال</span>
+</div>
+</div>
+</section>
+<!-- Form Details -->
+<div class="space-y-gap">
+<!-- Clinic Name -->
+<div class="bg-white p-card-padding rounded-xl shadow-sm border border-slate-50">
+<label class="block text-caption font-semibold text-text-secondary mb-2">اسم الطبيب أو العيادة</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-400">medical_services</span>
+<input class="w-full h-[52px] pr-12 pl-4 rounded-[10px] border border-border focus:border-primary focus:ring-0 text-body transition-all" placeholder="مثلاً: د. أحمد محمد - عيادة الحياة" type="text"/>
+</div>
+</div>
+<!-- Date & Time Picker - Bento Style -->
+<div class="grid grid-cols-2 gap-gap">
+<div class="bg-white p-card-padding rounded-xl shadow-sm border border-slate-50 col-span-2 sm:col-span-1">
+<label class="block text-caption font-semibold text-text-secondary mb-2">تاريخ الموعد</label>
+<div class="flex items-center gap-3 h-[52px] pr-4 border border-border rounded-[10px]">
+<span class="material-symbols-outlined text-primary">calendar_today</span>
+<input class="w-full border-none focus:ring-0 text-body bg-transparent" type="date" value="2024-05-20"/>
+</div>
+</div>
+<div class="bg-white p-card-padding rounded-xl shadow-sm border border-slate-50 col-span-2 sm:col-span-1">
+<label class="block text-caption font-semibold text-text-secondary mb-2">الوقت</label>
+<div class="flex items-center gap-3 h-[52px] pr-4 border border-border rounded-[10px]">
+<span class="material-symbols-outlined text-primary">schedule</span>
+<input class="w-full border-none focus:ring-0 text-body bg-transparent" type="time" value="10:30"/>
+</div>
+</div>
+</div>
+<!-- Reminder Toggle -->
+<div class="bg-white p-card-padding rounded-xl shadow-sm border border-slate-50 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-status-upcoming-bg text-status-upcoming-text rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">notifications_active</span>
+</div>
+<div>
+<p class="font-h3 text-[16px]">تذكير بالموعد</p>
+<p class="text-caption text-text-secondary">تلقي إشعار قبل الموعد بـ 30 دقيقة</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<!-- File Attachment -->
+<div class="bg-white p-card-padding rounded-xl shadow-sm border border-slate-50">
+<label class="block text-caption font-semibold text-text-secondary mb-2">المرفقات (نتائج تحاليل، أشعة)</label>
+<div class="border-2 border-dashed border-border rounded-xl p-6 flex flex-col items-center justify-center gap-2 hover:border-primary transition-all group cursor-pointer">
+<div class="w-12 h-12 bg-slate-50 rounded-full flex items-center justify-center group-hover:bg-blue-50 transition-colors">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary">upload_file</span>
+</div>
+<p class="text-caption text-text-secondary">اضغط هنا لرفع الملفات</p>
+</div>
+</div>
+<!-- Notes -->
+<div class="bg-white p-card-padding rounded-xl shadow-sm border border-slate-50">
+<label class="block text-caption font-semibold text-text-secondary mb-2">ملاحظات إضافية</label>
+<textarea class="w-full p-4 rounded-[10px] border border-border focus:border-primary focus:ring-0 text-body transition-all resize-none" placeholder="اكتب أي تعليمات خاصة أو أسئلة للطبيب..." rows="3"></textarea>
+</div>
+</div>
+<!-- Appointment Context Image - Aesthetic Decoration -->
+<div class="mt-8 rounded-2xl overflow-hidden h-40 relative group">
+<img alt="عيادة طبية حديثة" class="w-full h-full object-cover" data-alt="Modern high-end medical consultation room with soft natural lighting, minimal furniture, and professional clean clinical atmosphere" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIkZJ5SyuYaHvBZHi7SV_L-iHhkMOmSmMv3TA_4mjf9Pc6hJlM61i3Ol8mQCC7zcgh3oESNnQBMU3bOmljEtl_4mqciP_SkzeBuyPBYm7YjpSohUWp92bgivFGs0uVomzPYoNiMtawjfh6aOWkqIbr8pr_wNk2m1YzItJdk1hqmvNZRT2KmxJZDTOY0ZgL0PEenWXiyuatwz6-UTA-yeycaeiXIKqjAtbMVTyOvTwIP7QGaMFgelKyL2GCYsbKX1b1A3dM5l2BQco"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+<div class="text-white">
+<p class="font-bold text-body">صحتك هي الأهم</p>
+<p class="text-caption opacity-90">تنظيم المواعيد يساعد في الالتزام بخطة العلاج</p>
+</div>
+</div>
+</div>
+<!-- Submit Button (Primary Style) -->
+<div class="mt-8">
+<button class="w-full h-[52px] bg-primary text-on-primary rounded-xl font-h3 flex items-center justify-center gap-2 shadow-md active:scale-[0.98] transition-transform">
+<span>تأكيد الموعد</span>
+<span class="material-symbols-outlined">event_available</span>
+</button>
+<p class="text-center text-caption text-text-secondary mt-4">سيتمت إضافة هذا الموعد إلى تقويمك وتذكيرك في الوقت المحدد.</p>
+</div>
+</main>
+<!-- Bottom Navigation Shell suppressed per Task-Focused instruction -->
+<!-- However, providing logic for navigation when active -->
+<nav class="hidden md:flex fixed bottom-0 left-0 w-full z-50 justify-around items-center px-4 py-2 pb-safe bg-white/90 backdrop-blur-md shadow-[0_-2px_12px_rgba(0,0,0,0.05)] border-t border-slate-100">
+<div class="flex flex-col items-center justify-center text-slate-400">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-manrope text-[10px] font-medium">الرئيسية</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-400">
+<span class="material-symbols-outlined">medication</span>
+<span class="font-manrope text-[10px] font-medium">الأدوية</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-400">
+<span class="material-symbols-outlined">bloodtype</span>
+<span class="font-manrope text-[10px] font-medium">الأنسولين</span>
+</div>
+<!-- Active Tab: المواعيد (Appointments) -->
+<div class="flex flex-col items-center justify-center text-blue-600 scale-105 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">calendar_today</span>
+<span class="font-manrope text-[10px] font-bold">المواعيد</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-400">
+<span class="material-symbols-outlined">folder_open</span>
+<span class="font-manrope text-[10px] font-medium">الملف</span>
+</div>
+</nav>
+</body></html>

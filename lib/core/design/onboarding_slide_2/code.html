@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DoseTrack Onboarding</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&amp;family=Manrope:wght@500;600;700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary": "#ffffff",
+                    "inverse-on-surface": "#eff0fa",
+                    "tertiary": "#924700",
+                    "on-primary-container": "#fefcff",
+                    "surface-container-high": "#e6e7f2",
+                    "primary-fixed": "#d8e2ff",
+                    "on-tertiary-container": "#fffbff",
+                    "status-taken-bg": "#D1FAE5",
+                    "text-primary": "#1E293B",
+                    "inverse-primary": "#adc6ff",
+                    "on-tertiary-fixed": "#311400",
+                    "on-error": "#ffffff",
+                    "error": "#ba1a1a",
+                    "status-upcoming-text": "#1E40AF",
+                    "inverse-surface": "#2e3038",
+                    "secondary": "#006c49",
+                    "status-upcoming-bg": "#DBEAFE",
+                    "surface": "#FFFFFF",
+                    "primary-container": "#2170e4",
+                    "on-surface": "#191b23",
+                    "surface-container-highest": "#e1e2ec",
+                    "on-surface-variant": "#424754",
+                    "on-secondary-fixed-variant": "#005236",
+                    "danger": "#EF4444",
+                    "on-background": "#191b23",
+                    "secondary-fixed": "#6ffbbe",
+                    "secondary-fixed-dim": "#4edea3",
+                    "surface-variant": "#e1e2ec",
+                    "status-taken-text": "#065F46",
+                    "outline-variant": "#c2c6d6",
+                    "on-secondary-container": "#00714d",
+                    "surface-bright": "#f9f9ff",
+                    "primary-fixed-dim": "#adc6ff",
+                    "dark-border": "#334155",
+                    "on-secondary": "#ffffff",
+                    "background": "#F8FAFC",
+                    "surface-container": "#ecedf7",
+                    "tertiary-fixed-dim": "#ffb786",
+                    "border": "#E2E8F0",
+                    "status-missed-text": "#991B1B",
+                    "surface-dim": "#d8d9e3",
+                    "primary": "#0058be",
+                    "secondary-container": "#6cf8bb",
+                    "on-error-container": "#93000a",
+                    "dark-surface": "#1E293B",
+                    "dark-text": "#F1F5F9",
+                    "on-tertiary": "#ffffff",
+                    "text-secondary": "#64748B",
+                    "surface-tint": "#005ac2",
+                    "on-tertiary-fixed-variant": "#723600",
+                    "on-secondary-fixed": "#002113",
+                    "status-missed-bg": "#FEE2E2",
+                    "tertiary-container": "#b75b00",
+                    "warning": "#F59E0B",
+                    "on-primary-fixed": "#001a42",
+                    "on-primary-fixed-variant": "#004395",
+                    "dark-background": "#0F172A",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-low": "#f2f3fd",
+                    "tertiary-fixed": "#ffdcc6",
+                    "error-container": "#ffdad6",
+                    "outline": "#727785"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "card-padding": "16px",
+                    "gap": "12px",
+                    "base": "8px",
+                    "screen-edge": "20px"
+            },
+            "fontFamily": {
+                    "h2": ["Cairo"],
+                    "caption": ["Cairo"],
+                    "body": ["Cairo"],
+                    "h1": ["Cairo"],
+                    "h3": ["Cairo"],
+                    "manrope": ["Manrope"]
+            },
+            "fontSize": {
+                    "h2": ["22px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "caption": ["13px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                    "body": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "h1": ["28px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "h3": ["18px", {"lineHeight": "1.4", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #F8FAFC;
+        }
+        .bento-glow {
+            background: radial-gradient(circle at top right, rgba(59, 130, 246, 0.08), transparent);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="antialiased text-text-primary">
+<!-- TopAppBar Suppressed for Onboarding Journey -->
+<main class="min-h-screen flex flex-col items-center justify-between px-screen-edge py-12 relative overflow-hidden bento-glow">
+<!-- Decorative Background Elements -->
+<div class="absolute top-[-10%] right-[-10%] w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
+<div class="absolute bottom-[20%] left-[-15%] w-80 h-80 bg-secondary/5 rounded-full blur-3xl"></div>
+<!-- Upper Content: Header & Illustration -->
+<div class="w-full max-w-md flex flex-col items-center mt-8">
+<div class="mb-12 relative">
+<!-- Illustration Placeholder using high-end UI patterns -->
+<div class="relative w-64 h-64 flex items-center justify-center">
+<div class="absolute inset-0 bg-blue-50 rounded-full scale-110 animate-pulse"></div>
+<div class="relative z-10 w-full h-full bg-white rounded-3xl shadow-xl flex items-center justify-center border border-slate-100 overflow-hidden">
+<img alt="تذكيرات ذكية" class="w-full h-full object-cover opacity-90" data-alt="Modern 3D style illustration of a vibrant blue notification bell with soft glowing rings and floating medical pill icons, clean medical aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhvn_JSB_8NdodmdPetFXa394HP5F8X6hhvxIXoe-2Z0hx1SgQejvtKdWnpxaO8f166UWf9TYPmGKEUwGmkMJ6JQR2OdEMTqVx_tR4G-4SQzud5kRK52BvtnPmIzFJ8PDtlWqcneBKETwPmDeT2leCwcNPTRlpfpuzX4rbb4DKaGoARdyZHos73siYi0INlCpmQz3SHA3_VUc1Aluy7bNScKKWs-UosZkjcRjtL6jEnXnDWpaWIa9HUwmmf4-6TbbCHw5EHmBS-Og"/>
+<div class="absolute inset-0 bg-gradient-to-t from-white/40 to-transparent"></div>
+</div>
+<!-- Floating Badge elements for depth -->
+<div class="absolute -top-4 -right-4 bg-white p-3 rounded-2xl shadow-lg border border-slate-50">
+<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">notifications_active</span>
+</div>
+<div class="absolute -bottom-6 -left-4 bg-white py-2 px-4 rounded-xl shadow-md border border-slate-50 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-xl">done_all</span>
+<span class="font-manrope text-caption font-bold text-slate-600">8:00 AM</span>
+</div>
+</div>
+</div>
+<div class="text-center space-y-4">
+<h1 class="font-h1 text-h1 text-primary">تذكيرات ذكية لا تفوت دواءك</h1>
+<p class="font-body text-body text-text-secondary max-w-[280px] mx-auto leading-relaxed">
+                    نظام تنبيهات متطور يضمن لك الالتزام بمواعيد أدويتك بدقة واحترافية عالية.
+                </p>
+</div>
+</div>
+<!-- Lower Content: Navigation & Indicators -->
+<div class="w-full max-w-md flex flex-col gap-8 pb-8">
+<!-- Step Indicators -->
+<div class="flex justify-center items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-slate-200"></div>
+<div class="w-8 h-2 rounded-full bg-primary transition-all duration-300"></div>
+<div class="w-2 h-2 rounded-full bg-slate-200"></div>
+</div>
+<!-- Action Buttons -->
+<div class="flex flex-col gap-gap">
+<button class="w-full h-[52px] bg-primary text-on-primary rounded-xl font-h3 text-h3 shadow-lg shadow-primary/20 active:scale-[0.98] transition-transform flex items-center justify-center">
+                    التالي
+                </button>
+<button class="w-full h-[52px] border border-primary/20 text-primary rounded-xl font-h3 text-h3 hover:bg-primary/5 active:scale-[0.98] transition-transform flex items-center justify-center">
+                    تخطي
+                </button>
+</div>
+</div>
+</main>
+<!-- BottomNavBar Suppressed for Onboarding Journey -->
+</body></html>

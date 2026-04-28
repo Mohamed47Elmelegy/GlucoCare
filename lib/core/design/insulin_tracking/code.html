@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&amp;family=Manrope:wght@500;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary": "#ffffff",
+                        "inverse-on-surface": "#eff0fa",
+                        "tertiary": "#924700",
+                        "on-primary-container": "#fefcff",
+                        "surface-container-high": "#e6e7f2",
+                        "primary-fixed": "#d8e2ff",
+                        "on-tertiary-container": "#fffbff",
+                        "status-taken-bg": "#D1FAE5",
+                        "text-primary": "#1E293B",
+                        "inverse-primary": "#adc6ff",
+                        "on-tertiary-fixed": "#311400",
+                        "on-error": "#ffffff",
+                        "error": "#ba1a1a",
+                        "status-upcoming-text": "#1E40AF",
+                        "inverse-surface": "#2e3038",
+                        "secondary": "#006c49",
+                        "status-upcoming-bg": "#DBEAFE",
+                        "surface": "#FFFFFF",
+                        "primary-container": "#2170e4",
+                        "on-surface": "#191b23",
+                        "surface-container-highest": "#e1e2ec",
+                        "on-surface-variant": "#424754",
+                        "on-secondary-fixed-variant": "#005236",
+                        "danger": "#EF4444",
+                        "on-background": "#191b23",
+                        "secondary-fixed": "#6ffbbe",
+                        "secondary-fixed-dim": "#4edea3",
+                        "surface-variant": "#e1e2ec",
+                        "status-taken-text": "#065F46",
+                        "outline-variant": "#c2c6d6",
+                        "on-secondary-container": "#00714d",
+                        "surface-bright": "#f9f9ff",
+                        "primary-fixed-dim": "#adc6ff",
+                        "dark-border": "#334155",
+                        "on-secondary": "#ffffff",
+                        "background": "#F8FAFC",
+                        "surface-container": "#ecedf7",
+                        "tertiary-fixed-dim": "#ffb786",
+                        "border": "#E2E8F0",
+                        "status-missed-text": "#991B1B",
+                        "surface-dim": "#d8d9e3",
+                        "primary": "#0058be",
+                        "secondary-container": "#6cf8bb",
+                        "on-error-container": "#93000a",
+                        "dark-surface": "#1E293B",
+                        "dark-text": "#F1F5F9",
+                        "on-tertiary": "#ffffff",
+                        "text-secondary": "#64748B",
+                        "surface-tint": "#005ac2",
+                        "on-tertiary-fixed-variant": "#723600",
+                        "on-secondary-fixed": "#002113",
+                        "status-missed-bg": "#FEE2E2",
+                        "tertiary-container": "#b75b00",
+                        "warning": "#F59E0B",
+                        "on-primary-fixed": "#001a42",
+                        "on-primary-fixed-variant": "#004395",
+                        "dark-background": "#0F172A",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f2f3fd",
+                        "tertiary-fixed": "#ffdcc6",
+                        "error-container": "#ffdad6",
+                        "outline": "#727785"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "card-padding": "16px",
+                        "gap": "12px",
+                        "base": "8px",
+                        "screen-edge": "20px"
+                    },
+                    "fontFamily": {
+                        "h2": ["Cairo"],
+                        "caption": ["Cairo"],
+                        "body": ["Cairo"],
+                        "h1": ["Cairo"],
+                        "h3": ["Cairo"],
+                        "manrope": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "h2": ["22px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "caption": ["13px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                        "body": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "h1": ["28px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "h3": ["18px", {"lineHeight": "1.4", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .chart-container {
+            background-image: radial-gradient(circle at 2px 2px, #E2E8F0 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background font-body text-text-primary min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-5 h-16 bg-white border-b border-slate-100 transition-colors duration-200">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden border border-slate-200">
+<img alt="Profile" class="w-full h-full object-cover" data-alt="close-up portrait of a middle-aged man with a friendly smile, professional medical setting background, soft lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaeY6jeqYub2ZYcIFtdgINod38yY2TbVPKvTJCybPhT2oQOwgbXZgkKW02u0ucW9lylhKm0I4jeT2dBB_oFbrdXczE1XpMn6uZrfnBlhyeKchWCLo0LLyvb3W7TIyvDit9BhW8_cK-b1kjIUsRxeJZnpVHxGKzUmHhTpovbfI4fD3LFi_bmR3_IBLFs-xcG-5-r6f8FLHKBPUDsC-VTy8L4t8oVfDV2ncqOCzpEIHT24hQ6vz0CO7MHSGC60np_bzDVFn_AoVFkN0"/>
+</div>
+<h1 class="font-manrope text-xl font-bold text-blue-600">صحتي</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full text-slate-500 hover:bg-slate-50 transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</header>
+<main class="pt-20 px-screen-edge space-y-6">
+<!-- Summary Card: Last Reading -->
+<section class="bg-surface rounded-xl p-card-padding shadow-[0_2px_12px_rgba(0,0,0,0.08)]">
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="text-text-secondary font-caption">آخر قراءة</p>
+<h2 class="font-h1 text-primary mt-1">115 <span class="text-body font-normal text-text-secondary">mg/dL</span></h2>
+</div>
+<div class="bg-status-taken-bg text-status-taken-text px-3 py-1 rounded-full text-caption font-bold">
+                    طبيعي
+                </div>
+</div>
+<div class="flex items-center gap-2 text-text-secondary text-caption">
+<span class="material-symbols-outlined text-[18px]" data-icon="schedule">schedule</span>
+<span>منذ ساعتين • عشوائي</span>
+</div>
+</section>
+<!-- Segmented Selector -->
+<section class="bg-surface-container-low p-1 rounded-lg flex items-center gap-1">
+<button class="flex-1 py-2 text-caption font-bold bg-white text-primary shadow-sm rounded-lg transition-all">عشوائي</button>
+<button class="flex-1 py-2 text-caption font-medium text-text-secondary hover:bg-white/50 rounded-lg transition-all">صائم</button>
+<button class="flex-1 py-2 text-caption font-medium text-text-secondary hover:bg-white/50 rounded-lg transition-all">تراكمي</button>
+<button class="flex-1 py-2 text-caption font-medium text-text-secondary hover:bg-white/50 rounded-lg transition-all">بعد الأكل</button>
+</section>
+<!-- Line Chart Visualization -->
+<section class="bg-surface rounded-xl p-card-padding shadow-[0_2px_12px_rgba(0,0,0,0.08)]">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-h3">مخطط القراءات</h3>
+<div class="flex gap-4">
+<div class="flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="text-caption text-text-secondary">القراءة</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-secondary/30"></span>
+<span class="text-caption text-text-secondary">النطاق</span>
+</div>
+</div>
+</div>
+<div class="chart-container relative h-48 w-full border-l border-b border-slate-200">
+<!-- Target Range Overlay (Green) -->
+<div class="absolute bottom-12 w-full h-16 bg-secondary/5 border-y border-secondary/10"></div>
+<!-- Mock SVG Chart Line -->
+<svg class="absolute inset-0 w-full h-full overflow-visible" preserveaspectratio="none">
+<path d="M0 80 Q 50 70, 100 90 T 200 60 T 300 85 T 400 70" fill="none" stroke="#0058be" stroke-linecap="round" stroke-width="3"></path>
+<!-- Data Points -->
+<circle cx="10" cy="80" fill="#0058be" r="4"></circle>
+<circle cx="100" cy="90" fill="#0058be" r="4"></circle>
+<circle cx="200" cy="60" fill="#0058be" r="4"></circle>
+<circle cx="300" cy="85" fill="#0058be" r="4"></circle>
+</svg>
+<!-- X-Axis Labels -->
+<div class="absolute -bottom-6 w-full flex justify-between px-2 text-[10px] text-text-secondary font-manrope">
+<span>SAT</span>
+<span>SUN</span>
+<span>MON</span>
+<span>TUE</span>
+<span>WED</span>
+</div>
+</div>
+</section>
+<!-- History List -->
+<section class="space-y-4 pb-4">
+<div class="flex justify-between items-center">
+<h3 class="font-h3">السجل الأخير</h3>
+<button class="text-primary text-caption font-bold">عرض الكل</button>
+</div>
+<div class="space-y-3">
+<!-- Item 1 -->
+<div class="bg-surface p-4 rounded-xl flex justify-between items-center border border-slate-50">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-lg bg-blue-50 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="bloodtype">bloodtype</span>
+</div>
+<div>
+<p class="font-bold">142 mg/dL</p>
+<p class="text-caption text-text-secondary">صائم • اليوم، 08:00 ص</p>
+</div>
+</div>
+<div class="bg-status-missed-bg text-status-missed-text px-2 py-1 rounded text-[11px] font-bold">
+                        مرتفع
+                    </div>
+</div>
+<!-- Item 2 -->
+<div class="bg-surface p-4 rounded-xl flex justify-between items-center border border-slate-50">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-lg bg-blue-50 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="bloodtype">bloodtype</span>
+</div>
+<div>
+<p class="font-bold">98 mg/dL</p>
+<p class="text-caption text-text-secondary">بعد العشاء • أمس، 09:30 م</p>
+</div>
+</div>
+<div class="bg-status-taken-bg text-status-taken-text px-2 py-1 rounded text-[11px] font-bold">
+                        طبيعي
+                    </div>
+</div>
+<!-- Item 3 -->
+<div class="bg-surface p-4 rounded-xl flex justify-between items-center border border-slate-50">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-lg bg-blue-50 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="bloodtype">bloodtype</span>
+</div>
+<div>
+<p class="font-bold">110 mg/dL</p>
+<p class="text-caption text-text-secondary">عشوائي • أمس، 04:15 م</p>
+</div>
+</div>
+<div class="bg-status-taken-bg text-status-taken-text px-2 py-1 rounded text-[11px] font-bold">
+                        طبيعي
+                    </div>
+</div>
+</div>
+</section>
+</main>
+<!-- FAB for adding new entry (Contextual) -->
+<button class="fixed bottom-24 left-6 w-14 h-14 bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center active:scale-95 transition-transform z-40">
+<span class="material-symbols-outlined text-[28px]" data-icon="add">add</span>
+</button>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 pb-safe bg-white/90 backdrop-blur-md border-t border-slate-100 shadow-[0_-2px_12px_rgba(0,0,0,0.05)]">
+<a class="flex flex-col items-center justify-center text-slate-400 hover:text-blue-500 transition-all active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-manrope text-[10px] font-medium mt-1">الرئيسية</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 hover:text-blue-500 transition-all active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="medication">medication</span>
+<span class="font-manrope text-[10px] font-medium mt-1">الأدوية</span>
+</a>
+<a class="flex flex-col items-center justify-center text-blue-600 scale-105 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="bloodtype" style="font-variation-settings: 'FILL' 1;">bloodtype</span>
+<span class="font-manrope text-[10px] font-bold mt-1">الأنسولين</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 hover:text-blue-500 transition-all active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+<span class="font-manrope text-[10px] font-medium mt-1">المواعيد</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 hover:text-blue-500 transition-all active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="folder_open">folder_open</span>
+<span class="font-manrope text-[10px] font-medium mt-1">الملف</span>
+</a>
+</nav>
+</body></html>

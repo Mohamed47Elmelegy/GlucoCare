@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DoseTrack - متابعة الأطباء</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Cairo', sans-serif;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary": "#ffffff",
+                      "inverse-on-surface": "#eff0fa",
+                      "tertiary": "#924700",
+                      "on-primary-container": "#fefcff",
+                      "surface-container-high": "#e6e7f2",
+                      "primary-fixed": "#d8e2ff",
+                      "on-tertiary-container": "#fffbff",
+                      "status-taken-bg": "#D1FAE5",
+                      "text-primary": "#1E293B",
+                      "inverse-primary": "#adc6ff",
+                      "on-tertiary-fixed": "#311400",
+                      "on-error": "#ffffff",
+                      "error": "#ba1a1a",
+                      "status-upcoming-text": "#1E40AF",
+                      "inverse-surface": "#2e3038",
+                      "secondary": "#006c49",
+                      "status-upcoming-bg": "#DBEAFE",
+                      "surface": "#FFFFFF",
+                      "primary-container": "#2170e4",
+                      "on-surface": "#191b23",
+                      "surface-container-highest": "#e1e2ec",
+                      "on-surface-variant": "#424754",
+                      "on-secondary-fixed-variant": "#005236",
+                      "danger": "#EF4444",
+                      "on-background": "#191b23",
+                      "secondary-fixed": "#6ffbbe",
+                      "secondary-fixed-dim": "#4edea3",
+                      "surface-variant": "#e1e2ec",
+                      "status-taken-text": "#065F46",
+                      "outline-variant": "#c2c6d6",
+                      "on-secondary-container": "#00714d",
+                      "surface-bright": "#f9f9ff",
+                      "primary-fixed-dim": "#adc6ff",
+                      "dark-border": "#334155",
+                      "on-secondary": "#ffffff",
+                      "background": "#F8FAFC",
+                      "surface-container": "#ecedf7",
+                      "tertiary-fixed-dim": "#ffb786",
+                      "border": "#E2E8F0",
+                      "status-missed-text": "#991B1B",
+                      "surface-dim": "#d8d9e3",
+                      "primary": "#0058be",
+                      "secondary-container": "#6cf8bb",
+                      "on-error-container": "#93000a",
+                      "dark-surface": "#1E293B",
+                      "dark-text": "#F1F5F9",
+                      "on-tertiary": "#ffffff",
+                      "text-secondary": "#64748B",
+                      "surface-tint": "#005ac2",
+                      "on-tertiary-fixed-variant": "#723600",
+                      "on-secondary-fixed": "#002113",
+                      "status-missed-bg": "#FEE2E2",
+                      "tertiary-container": "#b75b00",
+                      "warning": "#F59E0B",
+                      "on-primary-fixed": "#001a42",
+                      "on-primary-fixed-variant": "#004395",
+                      "dark-background": "#0F172A",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container-low": "#f2f3fd",
+                      "tertiary-fixed": "#ffdcc6",
+                      "error-container": "#ffdad6",
+                      "outline": "#727785"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "card-padding": "16px",
+                      "gap": "12px",
+                      "base": "8px",
+                      "screen-edge": "20px"
+              },
+              "fontFamily": {
+                      "h2": ["Cairo"],
+                      "caption": ["Cairo"],
+                      "body": ["Cairo"],
+                      "h1": ["Cairo"],
+                      "h3": ["Cairo"],
+                      "manrope": ["Manrope"]
+              },
+              "fontSize": {
+                      "h2": ["22px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                      "caption": ["13px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                      "body": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                      "h1": ["28px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                      "h3": ["18px", {"lineHeight": "1.4", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+      </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-5 h-16 bg-white border-b border-slate-100">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-fixed">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="professional portrait of a middle-aged male doctor in medical white coat with a friendly expression in a bright clinic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHHkwlvhJlCIKIdr3J78DCKoisBSW6ubm8E_u7zqHXl3MLBeqdQcNmWNiSgD9FixiZa2xoahlSh8gskV5tUwhdSaVdrj8l92A71qPHfaM0NfUMaf4U-hn5iU0PWH_bL9uSiT5w_qMvU13ovTZyq0Holp-9v1rHnR-kEjJe6WsXhBBGSRQCPn9pBvF0bk0m4yTAQTs6db9o0qz4CzlTbbh8ohVxgpNHve_K1-ZhkmpCFvDIu7Z-Wuyi6DP9x4uo0G6Sw-1-7hcfV44"/>
+</div>
+<span class="text-xl font-bold text-blue-600 font-manrope">صحتي</span>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-50 transition-colors">
+<span class="material-symbols-outlined text-slate-500" data-icon="notifications">notifications</span>
+</button>
+</header>
+<main class="pt-24 px-5 max-w-md mx-auto">
+<!-- Section Header -->
+<div class="flex justify-between items-end mb-6">
+<div>
+<h1 class="font-h1 text-h1 text-text-primary mb-1">متابعة الأطباء</h1>
+<p class="font-caption text-caption text-text-secondary">إدارة مواعيدك وسجلاتك الطبية</p>
+</div>
+<button class="bg-primary text-on-primary h-[52px] px-6 rounded-xl flex items-center gap-2 font-h3 text-h3 shadow-sm active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+<span>إضافة طبيب</span>
+</button>
+</div>
+<!-- Appointments List (Expanded State Visualization) -->
+<div class="space-y-gap">
+<!-- Active/Next Appointment Card -->
+<div class="bg-white rounded-[16px] p-card-padding shadow-[0_2px_12px_rgba(0,0,0,0.08)] border-r-4 border-primary">
+<div class="flex items-start justify-between mb-4">
+<div class="flex gap-3">
+<div class="w-14 h-14 rounded-xl bg-slate-50 flex items-center justify-center overflow-hidden">
+<img alt="Doctor Profile" class="w-full h-full object-cover" data-alt="close-up of a professional cardiologist smiling in a clean modern medical office setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCH6qNNV_KY0VBeXTRN2ErnZezlYC_86Llchyee1OIqu0LjSE0GA1XM8ZXPSCoDisuVyfXJUlO49W5Wdk3e6TjQTjaYz8wTX5cP7n6Z-vBdQvVPzQs0W49sx7QtDdf5F91X8i0tsdwyc4PLsdBr1Vr4M5Va7-rixqwl00kakW8R1r0QZlUI1nmofBR9RYFGqgy0lh7U0TCcA4osOjMbn3WcyvMrdJYlWllpjs5-uO7fv1-zj6y5emns019Mc7YMxyXx1ADGXTW51-U"/>
+</div>
+<div>
+<h3 class="font-h3 text-h3 text-text-primary">د. أحمد كمال</h3>
+<p class="font-caption text-caption text-text-secondary">استشاري أمراض القلب</p>
+</div>
+</div>
+<span class="bg-status-upcoming-bg text-status-upcoming-text px-3 py-1 rounded-full text-[12px] font-bold">موعد قريب</span>
+</div>
+<div class="flex items-center gap-4 bg-slate-50 p-3 rounded-lg mb-4">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-[20px]" data-icon="calendar_today">calendar_today</span>
+<span class="font-caption text-caption font-semibold">15 أكتوبر</span>
+</div>
+<div class="h-4 w-[1px] bg-slate-200"></div>
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-[20px]" data-icon="schedule">schedule</span>
+<span class="font-caption text-caption font-semibold">10:30 صباحاً</span>
+</div>
+</div>
+<!-- Expanded Content Mockup -->
+<div class="border-t border-slate-100 pt-4 mt-2">
+<div class="flex items-center justify-between mb-3">
+<span class="font-h3 text-h3 text-[14px]">ملاحظات التاريخ الطبي</span>
+<span class="material-symbols-outlined text-slate-400 text-[18px]" data-icon="expand_less">expand_less</span>
+</div>
+<ul class="space-y-2">
+<li class="flex gap-2 items-start">
+<span class="w-1.5 h-1.5 rounded-full bg-blue-400 mt-2"></span>
+<p class="font-caption text-caption text-on-surface-variant">تم تعديل جرعة الأنسولين اليومية في الزيارة السابقة.</p>
+</li>
+<li class="flex gap-2 items-start">
+<span class="w-1.5 h-1.5 rounded-full bg-blue-400 mt-2"></span>
+<p class="font-caption text-caption text-on-surface-variant">طلب إجراء فحص جهد القلب الشهر القادم.</p>
+</li>
+</ul>
+<div class="mt-4 flex gap-2">
+<button class="flex-1 border border-primary text-primary h-10 rounded-lg text-caption font-semibold hover:bg-blue-50 transition-colors">عرض السجل الكامل</button>
+<button class="w-10 h-10 flex items-center justify-center border border-slate-200 rounded-lg text-slate-500">
+<span class="material-symbols-outlined text-[20px]" data-icon="edit_note">edit_note</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Regular Doctor Card -->
+<div class="bg-white rounded-[16px] p-card-padding shadow-[0_2px_12px_rgba(0,0,0,0.05)]">
+<div class="flex items-start justify-between">
+<div class="flex gap-3">
+<div class="w-14 h-14 rounded-xl bg-slate-50 flex items-center justify-center overflow-hidden">
+<img alt="Doctor Profile" class="w-full h-full object-cover" data-alt="female endocrinology specialist in medical attire looking focused in a bright hospital room" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXPbDxtrEAo9nPqmEQqFNDkjTzHBtPChA-oxPY24cihgBKlCvcZwpcFcJYaaGAY0NrVRzrQgbu1WfVX0O6lNI35TNUKZh-5O1pFjeWgZ-y4mM0sT4NjtuhxnKZ8gNFuJ4SWIGRbnPQHGh5TGQZ9MN-X-bWumhxMbtCKsn1KSZTJHpvO8ep8zuW337vCeBmvY0wsK43yRLR7Iwhb_Z9R816VYN8QQQDI1j3fsCsY6xACOJ-IgevzdLPCZVWhFJKz3sWFVT_rODDmJI"/>
+</div>
+<div>
+<h3 class="font-h3 text-h3 text-text-primary">د. سارة المنصور</h3>
+<p class="font-caption text-caption text-text-secondary">أخصائية الغدد الصماء</p>
+</div>
+</div>
+<button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-50">
+<span class="material-symbols-outlined text-slate-400" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+<div class="mt-4 flex items-center justify-between">
+<div class="text-slate-400 flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]" data-icon="history">history</span>
+<span class="font-caption text-caption">آخر زيارة: منذ أسبوعين</span>
+</div>
+<div class="text-primary flex items-center gap-1">
+<span class="font-caption text-caption font-bold">عرض التفاصيل</span>
+<span class="material-symbols-outlined text-[18px]" data-icon="chevron_left">chevron_left</span>
+</div>
+</div>
+</div>
+<!-- Another Doctor Card -->
+<div class="bg-white rounded-[16px] p-card-padding shadow-[0_2px_12px_rgba(0,0,0,0.05)]">
+<div class="flex items-start justify-between">
+<div class="flex gap-3">
+<div class="w-14 h-14 rounded-xl bg-slate-50 flex items-center justify-center overflow-hidden">
+<img alt="Doctor Profile" class="w-full h-full object-cover" data-alt="portrait of a confident male pediatrician in a pediatric clinic with colorful blurred background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_QP62bvBx-5ioRi7yIqTJ-FfO7wVSCEpES6Fjs2ofiad8jiCwqBGJZofFY2WTUBGMU_YG3bHjyO46c3w2GnOgJ7HgWsA7vA2bi6V26DHp6yJwm8Z2hi3u2i_pE7P_RFj16e5KjQ29kAtbcUH7l1s6Q1Ki-9GBxGVTXCe8USlJqkco6M8xFO9ucoOLadsRu0Cok8wRMZ_6zV5IUFXMgWHfm6zliYZa-ac805lQLXZCAjl4_A77xLXRijRo-OjAZK6JQwfwAWNe7R0"/>
+</div>
+<div>
+<h3 class="font-h3 text-h3 text-text-primary">د. يوسف الهادي</h3>
+<p class="font-caption text-caption text-text-secondary">طبيب باطني عام</p>
+</div>
+</div>
+<button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-50">
+<span class="material-symbols-outlined text-slate-400" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+<div class="mt-4 flex items-center justify-between">
+<div class="text-slate-400 flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]" data-icon="event_busy">event_busy</span>
+<span class="font-caption text-caption">لا يوجد موعد محدد</span>
+</div>
+<div class="text-primary flex items-center gap-1">
+<span class="font-caption text-caption font-bold">حجز موعد</span>
+<span class="material-symbols-outlined text-[18px]" data-icon="add_circle">add_circle</span>
+</div>
+</div>
+</div>
+</div>
+<!-- History Preview Area (Bento Style) -->
+<div class="mt-8 mb-4">
+<h2 class="font-h2 text-h2 text-text-primary mb-4">إحصائيات المتابعة</h2>
+<div class="grid grid-cols-2 gap-3">
+<div class="bg-blue-50 p-4 rounded-2xl flex flex-col justify-between h-32">
+<span class="material-symbols-outlined text-primary bg-white w-10 h-10 flex items-center justify-center rounded-lg" data-icon="done_all" style="font-variation-settings: 'FILL' 1;">done_all</span>
+<div>
+<span class="block text-[24px] font-bold text-primary">12</span>
+<span class="font-caption text-caption text-blue-800">زيارة مكتملة</span>
+</div>
+</div>
+<div class="bg-green-50 p-4 rounded-2xl flex flex-col justify-between h-32">
+<span class="material-symbols-outlined text-secondary bg-white w-10 h-10 flex items-center justify-center rounded-lg" data-icon="assignment_turned_in" style="font-variation-settings: 'FILL' 1;">assignment_turned_in</span>
+<div>
+<span class="block text-[24px] font-bold text-secondary">4</span>
+<span class="font-caption text-caption text-secondary">تقارير حديثة</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 pb-safe bg-white/90 backdrop-blur-md shadow-[0_-2px_12px_rgba(0,0,0,0.05)] border-t border-slate-100">
+<button class="flex flex-col items-center justify-center text-slate-400 hover:text-blue-500 transition-all duration-200 active:scale-95">
+<span class="material-symbols-outlined mb-1" data-icon="dashboard">dashboard</span>
+<span class="font-manrope text-[10px] font-medium">الرئيسية</span>
+</button>
+<button class="flex flex-col items-center justify-center text-slate-400 hover:text-blue-500 transition-all duration-200 active:scale-95">
+<span class="material-symbols-outlined mb-1" data-icon="medication">medication</span>
+<span class="font-manrope text-[10px] font-medium">الأدوية</span>
+</button>
+<button class="flex flex-col items-center justify-center text-slate-400 hover:text-blue-500 transition-all duration-200 active:scale-95">
+<span class="material-symbols-outlined mb-1" data-icon="bloodtype">bloodtype</span>
+<span class="font-manrope text-[10px] font-medium">الأنسولين</span>
+</button>
+<button class="flex flex-col items-center justify-center text-blue-600 scale-105 transition-transform">
+<span class="material-symbols-outlined mb-1" data-icon="calendar_today" style="font-variation-settings: 'FILL' 1;">calendar_today</span>
+<span class="font-manrope text-[10px] font-bold">المواعيد</span>
+</button>
+<button class="flex flex-col items-center justify-center text-slate-400 hover:text-blue-500 transition-all duration-200 active:scale-95">
+<span class="material-symbols-outlined mb-1" data-icon="folder_open">folder_open</span>
+<span class="font-manrope text-[10px] font-medium">الملف</span>
+</button>
+</nav>
+</body></html>

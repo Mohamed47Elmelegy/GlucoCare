@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&amp;family=Manrope:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary": "#ffffff",
+                    "inverse-on-surface": "#eff0fa",
+                    "tertiary": "#924700",
+                    "on-primary-container": "#fefcff",
+                    "surface-container-high": "#e6e7f2",
+                    "primary-fixed": "#d8e2ff",
+                    "on-tertiary-container": "#fffbff",
+                    "status-taken-bg": "#D1FAE5",
+                    "text-primary": "#1E293B",
+                    "inverse-primary": "#adc6ff",
+                    "on-tertiary-fixed": "#311400",
+                    "on-error": "#ffffff",
+                    "error": "#ba1a1a",
+                    "status-upcoming-text": "#1E40AF",
+                    "inverse-surface": "#2e3038",
+                    "secondary": "#006c49",
+                    "status-upcoming-bg": "#DBEAFE",
+                    "surface": "#FFFFFF",
+                    "primary-container": "#2170e4",
+                    "on-surface": "#191b23",
+                    "surface-container-highest": "#e1e2ec",
+                    "on-surface-variant": "#424754",
+                    "on-secondary-fixed-variant": "#005236",
+                    "danger": "#EF4444",
+                    "on-background": "#191b23",
+                    "secondary-fixed": "#6ffbbe",
+                    "secondary-fixed-dim": "#4edea3",
+                    "surface-variant": "#e1e2ec",
+                    "status-taken-text": "#065F46",
+                    "outline-variant": "#c2c6d6",
+                    "on-secondary-container": "#00714d",
+                    "surface-bright": "#f9f9ff",
+                    "primary-fixed-dim": "#adc6ff",
+                    "dark-border": "#334155",
+                    "on-secondary": "#ffffff",
+                    "background": "#F8FAFC",
+                    "surface-container": "#ecedf7",
+                    "tertiary-fixed-dim": "#ffb786",
+                    "border": "#E2E8F0",
+                    "status-missed-text": "#991B1B",
+                    "surface-dim": "#d8d9e3",
+                    "primary": "#0058be",
+                    "secondary-container": "#6cf8bb",
+                    "on-error-container": "#93000a",
+                    "dark-surface": "#1E293B",
+                    "dark-text": "#F1F5F9",
+                    "on-tertiary": "#ffffff",
+                    "text-secondary": "#64748B",
+                    "surface-tint": "#005ac2",
+                    "on-tertiary-fixed-variant": "#723600",
+                    "on-secondary-fixed": "#002113",
+                    "status-missed-bg": "#FEE2E2",
+                    "tertiary-container": "#b75b00",
+                    "warning": "#F59E0B",
+                    "on-primary-fixed": "#001a42",
+                    "on-primary-fixed-variant": "#004395",
+                    "dark-background": "#0F172A",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-low": "#f2f3fd",
+                    "tertiary-fixed": "#ffdcc6",
+                    "error-container": "#ffdad6",
+                    "outline": "#727785"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "card-padding": "16px",
+                    "gap": "12px",
+                    "base": "8px",
+                    "screen-edge": "20px"
+            },
+            "fontFamily": {
+                    "h2": ["Cairo"],
+                    "caption": ["Cairo"],
+                    "body": ["Cairo"],
+                    "h1": ["Cairo"],
+                    "h3": ["Cairo"],
+                    "manrope": ["Manrope"]
+            },
+            "fontSize": {
+                    "h2": ["22px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "caption": ["13px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                    "body": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "h1": ["28px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "h3": ["18px", {"lineHeight": "1.4", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Cairo', sans-serif;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-text-primary min-h-screen flex flex-col items-center">
+<!-- Hero Section / Brand Identity -->
+<main class="w-full max-w-[480px] px-screen-edge py-12 flex flex-col items-center">
+<div class="mb-10 text-center">
+<div class="w-20 h-20 bg-primary-container rounded-xl flex items-center justify-center mb-6 mx-auto shadow-lg shadow-primary-container/20">
+<span class="material-symbols-outlined text-white text-[40px]" data-icon="medication" data-weight="fill" style="font-variation-settings: 'FILL' 1;">medication</span>
+</div>
+<h1 class="font-h1 text-h1 text-primary mb-2">صحتي</h1>
+<p class="font-body text-text-secondary">تتبع أدويتك بدقة وعناية</p>
+</div>
+<!-- Login Form Container -->
+<div class="w-full bg-surface rounded-xl p-card-padding shadow-[0_2px_12px_rgba(0,0,0,0.05)] border border-border">
+<div class="mb-8">
+<h2 class="font-h2 text-h2 text-text-primary mb-1">تسجيل الدخول</h2>
+<p class="font-caption text-text-secondary">أدخل بياناتك للمتابعة</p>
+</div>
+<form class="space-y-6">
+<!-- Phone/Email Input -->
+<div class="space-y-2">
+<label class="block font-manrope text-sm font-semibold text-text-primary" for="identifier">البريد الإلكتروني أو رقم الهاتف</label>
+<div class="relative group">
+<input class="w-full h-[52px] px-4 pr-12 rounded-[10px] border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all font-manrope text-base" id="identifier" name="identifier" placeholder="example@mail.com" type="text"/>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors" data-icon="mail">mail</span>
+</div>
+</div>
+<!-- Primary Action -->
+<button class="w-full h-[52px] bg-primary text-on-primary font-h3 text-h3 rounded-lg shadow-md hover:bg-primary-container transition-all active:scale-[0.98]" type="submit">
+                    تسجيل الدخول
+                </button>
+<!-- Divider -->
+<div class="flex items-center gap-4 py-2">
+<div class="h-px bg-border flex-1"></div>
+<span class="font-caption text-text-secondary">أو عبر رمز التحقق</span>
+<div class="h-px bg-border flex-1"></div>
+</div>
+<!-- OTP Hint Section -->
+<div class="bg-surface-container-low rounded-lg p-4 border border-dashed border-outline-variant">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="security">security</span>
+<div>
+<p class="font-h3 text-h3 text-primary text-sm mb-1">تأكيد الهوية</p>
+<p class="font-caption text-text-secondary leading-relaxed">سيتم إرسال رمز OTP مكون من 6 أرقام إلى وسيلة الاتصال الخاصة بك.</p>
+</div>
+</div>
+</div>
+</form>
+<!-- Bottom Navigation Links -->
+<div class="mt-8 text-center space-y-4">
+<p class="font-body text-text-secondary text-sm">
+                    ليس لديك حساب؟
+                    <a class="text-primary font-bold hover:underline" href="#">إنشاء حساب جديد</a>
+</p>
+<a class="block font-caption text-text-secondary hover:text-primary transition-colors" href="#">هل تواجه مشكلة في الدخول؟</a>
+</div>
+</div>
+<!-- Decorative Illustration Area -->
+<div class="mt-12 w-full grid grid-cols-2 gap-gap">
+<div class="bg-blue-50 rounded-2xl p-4 flex flex-col items-center justify-center text-center">
+<span class="material-symbols-outlined text-primary mb-2" data-icon="verified_user">verified_user</span>
+<span class="font-caption text-primary font-semibold">آمن 100%</span>
+</div>
+<div class="bg-blue-50 rounded-2xl p-4 flex flex-col items-center justify-center text-center">
+<span class="material-symbols-outlined text-primary mb-2" data-icon="notifications_active">notifications_active</span>
+<span class="font-caption text-primary font-semibold">تنبيهات ذكية</span>
+</div>
+</div>
+</main>
+<!-- Visual Polish / Background Elements -->
+<div class="fixed top-0 left-0 w-full h-1/2 -z-10 bg-gradient-to-b from-blue-50/50 to-transparent"></div>
+<div class="fixed -bottom-24 -left-24 w-64 h-64 bg-primary/5 rounded-full blur-3xl -z-10"></div>
+<div class="fixed -top-24 -right-24 w-64 h-64 bg-primary/5 rounded-full blur-3xl -z-10"></div>
+</body></html>

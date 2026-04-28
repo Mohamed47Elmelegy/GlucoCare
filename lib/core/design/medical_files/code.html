@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DoseTrack - ملفاتي الطبية</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Cairo', sans-serif;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary": "#ffffff",
+                    "inverse-on-surface": "#eff0fa",
+                    "tertiary": "#924700",
+                    "on-primary-container": "#fefcff",
+                    "surface-container-high": "#e6e7f2",
+                    "primary-fixed": "#d8e2ff",
+                    "on-tertiary-container": "#fffbff",
+                    "status-taken-bg": "#D1FAE5",
+                    "text-primary": "#1E293B",
+                    "inverse-primary": "#adc6ff",
+                    "on-tertiary-fixed": "#311400",
+                    "on-error": "#ffffff",
+                    "error": "#ba1a1a",
+                    "status-upcoming-text": "#1E40AF",
+                    "inverse-surface": "#2e3038",
+                    "secondary": "#006c49",
+                    "status-upcoming-bg": "#DBEAFE",
+                    "surface": "#FFFFFF",
+                    "primary-container": "#2170e4",
+                    "on-surface": "#191b23",
+                    "surface-container-highest": "#e1e2ec",
+                    "on-surface-variant": "#424754",
+                    "on-secondary-fixed-variant": "#005236",
+                    "danger": "#EF4444",
+                    "on-background": "#191b23",
+                    "secondary-fixed": "#6ffbbe",
+                    "secondary-fixed-dim": "#4edea3",
+                    "surface-variant": "#e1e2ec",
+                    "status-taken-text": "#065F46",
+                    "outline-variant": "#c2c6d6",
+                    "on-secondary-container": "#00714d",
+                    "surface-bright": "#f9f9ff",
+                    "primary-fixed-dim": "#adc6ff",
+                    "dark-border": "#334155",
+                    "on-secondary": "#ffffff",
+                    "background": "#F8FAFC",
+                    "surface-container": "#ecedf7",
+                    "tertiary-fixed-dim": "#ffb786",
+                    "border": "#E2E8F0",
+                    "status-missed-text": "#991B1B",
+                    "surface-dim": "#d8d9e3",
+                    "primary": "#0058be",
+                    "secondary-container": "#6cf8bb",
+                    "on-error-container": "#93000a",
+                    "dark-surface": "#1E293B",
+                    "dark-text": "#F1F5F9",
+                    "on-tertiary": "#ffffff",
+                    "text-secondary": "#64748B",
+                    "surface-tint": "#005ac2",
+                    "on-tertiary-fixed-variant": "#723600",
+                    "on-secondary-fixed": "#002113",
+                    "status-missed-bg": "#FEE2E2",
+                    "tertiary-container": "#b75b00",
+                    "warning": "#F59E0B",
+                    "on-primary-fixed": "#001a42",
+                    "on-primary-fixed-variant": "#004395",
+                    "dark-background": "#0F172A",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-low": "#f2f3fd",
+                    "tertiary-fixed": "#ffdcc6",
+                    "error-container": "#ffdad6",
+                    "outline": "#727785"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "card-padding": "16px",
+                    "gap": "12px",
+                    "base": "8px",
+                    "screen-edge": "20px"
+            },
+            "fontFamily": {
+                    "h2": ["Cairo"],
+                    "caption": ["Cairo"],
+                    "body": ["Cairo"],
+                    "h1": ["Cairo"],
+                    "h3": ["Cairo"]
+            },
+            "fontSize": {
+                    "h2": ["22px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "caption": ["13px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                    "body": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "h1": ["28px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "h3": ["18px", {"lineHeight": "1.4", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-text-primary min-h-screen pb-24">
+<!-- Top App Bar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-5 h-16 bg-white border-b border-slate-100">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/20">
+<img alt="Profile" class="w-full h-full object-cover" data-alt="close-up portrait of a friendly middle-aged man with short hair and a warm smile, professional lighting, soft background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAY0K0bdaAnzvKfnNgbahprQzZj1GxayNowtYrNbH4cEPmO1Z71sUMOuluyLJ4n__JMbvLE93SUCwWw9TUcfK_Wpjw96dGCH48IWassu_MxqDvEM11ou71-qZDV7CI_TILLdvg6YuVn82fBihBircloglTOlsdnhNFruFju067emjL5Bc5UAqzczDXjxA5_dk_adq2VGuboqLKBtwkpflwPYFZ-hXER9_kH5NOm5_6fFeVR0uVE4SRgQ97gs5sTn_6HQMtN98mBLmE"/>
+</div>
+<h1 class="text-xl font-bold text-blue-600 font-manrope">صحتي</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-50 transition-colors">
+<span class="material-symbols-outlined text-slate-500" data-icon="notifications">notifications</span>
+</button>
+</header>
+<!-- Main Content -->
+<main class="mt-16 px-screen-edge py-6">
+<!-- Search & View Control -->
+<div class="flex flex-col gap-4 mb-6">
+<div class="relative">
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" data-icon="search">search</span>
+<input class="w-full h-[52px] pr-12 pl-4 bg-white border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none text-body" placeholder="البحث في الملفات الطبية..." type="text"/>
+</div>
+<div class="flex items-center justify-between">
+<h2 class="font-h2 text-h2">ملفاتي</h2>
+<div class="flex p-1 bg-slate-100 rounded-lg">
+<button class="p-2 bg-white shadow-sm rounded-md text-primary">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+</button>
+<button class="p-2 text-slate-400">
+<span class="material-symbols-outlined" data-icon="view_list">view_list</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Filter Chips -->
+<div class="flex gap-3 overflow-x-auto pb-4 -mx-screen-edge px-screen-edge no-scrollbar">
+<button class="px-5 py-2 rounded-full bg-primary text-white whitespace-nowrap font-medium text-caption shadow-lg shadow-primary/20">الكل</button>
+<button class="px-5 py-2 rounded-full bg-white border border-border text-text-secondary whitespace-nowrap font-medium text-caption hover:border-primary transition-colors">المختبر</button>
+<button class="px-5 py-2 rounded-full bg-white border border-border text-text-secondary whitespace-nowrap font-medium text-caption hover:border-primary transition-colors">الأشعة</button>
+<button class="px-5 py-2 rounded-full bg-white border border-border text-text-secondary whitespace-nowrap font-medium text-caption hover:border-primary transition-colors">الوصفات</button>
+<button class="px-5 py-2 rounded-full bg-white border border-border text-text-secondary whitespace-nowrap font-medium text-caption hover:border-primary transition-colors">التقارير</button>
+</div>
+<!-- Bento Grid Files -->
+<div class="bento-grid mt-2">
+<!-- Lab Result Card -->
+<div class="bg-white p-card-padding rounded-xl shadow-[0_2px_12px_rgba(0,0,0,0.05)] border border-slate-50 flex flex-col gap-3">
+<div class="w-12 h-12 rounded-xl bg-status-taken-bg flex items-center justify-center text-status-taken-text">
+<span class="material-symbols-outlined text-3xl" data-icon="lab_research">lab_research</span>
+</div>
+<div>
+<h3 class="font-h3 text-h3 text-text-primary line-clamp-1">تحليل الدم الشامل</h3>
+<p class="text-caption text-text-secondary mt-1">12 أكتوبر 2023</p>
+</div>
+<div class="flex items-center justify-between mt-auto">
+<span class="text-[11px] font-bold text-status-taken-text bg-status-taken-bg px-2 py-1 rounded">PDF</span>
+<button class="text-slate-400"><span class="material-symbols-outlined" data-icon="more_vert">more_vert</span></button>
+</div>
+</div>
+<!-- X-Ray Card (Asymmetric Span) -->
+<div class="bg-white p-card-padding rounded-xl shadow-[0_2px_12px_rgba(0,0,0,0.05)] border border-slate-50 flex flex-col gap-3">
+<div class="w-12 h-12 rounded-xl bg-status-upcoming-bg flex items-center justify-center text-status-upcoming-text">
+<span class="material-symbols-outlined text-3xl" data-icon="radiology">radiology</span>
+</div>
+<div>
+<h3 class="font-h3 text-h3 text-text-primary line-clamp-1">أشعة سينية للصدر</h3>
+<p class="text-caption text-text-secondary mt-1">05 أكتوبر 2023</p>
+</div>
+<div class="flex items-center justify-between mt-auto">
+<span class="text-[11px] font-bold text-status-upcoming-text bg-status-upcoming-bg px-2 py-1 rounded">JPG</span>
+<button class="text-slate-400"><span class="material-symbols-outlined" data-icon="more_vert">more_vert</span></button>
+</div>
+</div>
+<!-- Prescription Card (Full Width) -->
+<div class="col-span-2 bg-white p-card-padding rounded-xl shadow-[0_2px_12px_rgba(0,0,0,0.05)] border border-slate-50 flex items-center gap-4">
+<div class="w-14 h-14 rounded-xl bg-amber-50 flex items-center justify-center text-warning">
+<span class="material-symbols-outlined text-3xl" data-icon="prescriptions">prescriptions</span>
+</div>
+<div class="flex-1">
+<h3 class="font-h3 text-h3 text-text-primary">وصفة مضاد حيوي</h3>
+<p class="text-caption text-text-secondary mt-0.5">صيدلية المجتمع • 28 سبتمبر</p>
+</div>
+<div class="flex flex-col items-end gap-2">
+<button class="w-8 h-8 flex items-center justify-center rounded-lg bg-slate-50 text-slate-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="download">download</span>
+</button>
+<span class="text-[10px] text-text-secondary">1.2 MB</span>
+</div>
+</div>
+<!-- Lab Result 2 -->
+<div class="bg-white p-card-padding rounded-xl shadow-[0_2px_12px_rgba(0,0,0,0.05)] border border-slate-50 flex flex-col gap-3">
+<div class="w-12 h-12 rounded-xl bg-status-taken-bg flex items-center justify-center text-status-taken-text">
+<span class="material-symbols-outlined text-3xl" data-icon="biotech">biotech</span>
+</div>
+<div>
+<h3 class="font-h3 text-h3 text-text-primary line-clamp-1">مستوى السكر التراكمي</h3>
+<p class="text-caption text-text-secondary mt-1">20 سبتمبر 2023</p>
+</div>
+<div class="flex items-center justify-between mt-auto">
+<span class="text-[11px] font-bold text-status-taken-text bg-status-taken-bg px-2 py-1 rounded">PDF</span>
+<button class="text-slate-400"><span class="material-symbols-outlined" data-icon="more_vert">more_vert</span></button>
+</div>
+</div>
+<!-- Generic Document -->
+<div class="bg-white p-card-padding rounded-xl shadow-[0_2px_12px_rgba(0,0,0,0.05)] border border-slate-50 flex flex-col gap-3">
+<div class="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center text-slate-500">
+<span class="material-symbols-outlined text-3xl" data-icon="description">description</span>
+</div>
+<div>
+<h3 class="font-h3 text-h3 text-text-primary line-clamp-1">تقرير طبي عام</h3>
+<p class="text-caption text-text-secondary mt-1">15 سبتمبر 2023</p>
+</div>
+<div class="flex items-center justify-between mt-auto">
+<span class="text-[11px] font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded">DOCX</span>
+<button class="text-slate-400"><span class="material-symbols-outlined" data-icon="more_vert">more_vert</span></button>
+</div>
+</div>
+</div>
+<!-- Recent Activity Section -->
+<div class="mt-8 mb-4">
+<h2 class="font-h2 text-h2 mb-4">النشاط الأخير</h2>
+<div class="space-y-3">
+<div class="flex items-center gap-4 p-3 bg-white rounded-xl border border-slate-50">
+<div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-600">
+<span class="material-symbols-outlined text-xl" data-icon="cloud_upload">cloud_upload</span>
+</div>
+<div class="flex-1">
+<p class="text-body font-medium">تم رفع "تحليل الدم"</p>
+<p class="text-[12px] text-text-secondary">منذ ساعتين</p>
+</div>
+</div>
+<div class="flex items-center gap-4 p-3 bg-white rounded-xl border border-slate-50">
+<div class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400">
+<span class="material-symbols-outlined text-xl" data-icon="share">share</span>
+</div>
+<div class="flex-1">
+<p class="text-body font-medium">تمت مشاركة الملف مع د. أحمد</p>
+<p class="text-[12px] text-text-secondary">أمس، 4:30 مساءً</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Upload FAB -->
+<button class="fixed bottom-24 left-6 w-14 h-14 bg-primary text-white rounded-full shadow-xl shadow-primary/30 flex items-center justify-center z-40 active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-3xl" data-icon="add">add</span>
+</button>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 pb-safe bg-white/90 backdrop-blur-md shadow-[0_-2px_12px_rgba(0,0,0,0.05)] border-t border-slate-100 h-20">
+<div class="flex flex-col items-center justify-center text-slate-400 font-manrope text-[10px] font-medium active:scale-95 transition-all duration-200">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="mt-1">الرئيسية</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-400 font-manrope text-[10px] font-medium active:scale-95 transition-all duration-200">
+<span class="material-symbols-outlined" data-icon="medication">medication</span>
+<span class="mt-1">الأدوية</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-400 font-manrope text-[10px] font-medium active:scale-95 transition-all duration-200">
+<span class="material-symbols-outlined" data-icon="bloodtype">bloodtype</span>
+<span class="mt-1">الأنسولين</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-400 font-manrope text-[10px] font-medium active:scale-95 transition-all duration-200">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+<span class="mt-1">المواعيد</span>
+</div>
+<!-- Active Tab: الملف -->
+<div class="flex flex-col items-center justify-center text-blue-600 scale-105 font-manrope text-[10px] font-bold transition-all duration-200">
+<span class="material-symbols-outlined" data-icon="folder_open" style="font-variation-settings: 'FILL' 1;">folder_open</span>
+<span class="mt-1">الملف</span>
+</div>
+</nav>
+</body></html>
