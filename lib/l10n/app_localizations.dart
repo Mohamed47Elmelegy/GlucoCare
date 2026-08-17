@@ -961,6 +961,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Dangerous'**
   String get statusDangerous;
+
+  /// App subtitle on login screen
+  ///
+  /// In en, this message translates to:
+  /// **'Your health in your hands'**
+  String get appSubtitle;
+
+  /// Divider text for alternative actions
+  ///
+  /// In en, this message translates to:
+  /// **'OR'**
+  String get orDivider;
+
+  /// Label for phone number field
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number'**
+  String get phoneLabel;
+
+  /// Validation message for phone number
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your phone number'**
+  String get enterPhone;
+
+  /// Subtitle for the sign up screen
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your details to start'**
+  String get startJourneySubtitle;
 }
 
 class _AppLocalizationsDelegate

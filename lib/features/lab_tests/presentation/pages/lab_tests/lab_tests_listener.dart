@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/constants/app_colors.dart';
-import '../../bloc/lab_test_bloc.dart';
-import '../../bloc/lab_test_event.dart';
-import '../../bloc/lab_test_state.dart';
+import '../../cubit/lab_test_cubit.dart';
+import '../../cubit/lab_test_state.dart';
 import 'lab_tests_view.dart';
 import '../../../domain/entities/lab_test.dart';
 
@@ -14,9 +13,9 @@ class LabTestsListener extends StatelessWidget {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () async {
-        context.read<LabTestBloc>().add(const SyncLabTestsEvent());
+        context.read<LabTestCubit>().syncLabTests();
       },
-      child: BlocConsumer<LabTestBloc, LabTestState>(
+      child: BlocConsumer<LabTestCubit, LabTestState>(
         listener: (context, state) {
           if (state is LabTestError) {
             ScaffoldMessenger.of(context).showSnackBar(

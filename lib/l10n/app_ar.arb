@@ -198,7 +198,9 @@
         "description": "Health status label for very high blood sugar levels"
     },
     "statusDangerous": "خطير جدًا",
-    "@statusDangerous": {
-        "description": "Health status label for dangerous blood sugar levels"
-    }
+    "appSubtitle": "صحتك في يدك",
+    "orDivider": "أو",
+    "phoneLabel": "رقم الهاتف",
+    "enterPhone": "يرجى إدخال رقم الهاتف",
+    "startJourneySubtitle": "أدخل بياناتك للبدء"
 }

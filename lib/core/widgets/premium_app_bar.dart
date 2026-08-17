@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../extensions/context_extension.dart';
+import '../constants/app_colors.dart';
+import '../constants/app_text_styles.dart';
 
 class PremiumAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -20,7 +21,7 @@ class PremiumAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: Text(
         title,
-        style: context.textTheme.titleLarge?.copyWith(
+        style: AppTextStyles.h3.copyWith(
           fontWeight: FontWeight.bold,
           letterSpacing: -0.5,
         ),
@@ -29,7 +30,7 @@ class PremiumAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: leading,
       centerTitle: centerTitle,
       elevation: 0,
-      backgroundColor: Colors.transparent,
+      backgroundColor: AppColors.transparent,
     );
   }
 

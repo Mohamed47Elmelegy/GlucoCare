@@ -2,12 +2,11 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_test_ai/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:flutter_test_ai/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:flutter_test_ai/l10n/app_localizations.dart';
 import '../../../../core/routes/route_constants.dart';
-import '../bloc/medication_bloc.dart';
-import '../bloc/medication_event.dart';
-import '../bloc/medication_state.dart';
+import '../cubit/medication_cubit.dart';
+import '../cubit/medication_state.dart';
 import '../../domain/entities/medication.dart';
 import '../../domain/entities/dose_history.dart';
 import '../../domain/entities/dose_status.dart';
@@ -29,7 +28,7 @@ class _DashboardPageState extends State<DashboardPage> {
   @override
   void initState() {
     super.initState();
-    context.read<MedicationBloc>().add(LoadTodaySchedule(DateTime.now()));
+    context.read<MedicationCubit>().loadTodaySchedule(date: DateTime.now());
   }
 
   @override
@@ -39,7 +38,7 @@ class _DashboardPageState extends State<DashboardPage> {
 
     return Scaffold(
       backgroundColor: colorScheme.surface,
-      body: BlocConsumer<MedicationBloc, MedicationState>(
+      body: BlocConsumer<MedicationCubit, MedicationState>(
         listener: (context, state) {
           if (state is MedicationActionSuccess) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -49,8 +48,8 @@ class _DashboardPageState extends State<DashboardPage> {
                 behavior: SnackBarBehavior.floating,
               ),
             );
-            context.read<MedicationBloc>().add(
-              LoadTodaySchedule(DateTime.now()),
+            context.read<MedicationCubit>().loadTodaySchedule(
+              date: DateTime.now(),
             );
           } else if (state is MedicationError) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -93,9 +92,8 @@ class _DashboardPageState extends State<DashboardPage> {
                 const SizedBox(height: 16),
                 Text(l10n.errorOccurred),
                 TextButton(
-                  onPressed: () => context.read<MedicationBloc>().add(
-                    LoadTodaySchedule(DateTime.now()),
-                  ),
+                  onPressed: () => context.read<MedicationCubit>()
+                      .loadTodaySchedule(date: DateTime.now()),
                   child: Text(l10n.retry),
                 ),
               ],
@@ -173,10 +171,10 @@ class _DashboardContent extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            BlocBuilder<AuthBloc, AuthState>(
+                            BlocBuilder<AuthCubit, AuthState>(
                               builder: (context, authState) {
                                 String name = l10n.userName;
-                                if (authState is AuthSuccess) {
+                                if (authState is AuthAuthenticated) {
                                   name = authState.user.name;
                                 }
                                 return Column(
@@ -424,9 +422,7 @@ class _DashboardContent extends StatelessWidget {
                                   status: DoseStatus.taken,
                                   notes: '',
                                 );
-                                context.read<MedicationBloc>().add(
-                                  MarkMedicationAsTaken(hist),
-                                );
+                                context.read<MedicationCubit>().markMedicationAsTaken(history: hist);
                               },
                             ),
                           ),

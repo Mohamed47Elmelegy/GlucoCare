@@ -1,100 +1,89 @@
 import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
-import '../extensions/context_extension.dart';
+import '../constants/app_text_styles.dart';
 
 class AppButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
   final bool isLoading;
-  final LinearGradient? gradient;
-  final List<BoxShadow>? boxShadow;
-  final double fontSize;
-  final EdgeInsets padding;
-
   final bool isSecondary;
-  final bool isOutline;
+  final bool isDanger;
+  final bool isOutline; // Restored for compatibility
+  final LinearGradient? gradient; // Restored for compatibility
+  final List<BoxShadow>? boxShadow; // Restored for compatibility
+  final double? width;
+  final double height;
+  final double fontSize;
+  final EdgeInsets? padding;
 
   const AppButton({
     super.key,
     required this.text,
     required this.onPressed,
     this.isLoading = false,
+    this.isSecondary = false,
+    this.isDanger = false,
+    this.isOutline = false,
     this.gradient,
     this.boxShadow,
-    this.fontSize = 18,
-    this.padding = const EdgeInsets.symmetric(vertical: 18),
-    this.isSecondary = false,
-    this.isOutline = false,
+    this.width,
+    this.height = 52,
+    this.fontSize = 16,
+    this.padding,
   });
 
   @override
   Widget build(BuildContext context) {
+    final bool effectiveSecondary = isSecondary || isOutline;
+
+    return SizedBox(
+      width: width ?? double.infinity,
+      height: height,
+      child: effectiveSecondary
+          ? OutlinedButton(
+              onPressed: isLoading ? null : onPressed,
+              style: OutlinedButton.styleFrom(
+                side: const BorderSide(color: AppColors.primary, width: 1.5),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                padding: padding,
+              ),
+              child: _buildChild(context, AppColors.primary),
+            )
+          : ElevatedButton(
+              onPressed: isLoading ? null : onPressed,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: isDanger ? AppColors.danger : AppColors.primary,
+                foregroundColor: AppColors.onPrimary,
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                padding: padding,
+              ),
+              child: _buildChild(context, AppColors.onPrimary),
+            ),
+    );
+  }
+
+  Widget _buildChild(BuildContext context, Color textColor) {
     if (isLoading) {
-      return const Center(
-        child: CircularProgressIndicator(color: AppColors.premiumMint),
-      );
-    }
-
-    final colorScheme = context.colorScheme;
-
-    if (isOutline) {
-      return OutlinedButton(
-        onPressed: onPressed,
-        style: OutlinedButton.styleFrom(
-          padding: padding,
-          side: BorderSide(color: colorScheme.primary, width: 2),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-        ),
-        child: Text(
-          text,
-          style: TextStyle(
-            fontSize: fontSize,
-            fontWeight: FontWeight.bold,
-            color: colorScheme.primary,
-          ),
+      return SizedBox(
+        height: 20,
+        width: 20,
+        child: CircularProgressIndicator(
+          strokeWidth: 2,
+          valueColor: AlwaysStoppedAnimation<Color>(textColor),
         ),
       );
     }
-
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        gradient: isSecondary ? null : (gradient ?? AppColors.premiumGradient),
-        color: isSecondary ? colorScheme.secondaryContainer : null,
-        boxShadow: isSecondary
-            ? null
-            : (boxShadow ??
-                  [
-                    BoxShadow(
-                      color: (gradient?.colors.first ?? AppColors.premiumMint)
-                          .withValues(alpha: 0.3),
-                      blurRadius: 12,
-                      offset: const Offset(0, 4),
-                    ),
-                  ]),
-      ),
-      child: ElevatedButton(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.transparent,
-          shadowColor: Colors.transparent,
-          padding: padding,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-        ),
-        child: Text(
-          text,
-          style: TextStyle(
-            fontSize: fontSize,
-            fontWeight: FontWeight.bold,
-            color: isSecondary
-                ? colorScheme.onSecondaryContainer
-                : Colors.white,
-          ),
-        ),
+    return Text(
+      text,
+      style: AppTextStyles.labelLarge.copyWith(
+        color: textColor,
+        fontWeight: FontWeight.bold,
+        fontSize: fontSize,
       ),
     );
   }

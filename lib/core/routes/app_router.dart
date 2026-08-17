@@ -9,20 +9,20 @@ import '../../features/medication/presentation/pages/add_medication_page.dart';
 import '../../features/medication/presentation/pages/edit_medication_page.dart';
 import '../../features/medication/presentation/pages/medication_history/medication_history_page.dart';
 import '../../features/medication/presentation/pages/insulin_readings/insulin_readings_page.dart';
-import '../../features/lab_tests/presentation/pages/lab_tests/lab_tests_page.dart';
-import '../../injection_container.dart';
+import '../../features/lab_tests/presentation/pages/lab_tests_page.dart';
+import '../../core/di/injection_container.dart';
 import '../../features/auth/presentation/pages/edit_profile/edit_profile_page.dart';
 import '../../features/medication/presentation/pages/intake_todo_page.dart';
 
 import '../utils/go_router_refresh_stream.dart';
-import '../../features/auth/presentation/bloc/auth_bloc.dart';
+import '../../features/auth/presentation/cubit/auth_cubit.dart';
 import 'route_constants.dart';
 
 final GoRouter appRouter = GoRouter(
   initialLocation: RouteConstants.splash,
-  refreshListenable: GoRouterRefreshStream(sl<AuthBloc>().stream),
+  refreshListenable: GoRouterRefreshStream(sl<AuthCubit>().stream),
   redirect: (context, state) {
-    final authState = sl<AuthBloc>().state;
+    final authState = sl<AuthCubit>().state;
     final bool loggingIn =
         state.matchedLocation == RouteConstants.login ||
         state.matchedLocation == RouteConstants.createAccount ||
@@ -30,7 +30,7 @@ final GoRouter appRouter = GoRouter(
 
     if (authState is AuthLoading || authState is AuthInitial) return null;
 
-    final bool authenticated = authState is AuthSuccess;
+    final bool authenticated = authState is AuthAuthenticated;
 
     if (!authenticated) {
       if (loggingIn) return null;

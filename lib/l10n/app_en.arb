@@ -590,5 +590,25 @@
     "statusDangerous": "Dangerous",
     "@statusDangerous": {
         "description": "Health status label for dangerous blood sugar levels"
+    },
+    "appSubtitle": "Your health in your hands",
+    "@appSubtitle": {
+        "description": "App subtitle on login screen"
+    },
+    "orDivider": "OR",
+    "@orDivider": {
+        "description": "Divider text for alternative actions"
+    },
+    "phoneLabel": "Phone Number",
+    "@phoneLabel": {
+        "description": "Label for phone number field"
+    },
+    "enterPhone": "Please enter your phone number",
+    "@enterPhone": {
+        "description": "Validation message for phone number"
+    },
+    "startJourneySubtitle": "Enter your details to start",
+    "@startJourneySubtitle": {
+        "description": "Subtitle for the sign up screen"
     }
 }

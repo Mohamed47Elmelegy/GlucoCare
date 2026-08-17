@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:flutter_test_ai/features/medication/presentation/bloc/medication_state.dart';
+import 'package:flutter_test_ai/features/medication/presentation/cubit/medication_state.dart';
 import 'package:flutter_test_ai/features/home/domain/entities/medication_timeline_item.dart';
 import 'premium_medication_timeline.dart';
 import '../../../../l10n/app_localizations.dart';

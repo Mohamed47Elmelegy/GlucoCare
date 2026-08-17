@@ -15,16 +15,14 @@ import 'features/medication/data/models/dose_history_model.dart';
 import 'features/medication/data/models/insulin_reading_model.dart';
 import 'features/lab_tests/data/models/lab_test_model.dart';
 import 'features/medication/data/models/intake_task_model.dart';
-import 'features/lab_tests/presentation/bloc/lab_test_bloc.dart';
-import 'features/medication/presentation/bloc/intake_bloc.dart';
-import 'features/medication/presentation/bloc/intake_event.dart';
-
-import 'features/medication/presentation/bloc/medication_bloc.dart';
-import 'features/medication/presentation/bloc/insulin_bloc.dart';
-import 'features/auth/presentation/bloc/auth_bloc.dart';
+import 'features/lab_tests/presentation/cubit/lab_test_cubit.dart';
+import 'features/medication/presentation/cubit/intake_cubit.dart';
+import 'features/medication/presentation/cubit/medication_cubit.dart';
+import 'features/medication/presentation/cubit/insulin_cubit.dart';
+import 'features/auth/presentation/cubit/auth_cubit.dart';
 import 'core/theme/bloc/theme_cubit.dart';
 import 'core/localization/bloc/locale_cubit.dart';
-import 'injection_container.dart' as di;
+import 'core/di/injection_container.dart' as di;
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'core/theme/app_theme.dart';
@@ -63,15 +61,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => di.sl<AuthBloc>()..add(AppStarted())),
-        BlocProvider(create: (_) => di.sl<MedicationBloc>()),
-        BlocProvider(create: (_) => di.sl<InsulinBloc>()),
-        BlocProvider(create: (_) => di.sl<LabTestBloc>()),
+        BlocProvider(create: (_) => di.sl<AuthCubit>()..checkAuthStatus()),
+        BlocProvider(create: (_) => di.sl<MedicationCubit>()),
+        BlocProvider(create: (_) => di.sl<InsulinCubit>()),
+        BlocProvider(create: (_) => di.sl<LabTestCubit>()),
         BlocProvider(create: (_) => di.sl<ThemeCubit>()),
         BlocProvider(create: (_) => di.sl<LocaleCubit>()),
         BlocProvider(
-          create: (_) => di.sl<IntakeBloc>()
-            ..add(IntakeTasksLoadRequested(date: DateTime.now())),
+          create: (_) => di.sl<IntakeCubit>()
+            ..loadTasks(date: DateTime.now()),
         ),
       ],
       child: BlocBuilder<ThemeCubit, ThemeMode>(

@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../../../../core/extensions/context_extension.dart';
-import '../bloc/medication_bloc.dart';
-import '../bloc/medication_event.dart';
-import '../bloc/medication_state.dart';
+import '../cubit/medication_cubit.dart';
+import '../cubit/medication_state.dart';
 import 'medication_list_page_body.dart';
 
 class MedicationListPageBodyConsumer extends StatelessWidget {
@@ -14,13 +13,13 @@ class MedicationListPageBodyConsumer extends StatelessWidget {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () async {
-        context.read<MedicationBloc>().add(const SyncMedicationsEvent());
+        context.read<MedicationCubit>().syncMedications();
       },
-      child: BlocConsumer<MedicationBloc, MedicationState>(
+      child: BlocConsumer<MedicationCubit, MedicationState>(
         listener: (context, state) {
           if (state is MedicationActionSuccess) {
-            context.read<MedicationBloc>().add(
-              LoadTodaySchedule(DateTime.now()),
+            context.read<MedicationCubit>().loadTodaySchedule(
+              date: DateTime.now(),
             );
           }
         },
@@ -54,9 +53,7 @@ class MedicationListPageBodyConsumer extends StatelessWidget {
                     const SizedBox(height: 16),
                     Text(context.l10n.errorOccurred),
                     TextButton(
-                      onPressed: () => context.read<MedicationBloc>().add(
-                        const GetMedicationsEvent(),
-                      ),
+                      onPressed: () => context.read<MedicationCubit>().getMedications(),
                       child: Text(context.l10n.retry),
                     ),
                   ],
@@ -81,9 +78,7 @@ class MedicationListPageBodyConsumer extends StatelessWidget {
                   const SizedBox(height: 16),
                   Text(context.l10n.noMedicationsScheduled),
                   TextButton(
-                    onPressed: () => context.read<MedicationBloc>().add(
-                      const GetMedicationsEvent(),
-                    ),
+                    onPressed: () => context.read<MedicationCubit>().getMedications(),
                     child: Text(context.l10n.retry),
                   ),
                 ],

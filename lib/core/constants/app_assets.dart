@@ -1,5 +1,6 @@
 class AppAssets {
   static const String iconsPath = 'assets/icons';
+  static const String imagesPath = 'assets/images';
 
   // Icons
   static const String appLogo = '$iconsPath/app_logo.png';
@@ -17,4 +18,7 @@ class AppAssets {
   // UI Icons
   static const String check = '$iconsPath/check.png';
   static const String emptyState = '$iconsPath/empty_state.png';
+
+  // Images
+  static const String appIcon = '$imagesPath/app_icon.png';
 }

@@ -1,6 +1,6 @@
 import 'dart:developer';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import '../../injection_container.dart' as di;
+import '../di/injection_container.dart' as di;
 import '../../features/medication/domain/usecases/mark_intake_task.dart';
 import '../../features/medication/domain/entities/intake_status.dart';
 import '../../features/medication/domain/usecases/reschedule_on_snooze.dart';

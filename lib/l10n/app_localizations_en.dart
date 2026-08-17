@@ -445,4 +445,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get statusDangerous => 'Dangerous';
+
+  @override
+  String get appSubtitle => 'Your health in your hands';
+
+  @override
+  String get orDivider => 'OR';
+
+  @override
+  String get phoneLabel => 'Phone Number';
+
+  @override
+  String get enterPhone => 'Please enter your phone number';
+
+  @override
+  String get startJourneySubtitle => 'Enter your details to start';
 }

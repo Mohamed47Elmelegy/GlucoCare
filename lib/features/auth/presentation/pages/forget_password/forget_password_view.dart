@@ -1,9 +1,8 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../../../../../core/constants/app_colors.dart';
+import '../../../../../core/constants/app_text_styles.dart';
 import '../../../../../core/widgets/app_text_field.dart';
-import '../../../../../core/widgets/app_background.dart';
 import '../../../../../core/widgets/app_button.dart';
 import '../../../../../core/widgets/app_header.dart';
 import '../../../../../l10n/app_localizations.dart';
@@ -41,72 +40,79 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    return AppBackground(
-      child: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return SafeArea(
+      child: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 24.0),
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 480),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                AppHeader(
-                  title: l10n.recoveryTitle,
-                  subtitle: l10n.recoverySubtitle,
-                  icon: PhosphorIcons.key(PhosphorIconsStyle.bold),
-                ),
-                const SizedBox(height: 40),
-                _buildResetForm(l10n),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildResetForm(AppLocalizations l10n) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(30),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-        child: Container(
-          padding: const EdgeInsets.all(32),
-          decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.05),
-            borderRadius: BorderRadius.circular(30),
-            border: Border.all(
-              color: Colors.white.withValues(alpha: 0.1),
-              width: 1.5,
-            ),
-          ),
-          child: Form(
-            key: _formKey,
-            child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                AppTextField(
-                  controller: _emailController,
-                  label: l10n.emailLabel,
-                  icon: PhosphorIcons.envelopeSimple(),
-                  keyboardType: TextInputType.emailAddress,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) return l10n.enterEmail;
-                    if (!value.contains('@')) return l10n.enterValidEmail;
-                    return null;
-                  },
+                AppHeader(
+                  title: 'صحتي',
+                  subtitle: l10n.recoverySubtitle,
+                  icon: PhosphorIconsFill.key,
                 ),
-                const SizedBox(height: 40),
-                AppButton(
-                  text: l10n.sendRecoveryLink,
-                  onPressed: _onResetPressed,
-                  isLoading: widget.isLoading,
-                  gradient: LinearGradient(
-                    colors: [
-                      AppColors.premiumAqua,
-                      AppColors.premiumAqua.withValues(alpha: 0.7),
+                const SizedBox(height: 32),
+                Container(
+                  padding: const EdgeInsets.all(24),
+                  decoration: BoxDecoration(
+                    color: isDark ? AppColors.darkSurface : AppColors.surface,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(
+                      color: isDark ? AppColors.darkBorder : AppColors.border,
+                      width: 1,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: isDark ? 0.2 : 0.05),
+                        blurRadius: 16,
+                        offset: const Offset(0, 4),
+                      ),
                     ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
+                  ),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Text(
+                          l10n.recoveryTitle,
+                          style: AppTextStyles.h2.copyWith(
+                            color: isDark ? AppColors.darkText : AppColors.textPrimary,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          l10n.recoverySubtitle,
+                          style: AppTextStyles.caption.copyWith(
+                            color: AppColors.textSecondary,
+                          ),
+                        ),
+                        const SizedBox(height: 24),
+                        AppTextField(
+                          controller: _emailController,
+                          label: l10n.emailLabel,
+                          icon: PhosphorIconsRegular.envelopeSimple,
+                          keyboardType: TextInputType.emailAddress,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) return l10n.enterEmail;
+                            if (!value.contains('@')) return l10n.enterValidEmail;
+                            return null;
+                          },
+                        ),
+                        const SizedBox(height: 28),
+                        AppButton(
+                          text: l10n.sendRecoveryLink,
+                          onPressed: _onResetPressed,
+                          isLoading: widget.isLoading,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],

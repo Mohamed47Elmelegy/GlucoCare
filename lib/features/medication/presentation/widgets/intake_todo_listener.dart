@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/extensions/context_extension.dart';
-import '../bloc/intake_bloc.dart';
-import '../bloc/intake_state.dart';
+import '../cubit/intake_cubit.dart';
+import '../cubit/intake_state.dart';
 
 class IntakeTodoListener extends StatelessWidget {
   final Widget child;
@@ -14,7 +14,7 @@ class IntakeTodoListener extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<IntakeBloc, IntakeState>(
+    return BlocListener<IntakeCubit, IntakeState>(
       listener: (context, state) {
         if (state is IntakeActionSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:uuid/uuid.dart';
-import '../../../../../core/extensions/context_extension.dart';
-import '../../../../../core/widgets/premium_app_bar.dart';
+import '../../../../../core/constants/app_colors.dart';
+import '../../../../../core/constants/app_text_styles.dart';
+import '../../../../../core/widgets/app_top_bar.dart';
+import '../../../../../core/widgets/app_button.dart';
+import '../../../../../core/widgets/app_text_field.dart';
 import '../../../domain/entities/insulin_reading.dart';
-import '../../bloc/insulin_bloc.dart';
-import '../../bloc/insulin_event.dart';
-import '../../utils/insulin_reading_ui_extensions.dart';
+import '../../cubit/insulin_cubit.dart';
 import 'insulin_readings_listener.dart';
 
 class InsulinReadingsPage extends StatefulWidget {
@@ -21,18 +23,10 @@ class _InsulinReadingsPageState extends State<InsulinReadingsPage> {
   final _noteController = TextEditingController();
   ReadingType _selectedReadingType = ReadingType.fasting;
 
-  List<ReadingType> get _readingTypes => ReadingType.values;
-
   @override
   void initState() {
     super.initState();
-    context.read<InsulinBloc>().add(const LoadInsulinReadings());
-    _selectedReadingType = ReadingType.fasting;
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+    context.read<InsulinCubit>().loadReadings();
   }
 
   @override
@@ -54,10 +48,16 @@ class _InsulinReadingsPageState extends State<InsulinReadingsPage> {
       note: _noteController.text.isEmpty ? null : _noteController.text,
     );
 
-    context.read<InsulinBloc>().add(AddInsulinReadingEvent(reading));
+    context.read<InsulinCubit>().addReading(reading: reading);
     Navigator.pop(context);
     _readingController.clear();
     _noteController.clear();
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('تم تسجيل قراءة السكر بنجاح'),
+        backgroundColor: AppColors.primary,
+      ),
+    );
   }
 
   void _showAddDialog() {
@@ -66,111 +66,101 @@ class _InsulinReadingsPageState extends State<InsulinReadingsPage> {
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) => StatefulBuilder(
-        builder: (context, setModalState) => Padding(
-          padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewInsets.bottom,
-          ),
-          child: Container(
-            padding: const EdgeInsets.fromLTRB(24, 24, 24, 40),
-            decoration: BoxDecoration(
-              color: context.colorScheme.surface,
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
+        builder: (context, setModalState) {
+          final isDark = Theme.of(context).brightness == Brightness.dark;
+
+          return Padding(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom,
             ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                  child: Container(
-                    width: 40,
-                    height: 4,
-                    decoration: BoxDecoration(
-                      color: context.colorScheme.outlineVariant,
-                      borderRadius: BorderRadius.circular(2),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  context.l10n.bloodSugarReading,
-                  style: context.textTheme.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 24),
-                DropdownButtonFormField<ReadingType>(
-                  initialValue: _selectedReadingType,
-                  decoration: InputDecoration(
-                    labelText: context.l10n.readingType,
-                    prefixIcon: const Icon(Icons.category),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                  ),
-                  items: _readingTypes.map((type) {
-                    return DropdownMenuItem<ReadingType>(
-                      value: type,
-                      child: Text(type.label(context)),
-                    );
-                  }).toList(),
-                  onChanged: (value) {
-                    if (value != null) {
-                      setModalState(() {
-                        _selectedReadingType = value;
-                      });
-                      setState(() {
-                        _selectedReadingType = value;
-                      });
-                    }
-                  },
-                ),
-                const SizedBox(height: 16),
-                TextField(
-                  controller: _readingController,
-                  keyboardType: const TextInputType.numberWithOptions(
-                    decimal: true,
-                  ),
-                  autofocus: true,
-                  decoration: InputDecoration(
-                    labelText: context.l10n.readingValue,
-                    prefixIcon: const Icon(Icons.show_chart),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                TextField(
-                  controller: _noteController,
-                  decoration: InputDecoration(
-                    labelText: context.l10n.notes,
-                    prefixIcon: const Icon(Icons.notes),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 24),
-                SizedBox(
-                  width: double.infinity,
-                  height: 56,
-                  child: ElevatedButton(
-                    onPressed: _addReading,
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
+            child: Container(
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                color: isDark ? AppColors.darkSurface : Colors.white,
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Center(
+                    child: Container(
+                      width: 40,
+                      height: 4,
+                      decoration: BoxDecoration(
+                        color: AppColors.border,
+                        borderRadius: BorderRadius.circular(2),
                       ),
                     ),
-                    child: Text(
-                      context.l10n.saveReading,
-                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    'تسجيل قراءة سكر جديدة',
+                    style: AppTextStyles.h2.copyWith(
+                      color: isDark ? AppColors.darkText : AppColors.textPrimary,
                     ),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 4),
+                  Text(
+                    'أدخل قيمة السكر وتوقيت القياس لمتابعة دقيقة',
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.textSecondary,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  AppTextField(
+                    controller: _readingController,
+                    label: 'قيمة السكر (mg/dL)',
+                    icon: PhosphorIconsRegular.drop,
+                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                  ),
+                  const SizedBox(height: 14),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 14),
+                    decoration: BoxDecoration(
+                      color: isDark ? AppColors.darkSurface : Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: AppColors.border),
+                    ),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<ReadingType>(
+                        value: _selectedReadingType,
+                        isExpanded: true,
+                        icon: const Icon(PhosphorIconsBold.caretDown, size: 16),
+                        style: AppTextStyles.body.copyWith(
+                          color: isDark ? AppColors.darkText : AppColors.textPrimary,
+                          fontSize: 14,
+                        ),
+                        items: const [
+                          DropdownMenuItem(value: ReadingType.fasting, child: Text('صائم')),
+                          DropdownMenuItem(value: ReadingType.postprandial, child: Text('بعد الأكل')),
+                          DropdownMenuItem(value: ReadingType.beforeSleep, child: Text('قبل النوم')),
+                          DropdownMenuItem(value: ReadingType.hba1c, child: Text('تراكمي')),
+                        ],
+                        onChanged: (val) {
+                          if (val != null) {
+                            setModalState(() => _selectedReadingType = val);
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 14),
+                  AppTextField(
+                    controller: _noteController,
+                    label: 'ملاحظات (اختياري)',
+                    icon: PhosphorIconsRegular.notePencil,
+                  ),
+                  const SizedBox(height: 24),
+                  AppButton(
+                    text: 'حفظ القراءة',
+                    onPressed: _addReading,
+                  ),
+                ],
+              ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }
@@ -178,19 +168,16 @@ class _InsulinReadingsPageState extends State<InsulinReadingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PremiumAppBar(
-        title: context.l10n.bloodSugarReadings,
-      ),
+      backgroundColor: AppColors.background,
+      appBar: const AppTopBar(title: 'صحتي'),
       body: const InsulinReadingsListener(),
       floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 80),
-        child: FloatingActionButton.extended(
+        padding: const EdgeInsets.only(bottom: 60),
+        child: FloatingActionButton(
           onPressed: _showAddDialog,
-          icon: const Icon(Icons.add),
-          label: Text(
-            context.l10n.add,
-            style: const TextStyle(fontWeight: FontWeight.bold),
-          ),
+          backgroundColor: AppColors.primary,
+          elevation: 6,
+          child: const Icon(PhosphorIconsBold.plus, color: Colors.white, size: 26),
         ),
       ),
     );

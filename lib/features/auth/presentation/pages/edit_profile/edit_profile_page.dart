@@ -11,7 +11,7 @@ import '../../../../../core/utils/snackbar_utils.dart';
 import '../../../../../core/widgets/premium_app_bar.dart';
 import '../../../../../core/extensions/context_extension.dart';
 import '../../../../../core/utils/dialog_utils.dart';
-import '../../bloc/auth_bloc.dart';
+import '../../cubit/auth_cubit.dart';
 import '../../widgets/profile_section.dart';
 
 class EditProfilePage extends StatefulWidget {
@@ -31,8 +31,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   void initState() {
     super.initState();
-    final authState = context.read<AuthBloc>().state;
-    if (authState is AuthSuccess) {
+    final authState = context.read<AuthCubit>().state;
+    if (authState is AuthAuthenticated) {
       _nameController.text = authState.user.name;
       _emailController.text = authState.user.email;
     }
@@ -52,12 +52,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
       final email = _emailController.text.trim();
       final password = _passwordController.text.trim();
       
-      context.read<AuthBloc>().add(
-        UpdateProfileRequested(
-          name: name,
-          email: email,
-          password: password,
-        ),
+      context.read<AuthCubit>().updateProfile(
+        name: name,
+        email: email,
+        password: password,
       );
     }
   }
@@ -71,7 +69,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       cancelText: context.l10n.cancel,
       confirmColor: context.colorScheme.error,
       onConfirm: () {
-        context.read<AuthBloc>().add(DeleteAccountRequested());
+        context.read<AuthCubit>().deleteAccount();
       },
     );
   }
@@ -87,16 +85,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
         ),
         title: context.l10n.accountInformation,
       ),
-      body: BlocConsumer<AuthBloc, AuthState>(
+      body: BlocConsumer<AuthCubit, AuthState>(
         listenWhen: (previous, current) {
-          return current is AuthSuccess || current is AuthFailure || current is AuthUnauthenticated;
+          return current is AuthAuthenticated || current is AuthError || current is AuthUnauthenticated;
         },
         listener: (context, state) {
-          if (state is AuthUpdateFailure) {
-            SnackBarUtils.showError(context, state.errorMessage);
-          } else if (state is AuthFailure) {
+          if (state is AuthUpdateError) {
             SnackBarUtils.showError(context, state.message);
-          } else if (state is AuthSuccess) {
+          } else if (state is AuthError) {
+            SnackBarUtils.showError(context, state.message);
+          } else if (state is AuthAuthenticated) {
             SnackBarUtils.showSuccess(context, context.l10n.profileUpdated);
             context.pop();
           } else if (state is AuthUnauthenticated) {

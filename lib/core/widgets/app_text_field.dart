@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
+import '../constants/app_text_styles.dart';
 import '../extensions/context_extension.dart';
 
 class AppTextField extends StatelessWidget {
@@ -41,54 +42,55 @@ class AppTextField extends StatelessWidget {
             ),
           ),
         ),
-        TextFormField(
-          controller: controller,
-          obscureText: obscureText,
-          keyboardType: keyboardType,
-          style: context.textTheme.bodyLarge?.copyWith(
-            color: context.colorScheme.onSurface,
-          ),
-          cursorColor: AppColors.premiumMint,
-          decoration: InputDecoration(
-            hintText: '$label...',
-            hintStyle: context.textTheme.bodyLarge?.copyWith(
-              color: context.colorScheme.onSurface.withValues(alpha: 0.3),
+        SizedBox(
+          height: 52,
+          child: TextFormField(
+            controller: controller,
+            obscureText: obscureText,
+            keyboardType: keyboardType,
+            style: AppTextStyles.bodyLarge.copyWith(
+              color: context.colorScheme.onSurface,
             ),
-            prefixIcon: Icon(
-              icon,
-              color: iconColor ?? (context.isDark ? AppColors.premiumMint : context.colorScheme.primary),
-              size: 22,
-            ),
-            suffixIcon: suffixIcon,
-            filled: true,
-            fillColor: context.isDark 
-                ? context.colorScheme.onSurface.withValues(alpha: 0.05)
-                : context.colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
-            contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(18),
-              borderSide: BorderSide(
-                color: context.colorScheme.outline.withValues(alpha: context.isDark ? 0.1 : 0.2),
+            cursorColor: AppColors.primary,
+            decoration: InputDecoration(
+              hintText: '$label...',
+              hintStyle: AppTextStyles.bodyLarge.copyWith(
+                color: context.colorScheme.onSurface.withValues(alpha: 0.3),
+              ),
+              prefixIcon: Icon(
+                icon,
+                color: iconColor ?? AppColors.primary,
+                size: 20,
+              ),
+              suffixIcon: suffixIcon,
+              filled: true,
+              fillColor: AppColors.surface,
+              contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: const BorderSide(
+                  color: AppColors.border,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: const BorderSide(
+                  color: AppColors.primary,
+                  width: 1.5,
+                ),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(color: context.colorScheme.error.withValues(alpha: 0.5)),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(color: context.colorScheme.error, width: 1.5),
               ),
             ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(18),
-              borderSide: BorderSide(
-                color: context.isDark ? AppColors.premiumMint : context.colorScheme.primary,
-                width: 2,
-              ),
-            ),
-            errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(18),
-              borderSide: BorderSide(color: context.colorScheme.error.withValues(alpha: 0.5)),
-            ),
-            focusedErrorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(18),
-              borderSide: BorderSide(color: context.colorScheme.error, width: 2),
-            ),
+            validator: validator,
+            onChanged: onChanged,
           ),
-          validator: validator,
-          onChanged: onChanged,
         ),
       ],
     );

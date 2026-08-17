@@ -5,8 +5,7 @@ import 'package:uuid/uuid.dart';
 import '../../../../core/extensions/context_extension.dart';
 import '../../../../core/widgets/premium_app_bar.dart';
 import '../../domain/entities/insulin_reading.dart';
-import '../bloc/insulin_bloc.dart';
-import '../bloc/insulin_event.dart';
+import '../cubit/insulin_cubit.dart';
 // removed insulin_state.dart
 import '../utils/insulin_reading_ui_extensions.dart';
 import '../widgets/insulin_readings_page_body_consumer.dart';
@@ -25,7 +24,7 @@ class _InsulinReadingsPageState extends State<InsulinReadingsPage> {
   @override
   void initState() {
     super.initState();
-    context.read<InsulinBloc>().add(const LoadInsulinReadings());
+    context.read<InsulinCubit>().loadReadings();
     _selectedReadingType = ReadingType.fasting;
   }
 
@@ -48,7 +47,7 @@ class _InsulinReadingsPageState extends State<InsulinReadingsPage> {
       note: _noteController.text.isEmpty ? null : _noteController.text,
     );
 
-    context.read<InsulinBloc>().add(AddInsulinReadingEvent(reading));
+    context.read<InsulinCubit>().addReading(reading: reading);
     Navigator.pop(context);
     _readingController.clear();
     _noteController.clear();

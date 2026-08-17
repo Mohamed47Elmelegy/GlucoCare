@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../constants/app_colors.dart';
+import '../constants/app_text_styles.dart';
 
 class AppHeader extends StatelessWidget {
   final String title;
@@ -18,46 +19,48 @@ class AppHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Column(
       children: [
         if (showLogo)
           Container(
-            padding: const EdgeInsets.all(20),
+            width: 72,
+            height: 72,
             decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: AppColors.premiumGradient,
+              color: AppColors.primary,
+              borderRadius: BorderRadius.circular(16),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.premiumMint.withValues(alpha: 0.3),
+                  color: AppColors.primary.withValues(alpha: 0.25),
                   blurRadius: 20,
-                  spreadRadius: 5,
+                  offset: const Offset(0, 8),
                 ),
               ],
             ),
-            child: Icon(
-              icon ?? PhosphorIcons.heartbeat(PhosphorIconsStyle.bold),
-              size: 48,
-              color: Colors.white,
+            child: Center(
+              child: Icon(
+                icon ?? PhosphorIconsFill.pill,
+                size: 38,
+                color: Colors.white,
+              ),
             ),
           ),
-        if (showLogo) const SizedBox(height: 24),
+        if (showLogo) const SizedBox(height: 20),
         Text(
           title,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 32,
-            fontWeight: FontWeight.w900,
-            letterSpacing: -1,
+          style: AppTextStyles.h1.copyWith(
+            color: AppColors.primary,
+            fontSize: 28,
+            fontWeight: FontWeight.w800,
           ),
           textAlign: TextAlign.center,
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 6),
         Text(
           subtitle,
-          style: TextStyle(
-            color: Colors.white.withValues(alpha: 0.6),
-            fontSize: 16,
-            fontWeight: FontWeight.w400,
+          style: AppTextStyles.body.copyWith(
+            color: isDark ? AppColors.darkText.withValues(alpha: 0.7) : AppColors.textSecondary,
           ),
           textAlign: TextAlign.center,
         ),
@@ -65,3 +68,4 @@ class AppHeader extends StatelessWidget {
     );
   }
 }
+

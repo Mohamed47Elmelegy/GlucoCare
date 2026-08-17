@@ -446,4 +446,19 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get statusDangerous => 'خطير جدًا';
+
+  @override
+  String get appSubtitle => 'صحتك في يدك';
+
+  @override
+  String get orDivider => 'أو';
+
+  @override
+  String get phoneLabel => 'رقم الهاتف';
+
+  @override
+  String get enterPhone => 'يرجى إدخال رقم الهاتف';
+
+  @override
+  String get startJourneySubtitle => 'أدخل بياناتك للبدء';
 }

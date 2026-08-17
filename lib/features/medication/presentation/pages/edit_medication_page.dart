@@ -3,17 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../../../../core/constants/app_colors.dart';
-import '../../../../core/extensions/context_extension.dart';
-import '../../../../core/widgets/premium_card.dart';
-import '../../../../core/widgets/premium_app_bar.dart';
+import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/widgets/app_button.dart';
+import '../../../../core/widgets/app_text_field.dart';
 import '../../domain/entities/medication.dart';
 import '../../domain/entities/medication_type.dart';
 import '../../domain/entities/meal_slot.dart';
 import '../../domain/entities/schedule_type.dart';
-import '../widgets/medication_form.dart';
-import '../bloc/medication_bloc.dart';
-import '../bloc/medication_event.dart';
-import '../bloc/medication_state.dart';
+import '../cubit/medication_cubit.dart';
+import '../cubit/medication_state.dart';
 
 class EditMedicationPage extends StatefulWidget {
   final Medication medication;
@@ -52,24 +50,6 @@ class _EditMedicationPageState extends State<EditMedicationPage> {
     _durationDays = widget.medication.durationDays;
   }
 
-  void _onMealSlotToggled(MealSlot slot) {
-    setState(() {
-      if (_selectedMealSlots.contains(slot)) {
-        if (_selectedMealSlots.length > 1) {
-          _selectedMealSlots.remove(slot);
-        }
-      } else {
-        _selectedMealSlots.add(slot);
-      }
-    });
-  }
-
-  void _onTimeChanged(MealSlot slot, TimeOfDay time) {
-    setState(() {
-      _customTimes[slot] = time;
-    });
-  }
-
   @override
   void dispose() {
     _nameController.dispose();
@@ -79,15 +59,14 @@ class _EditMedicationPageState extends State<EditMedicationPage> {
     super.dispose();
   }
 
-
   void _onSave() {
     if (_formKey.currentState!.validate()) {
       final updated = widget.medication.copyWith(
-        name: _nameController.text,
-        dosage: _dosageController.text,
-        unit: _unitController.text,
+        name: _nameController.text.trim(),
+        dosage: _dosageController.text.trim(),
+        unit: _unitController.text.trim(),
         type: _selectedType,
-        notes: _notesController.text,
+        notes: _notesController.text.trim(),
         mealSlots: _selectedMealSlots.toList(),
         customTimes: _customTimes,
         scheduleType: _selectedScheduleType,
@@ -95,111 +74,150 @@ class _EditMedicationPageState extends State<EditMedicationPage> {
         durationDays: _durationDays,
       );
 
-      context.read<MedicationBloc>().add(
-        UpdateMedicationEvent(medication: updated),
-      );
+      context.read<MedicationCubit>().updateMedication(medication: updated);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      appBar: PremiumAppBar(
-        title: context.l10n.editMedication,
+      backgroundColor: isDark ? AppColors.darkBackground : AppColors.background,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(
+            PhosphorIconsBold.caretLeft,
+            color: isDark ? AppColors.darkText : AppColors.textPrimary,
+          ),
+          onPressed: () => context.pop(),
+        ),
       ),
-      body: BlocListener<MedicationBloc, MedicationState>(
+      body: BlocListener<MedicationCubit, MedicationState>(
         listener: (context, state) {
           if (state is MedicationActionSuccess) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(context.l10n.medicationUpdated),
-                backgroundColor: context.colorScheme.primary,
+                content: Text(state.message),
+                backgroundColor: AppColors.primary,
                 behavior: SnackBarBehavior.floating,
               ),
             );
             context.pop();
           }
         },
-        child: SafeArea(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(24.0),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 40),
+          child: Form(
+            key: _formKey,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // Header Icon and Title
-                PremiumCard(
-                  glassmorphic: true,
+                Text(
+                  'تعديل بيانات الدواء',
+                  style: AppTextStyles.h1.copyWith(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w800,
+                    color: isDark ? AppColors.darkText : AppColors.textPrimary,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  'تحديث الجرعة والمواعيد المحددة',
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.textSecondary,
+                  ),
+                ),
+                const SizedBox(height: 20),
+
+                // Card: Medication Info
+                _buildCard(
+                  isDark: isDark,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        height: 100,
-                        width: 100,
-                        padding: const EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          gradient: AppColors.premiumGradient,
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                              color: AppColors.premiumMint.withValues(
-                                alpha: 0.3,
-                              ),
-                              blurRadius: 20,
-                              spreadRadius: 5,
+                      Text(
+                        'اسم الدواء',
+                        style: AppTextStyles.h3.copyWith(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: isDark ? AppColors.darkText : AppColors.textPrimary,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      AppTextField(
+                        controller: _nameController,
+                        label: 'اسم الدواء',
+                        icon: PhosphorIconsRegular.pill,
+                        validator: (v) => v == null || v.isEmpty ? 'مطلوب' : null,
+                      ),
+                      const SizedBox(height: 16),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: AppTextField(
+                              controller: _dosageController,
+                              label: 'الجرعة',
+                              icon: PhosphorIconsRegular.scales,
+                              keyboardType: TextInputType.number,
+                              validator: (v) => v == null || v.isEmpty ? 'مطلوب' : null,
                             ),
-                          ],
-                        ),
-                        child: Icon(
-                          PhosphorIcons.pill(PhosphorIconsStyle.fill),
-                          color: Colors.white,
-                          size: 48,
-                        ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: AppTextField(
+                              controller: _unitController,
+                              label: 'الوحدة (ملجم، مل...)',
+                              icon: PhosphorIconsRegular.hash,
+                              validator: (v) => v == null || v.isEmpty ? 'مطلوب' : null,
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 24),
-                      Text(
-                        context.l10n.editMedication,
-                        style: context.textTheme.headlineSmall?.copyWith(
-                          fontWeight: FontWeight.w900,
-                          color: context.colorScheme.onSurface,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        context.l10n.updateMedicationDetails,
-                        style: context.textTheme.bodyMedium?.copyWith(
-                          color: context.colorScheme.onSurfaceVariant,
-                        ),
+                      const SizedBox(height: 16),
+                      AppTextField(
+                        controller: _notesController,
+                        label: 'ملاحظات وإرشادات',
+                        icon: PhosphorIconsRegular.notePencil,
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 28),
 
-                MedicationForm(
-                  formKey: _formKey,
-                  nameController: _nameController,
-                  dosageController: _dosageController,
-                  unitController: _unitController,
-                  notesController: _notesController,
-                  selectedType: _selectedType,
-                  selectedScheduleType: _selectedScheduleType,
-                  selectedMealSlots: _selectedMealSlots,
-                  customTimes: _customTimes,
-                  startDate: _startDate,
-                  durationDays: _durationDays,
-                  onTypeChanged: (type) => setState(() => _selectedType = type),
-                  onScheduleTypeChanged: (type) =>
-                      setState(() => _selectedScheduleType = type),
-                  onMealSlotToggled: _onMealSlotToggled,
-                  onTimeChanged: _onTimeChanged,
-                  onStartDateChanged: (date) => setState(() => _startDate = date),
-                  onDurationChanged: (val) =>
-                      setState(() => _durationDays = int.tryParse(val)),
-                  onSave: _onSave,
+                AppButton(
+                  text: 'حفظ التعديلات',
+                  onPressed: _onSave,
                 ),
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildCard({required Widget child, required bool isDark}) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.darkSurface : Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: isDark ? AppColors.darkBorder : AppColors.border,
+          width: 1,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: isDark ? 0.2 : 0.04),
+            blurRadius: 10,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: child,
     );
   }
 }

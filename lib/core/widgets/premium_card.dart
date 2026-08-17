@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import '../constants/app_colors.dart';
 import '../extensions/context_extension.dart';
 
 class PremiumCard extends StatelessWidget {
@@ -14,9 +15,9 @@ class PremiumCard extends StatelessWidget {
   const PremiumCard({
     super.key,
     required this.child,
-    this.padding = const EdgeInsets.all(20),
+    this.padding = const EdgeInsets.all(16),
     this.margin,
-    this.borderRadius = 24,
+    this.borderRadius = 16,
     this.glassmorphic = false,
     this.color,
     this.gradient,
@@ -36,18 +37,14 @@ class PremiumCard extends StatelessWidget {
                 ? colorScheme.surface.withValues(
                     alpha: isDark ? 0.7 : 0.1,
                   )
-                : colorScheme.surface),
+                : AppColors.surface),
         gradient: gradient,
         borderRadius: BorderRadius.circular(borderRadius),
-        border: Border.all(
-          color: colorScheme.onSurface.withValues(alpha: 0.05),
-          width: 1,
-        ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.03),
-            blurRadius: 20,
-            offset: const Offset(0, 10),
+            color: AppColors.textBlack.withValues(alpha: 0.12),
+            blurRadius: 12,
+            offset: const Offset(0, 2),
           ),
         ],
       ),

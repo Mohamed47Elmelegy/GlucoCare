@@ -3,9 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/extensions/context_extension.dart';
 import '../../domain/entities/meal_slot.dart';
-import '../bloc/intake_bloc.dart';
-import '../bloc/intake_event.dart';
-import '../bloc/intake_state.dart';
+import '../cubit/intake_cubit.dart';
+import '../cubit/intake_state.dart';
 import 'intake_progress_banner_widget.dart';
 import 'meal_slot_section_widget.dart';
 
@@ -14,7 +13,7 @@ class IntakeTodoView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<IntakeBloc, IntakeState>(
+    return BlocBuilder<IntakeCubit, IntakeState>(
       builder: (context, state) {
         if (state is IntakeLoading) {
           return const Center(child: CircularProgressIndicator());
@@ -29,9 +28,7 @@ class IntakeTodoView extends StatelessWidget {
 
           return RefreshIndicator(
             onRefresh: () async {
-              context.read<IntakeBloc>().add(
-                IntakeTasksLoadRequested(date: DateTime.now()),
-              );
+              context.read<IntakeCubit>().loadTasks(date: DateTime.now());
             },
             child: CustomScrollView(
               physics: const BouncingScrollPhysics(),
@@ -43,14 +40,12 @@ class IntakeTodoView extends StatelessWidget {
                   child: MealSlotSectionWidget(
                     title: AppStrings.breakfast,
                     tasks: breakfastTasks,
-                    onStatusChanged: (taskId, status, {takenAt, snoozeUntil}) => 
-                        context.read<IntakeBloc>().add(
-                          IntakeTaskStatusChanged(
-                            taskId: taskId, 
-                            status: status, 
-                            takenAt: takenAt, 
-                            snoozeUntil: snoozeUntil
-                          )
+                    onStatusChanged: (taskId, status, {takenAt, snoozeUntil}) =>
+                        context.read<IntakeCubit>().changeTaskStatus(
+                          taskId: taskId,
+                          status: status,
+                          takenAt: takenAt,
+                          snoozeUntil: snoozeUntil,
                         ),
                   ),
                 ),
@@ -58,14 +53,12 @@ class IntakeTodoView extends StatelessWidget {
                   child: MealSlotSectionWidget(
                     title: AppStrings.lunch,
                     tasks: lunchTasks,
-                    onStatusChanged: (taskId, status, {takenAt, snoozeUntil}) => 
-                        context.read<IntakeBloc>().add(
-                          IntakeTaskStatusChanged(
-                            taskId: taskId, 
-                            status: status, 
-                            takenAt: takenAt, 
-                            snoozeUntil: snoozeUntil
-                          )
+                    onStatusChanged: (taskId, status, {takenAt, snoozeUntil}) =>
+                        context.read<IntakeCubit>().changeTaskStatus(
+                          taskId: taskId,
+                          status: status,
+                          takenAt: takenAt,
+                          snoozeUntil: snoozeUntil,
                         ),
                   ),
                 ),
@@ -73,14 +66,12 @@ class IntakeTodoView extends StatelessWidget {
                   child: MealSlotSectionWidget(
                     title: AppStrings.dinner,
                     tasks: dinnerTasks,
-                    onStatusChanged: (taskId, status, {takenAt, snoozeUntil}) => 
-                        context.read<IntakeBloc>().add(
-                          IntakeTaskStatusChanged(
-                            taskId: taskId, 
-                            status: status, 
-                            takenAt: takenAt, 
-                            snoozeUntil: snoozeUntil
-                          )
+                    onStatusChanged: (taskId, status, {takenAt, snoozeUntil}) =>
+                        context.read<IntakeCubit>().changeTaskStatus(
+                          taskId: taskId,
+                          status: status,
+                          takenAt: takenAt,
+                          snoozeUntil: snoozeUntil,
                         ),
                   ),
                 ),

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../bloc/medication_bloc.dart';
-import '../../bloc/medication_event.dart';
-import '../../bloc/medication_state.dart';
+import '../../cubit/medication_cubit.dart';
+import '../../cubit/medication_state.dart';
 import 'medication_list_view.dart';
 import '../../../domain/entities/medication.dart';
 
@@ -13,13 +12,13 @@ class MedicationListListener extends StatelessWidget {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () async {
-        context.read<MedicationBloc>().add(const SyncMedicationsEvent());
+        context.read<MedicationCubit>().syncMedications();
       },
-      child: BlocConsumer<MedicationBloc, MedicationState>(
+      child: BlocConsumer<MedicationCubit, MedicationState>(
         listener: (context, state) {
           if (state is MedicationActionSuccess) {
-            context.read<MedicationBloc>().add(
-              LoadTodaySchedule(DateTime.now()),
+            context.read<MedicationCubit>().loadTodaySchedule(
+              date: DateTime.now(),
             );
           }
         },
@@ -39,7 +38,7 @@ class MedicationListListener extends StatelessWidget {
             hasError: hasError,
             medications: medications,
             onRetry: () {
-              context.read<MedicationBloc>().add(const GetMedicationsEvent());
+              context.read<MedicationCubit>().getMedications();
             },
           );
         },

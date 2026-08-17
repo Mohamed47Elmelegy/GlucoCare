@@ -50,12 +50,13 @@ dependencies:
   firebase_core: ^3.10.1
   firebase_auth: ^5.4.1
   shared_preferences: ^2.5.2
-  phosphor_flutter: 2.1.0
+  phosphor_flutter: ^1.0.0
   cloud_firestore: ^5.6.12
   internet_connection_checker: ^3.0.1
   shimmer: ^3.0.0
   flutter_secure_storage: ^10.0.0
   firebase_crashlytics: ^4.3.1
+  google_fonts: ^6.2.1
 
 dev_dependencies:
   flutter_test:
@@ -113,3 +114,9 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+dependency_overrides:
+  phosphor_flutter:
+    git:
+      url: https://github.com/MuhammadTalha64/phosphor_flutter.git
+

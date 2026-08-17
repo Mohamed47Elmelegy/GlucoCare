@@ -8,8 +8,7 @@ import '../../../../../core/widgets/premium_app_bar.dart';
 import '../../../../../core/widgets/app_button.dart';
 import '../../../../../core/widgets/app_text_field.dart';
 import '../../../domain/entities/lab_test.dart';
-import '../../bloc/lab_test_bloc.dart';
-import '../../bloc/lab_test_event.dart';
+import '../../cubit/lab_test_cubit.dart';
 import 'lab_tests_listener.dart';
 
 class LabTestsPage extends StatefulWidget {
@@ -23,7 +22,7 @@ class _LabTestsPageState extends State<LabTestsPage> {
   @override
   void initState() {
     super.initState();
-    context.read<LabTestBloc>().add(GetLabTestsEvent());
+    context.read<LabTestCubit>().getLabTests();
   }
 
   void _showAddLabTestDialog(BuildContext context) {
@@ -101,7 +100,7 @@ class _LabTestsPageState extends State<LabTestsPage> {
                   date: DateTime.now(),
                   category: categoryController.text,
                 );
-                context.read<LabTestBloc>().add(AddLabTestEvent(labTest: test));
+                context.read<LabTestCubit>().addLabTest(labTest: test);
                 Navigator.pop(dialogContext);
               },
             ),
