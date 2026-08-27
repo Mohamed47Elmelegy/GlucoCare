@@ -25,7 +25,6 @@ class _SettingsPageState extends State<SettingsPage> {
   bool _doseReminders = true;
   bool _insulinReminders = true;
   bool _soundEnabled = true;
-  bool _vibrationEnabled = true;
   bool _criticalAlerts = true;
 
   @override
@@ -42,7 +41,7 @@ class _SettingsPageState extends State<SettingsPage> {
           String email = 'ahmed@example.com';
           if (authState is AuthAuthenticated) {
             userName = authState.user.name;
-            email = authState.user.email ?? '';
+            email = authState.user.email;
           }
 
           return SingleChildScrollView(
@@ -296,7 +295,7 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
       ),
       value: value,
-      activeColor: AppColors.primary,
+      activeThumbColor: AppColors.primary,
       onChanged: onChanged,
     );
   }

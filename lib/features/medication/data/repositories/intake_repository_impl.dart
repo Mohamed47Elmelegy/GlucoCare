@@ -159,7 +159,7 @@ class IntakeRepositoryImpl implements IntakeRepository {
       final localTasks = await localDataSource.getAllIntakeTasks();
       final res = await remoteDataSource.saveAllIntakeTasks(user.id, localTasks);
       
-      return res.fold(
+      return await res.fold(
         (l) => Left(IntakeUpdateFailure(l.message)),
         (r) => const Right(unit),
       );

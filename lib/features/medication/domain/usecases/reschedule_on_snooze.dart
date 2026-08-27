@@ -5,7 +5,6 @@ import '../../domain/entities/intake_status.dart';
 import '../../domain/failures/intake_failure.dart';
 import '../../domain/repositories/intake_repository.dart';
 import '../../../../core/services/notification_service.dart';
-import 'package:get_it/get_it.dart';
 
 class RescheduleOnSnoozeUseCase implements UseCase<Either<IntakeFailure, Unit>, RescheduleOnSnoozeParams> {
   final IntakeRepository repository;

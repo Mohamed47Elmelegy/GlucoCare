@@ -37,7 +37,7 @@ class MedicationReminderServiceImpl implements ReminderServiceInterface {
         medicationId: medication.id,
       ));
       
-      return result.fold(
+      return await result.fold(
         (failure) {
           logger.e('Failed to get tasks for scheduling: ${failure.message}', failure);
           return left(ReminderFailure('Failed to schedule alarms: ${failure.message}'));
@@ -71,7 +71,7 @@ class MedicationReminderServiceImpl implements ReminderServiceInterface {
         medicationId: medicationId,
       ));
       
-      return result.fold(
+      return await result.fold(
         (failure) {
            logger.e('Failed to get tasks for cancellation: ${failure.message}', failure);
            return left(ReminderFailure('Failed to fetch tasks for cancellation: ${failure.message}'));

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:flutter_test_ai/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:flutter_test_ai/features/medication/presentation/bloc/medication_state.dart';
-import 'package:flutter_test_ai/features/medication/presentation/bloc/insulin_state.dart';
-import 'package:flutter_test_ai/features/medication/presentation/bloc/intake_state.dart';
 import '../../../../core/extensions/context_extension.dart';
-import '../widgets/premium_header.dart';
-import '../widgets/premium_summary_card.dart';
-import '../widgets/premium_category_tabs.dart';
+import '../../../auth/presentation/cubit/auth_state.dart';
+import '../../../medication/presentation/cubit/insulin_state.dart';
+import '../../../medication/presentation/cubit/intake_state.dart';
+import '../../../medication/presentation/cubit/medication_cubit.dart';
 import '../widgets/premium_timeline_section.dart';
 import '../widgets/premium_action_grid.dart';
+import 'premium_category_tabs.dart';
+import 'premium_header.dart';
+import 'premium_summary_card.dart';
 
 class PremiumDashboardPageBody extends StatefulWidget {
   final AuthState authState;
@@ -42,8 +42,8 @@ class _PremiumDashboardPageBodyState extends State<PremiumDashboardPageBody> {
     ];
 
     String userName = "User";
-    if (widget.authState is AuthSuccess) {
-      userName = (widget.authState as AuthSuccess).user.name.split(' ').first;
+    if (widget.authState is AuthAuthenticated) {
+      userName = (widget.authState as AuthAuthenticated).user.name.split(' ').first;
     }
 
     String glucoseValue = "--";

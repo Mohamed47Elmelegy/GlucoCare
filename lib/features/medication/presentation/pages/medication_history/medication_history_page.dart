@@ -6,8 +6,6 @@ import '../../../../../core/constants/app_colors.dart';
 import '../../../../../core/constants/app_text_styles.dart';
 import '../../../../../core/widgets/app_top_bar.dart';
 import '../../cubit/medication_cubit.dart';
-import '../../cubit/medication_state.dart';
-import '../../../domain/entities/dose_history.dart';
 
 class MedicationHistoryPage extends StatefulWidget {
   const MedicationHistoryPage({super.key});

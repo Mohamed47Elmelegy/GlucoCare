@@ -35,7 +35,7 @@ class NotificationActionHandler {
         ));
         log('Task $taskId snoozed from background');
       }
-    } catch (e, stack) {
+    } catch (e) {
       log('Error handling background notification: $e');
       // In a real app, log to Crashlytics here:
       // FirebaseCrashlytics.instance.recordError(e, stack);

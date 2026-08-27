@@ -33,7 +33,7 @@ class MedicationRepositoryImpl implements MedicationRepository {
       final user = await authLocalDataSource.getCachedUser();
       if (user != null) {
         final result = await remoteDataSource.saveMedication(user.id, model);
-        return result.fold(
+        return await result.fold(
           (failure) {
             developer.log('Remote sync failed: ${failure.message}');
             return right(null); // Return success anyway as it's saved locally
@@ -61,7 +61,7 @@ class MedicationRepositoryImpl implements MedicationRepository {
       final user = await authLocalDataSource.getCachedUser();
       if (user != null) {
         final result = await remoteDataSource.updateMedication(user.id, model);
-        return result.fold(
+        return await result.fold(
           (failure) {
             developer.log('Remote sync failed: ${failure.message}');
             return right(null);
@@ -87,7 +87,7 @@ class MedicationRepositoryImpl implements MedicationRepository {
       final user = await authLocalDataSource.getCachedUser();
       if (user != null) {
         final result = await remoteDataSource.deleteMedication(user.id, id);
-        return result.fold(
+        return await result.fold(
           (failure) {
             developer.log('Remote sync failed: ${failure.message}');
             return right(null);
@@ -118,7 +118,7 @@ class MedicationRepositoryImpl implements MedicationRepository {
   Future<Either<Failure, List<Medication>>> getTodayMedications(DateTime date) async {
     try {
       final allMedsResult = await getMedications();
-      return allMedsResult.fold(
+      return await allMedsResult.fold(
         (failure) => left(failure),
         (meds) {
           final todayMeds = meds.where((m) {
