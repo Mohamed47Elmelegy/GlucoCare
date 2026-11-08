@@ -11,7 +11,6 @@ import '../../../../core/widgets/app_button.dart';
 import '../../../../core/widgets/app_text_field.dart';
 import '../../domain/entities/lab_test.dart';
 import '../cubit/lab_test_cubit.dart';
-import '../cubit/lab_test_state.dart';
 
 class LabTestsPage extends StatefulWidget {
   const LabTestsPage({super.key});
@@ -322,6 +321,7 @@ class _LabTestsPageState extends State<LabTestsPage> {
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 60),
         child: FloatingActionButton.extended(
+          heroTag: 'lab-tests-add-file',
           onPressed: _showAddFileDialog,
           backgroundColor: AppColors.primary,
           elevation: 6,

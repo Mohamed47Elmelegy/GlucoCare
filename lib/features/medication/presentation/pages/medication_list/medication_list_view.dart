@@ -60,7 +60,9 @@ class _MedicationListViewState extends State<MedicationListView> {
 
     if (widget.hasError) {
       return Scaffold(
-        backgroundColor: isDark ? AppColors.darkBackground : AppColors.background,
+        backgroundColor: isDark
+            ? AppColors.darkBackground
+            : AppColors.background,
         appBar: const AppTopBar(title: 'صحتي'),
         body: Center(
           child: Column(
@@ -98,23 +100,34 @@ class _MedicationListViewState extends State<MedicationListView> {
 
     final query = _searchController.text.trim().toLowerCase();
     final filteredMeds = widget.medications.where((med) {
-      final matchesSearch = query.isEmpty ||
+      final matchesSearch =
+          query.isEmpty ||
           med.name.toLowerCase().contains(query) ||
           med.dosage.toLowerCase().contains(query);
       if (!matchesSearch) return false;
 
       if (_selectedFilter == 'الكل') return true;
       if (_selectedFilter == 'الصباح') {
-        return med.mealSlots.any((s) => s.label.contains('إفطار') || s.label.contains('صباح'));
+        return med.mealSlots.any(
+          (s) => s.label.contains('إفطار') || s.label.contains('صباح'),
+        );
       }
       if (_selectedFilter == 'الظهيرة') {
-        return med.mealSlots.any((s) => s.label.contains('غداء') || s.label.contains('ظهر'));
+        return med.mealSlots.any(
+          (s) => s.label.contains('غداء') || s.label.contains('ظهر'),
+        );
       }
       if (_selectedFilter == 'المساء') {
-        return med.mealSlots.any((s) => s.label.contains('عشاء') || s.label.contains('مساء') || s.label.contains('نوم'));
+        return med.mealSlots.any(
+          (s) =>
+              s.label.contains('عشاء') ||
+              s.label.contains('مساء') ||
+              s.label.contains('نوم'),
+        );
       }
       if (_selectedFilter == 'عند الحاجة') {
-        return med.type.name.toLowerCase().contains('prn') || med.mealSlots.isEmpty;
+        return med.type.name.toLowerCase().contains('prn') ||
+            med.mealSlots.isEmpty;
       }
       return true;
     }).toList();
@@ -161,7 +174,10 @@ class _MedicationListViewState extends State<MedicationListView> {
                 onChanged: (_) => setState(() {}),
                 decoration: const InputDecoration(
                   hintText: 'ابحث عن دواء...',
-                  hintStyle: TextStyle(color: AppColors.textSecondary, fontSize: 14),
+                  hintStyle: TextStyle(
+                    color: AppColors.textSecondary,
+                    fontSize: 14,
+                  ),
                   prefixIcon: Icon(
                     PhosphorIconsRegular.magnifyingGlass,
                     color: AppColors.textSecondary,
@@ -189,12 +205,18 @@ class _MedicationListViewState extends State<MedicationListView> {
                         if (selected) setState(() => _selectedFilter = filter);
                       },
                       selectedColor: AppColors.primary,
-                      backgroundColor: isDark ? AppColors.darkSurface : Colors.white,
+                      backgroundColor: isDark
+                          ? AppColors.darkSurface
+                          : Colors.white,
                       labelStyle: TextStyle(
                         color: isSelected
                             ? Colors.white
-                            : (isDark ? AppColors.darkText : AppColors.textSecondary),
-                        fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                            : (isDark
+                                  ? AppColors.darkText
+                                  : AppColors.textSecondary),
+                        fontWeight: isSelected
+                            ? FontWeight.bold
+                            : FontWeight.w500,
                         fontSize: 12,
                       ),
                       shape: RoundedRectangleBorder(
@@ -202,10 +224,15 @@ class _MedicationListViewState extends State<MedicationListView> {
                         side: BorderSide(
                           color: isSelected
                               ? AppColors.primary
-                              : (isDark ? AppColors.darkBorder : AppColors.border),
+                              : (isDark
+                                    ? AppColors.darkBorder
+                                    : AppColors.border),
                         ),
                       ),
-                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 14,
+                        vertical: 8,
+                      ),
                       showCheckmark: false,
                     ),
                   );
@@ -234,7 +261,9 @@ class _MedicationListViewState extends State<MedicationListView> {
                     Text(
                       'لا توجد أدوية مطابقة',
                       style: AppTextStyles.h3.copyWith(
-                        color: isDark ? AppColors.darkText : AppColors.textPrimary,
+                        color: isDark
+                            ? AppColors.darkText
+                            : AppColors.textPrimary,
                       ),
                     ),
                   ],
@@ -248,10 +277,15 @@ class _MedicationListViewState extends State<MedicationListView> {
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 60),
         child: FloatingActionButton(
+          heroTag: 'medication-list-add',
           onPressed: () => context.push(RouteConstants.addMedication),
           backgroundColor: AppColors.primary,
           elevation: 6,
-          child: const Icon(PhosphorIconsBold.plus, color: Colors.white, size: 26),
+          child: const Icon(
+            PhosphorIconsBold.plus,
+            color: Colors.white,
+            size: 26,
+          ),
         ),
       ),
     );
@@ -316,36 +350,60 @@ class _MedicationListViewState extends State<MedicationListView> {
           Row(
             children: [
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 6,
+                ),
                 decoration: BoxDecoration(
-                  color: isDark ? AppColors.darkBackground : AppColors.background,
+                  color: isDark
+                      ? AppColors.darkBackground
+                      : AppColors.background,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Row(
                   children: [
-                    const Icon(PhosphorIconsRegular.clock, size: 14, color: AppColors.textSecondary),
+                    const Icon(
+                      PhosphorIconsRegular.clock,
+                      size: 14,
+                      color: AppColors.textSecondary,
+                    ),
                     const SizedBox(width: 4),
                     Text(
                       'مرتان يومياً',
-                      style: AppTextStyles.caption.copyWith(fontWeight: FontWeight.bold, fontSize: 11),
+                      style: AppTextStyles.caption.copyWith(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 11,
+                      ),
                     ),
                   ],
                 ),
               ),
               const SizedBox(width: 8),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 6,
+                ),
                 decoration: BoxDecoration(
-                  color: isDark ? AppColors.darkBackground : AppColors.background,
+                  color: isDark
+                      ? AppColors.darkBackground
+                      : AppColors.background,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Row(
                   children: [
-                    const Icon(PhosphorIconsRegular.archive, size: 14, color: AppColors.textSecondary),
+                    const Icon(
+                      PhosphorIconsRegular.archive,
+                      size: 14,
+                      color: AppColors.textSecondary,
+                    ),
                     const SizedBox(width: 4),
                     Text(
                       'المتبقي: 14 حبة',
-                      style: AppTextStyles.caption.copyWith(fontWeight: FontWeight.bold, fontSize: 11),
+                      style: AppTextStyles.caption.copyWith(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 11,
+                      ),
                     ),
                   ],
                 ),
@@ -390,12 +448,16 @@ class _MedicationListViewState extends State<MedicationListView> {
                 width: 46,
                 height: 46,
                 decoration: BoxDecoration(
-                  color: isInjection ? AppColors.statusMissedBg : AppColors.statusUpcomingBg,
+                  color: isInjection
+                      ? AppColors.statusMissedBg
+                      : AppColors.statusUpcomingBg,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Center(
                   child: Icon(
-                    isInjection ? PhosphorIconsFill.syringe : PhosphorIconsFill.pill,
+                    isInjection
+                        ? PhosphorIconsFill.syringe
+                        : PhosphorIconsFill.pill,
                     color: isInjection ? AppColors.danger : AppColors.primary,
                     size: 24,
                   ),
@@ -403,7 +465,7 @@ class _MedicationListViewState extends State<MedicationListView> {
               ),
               Switch(
                 value: isEnabled,
-                activeColor: AppColors.primary,
+                activeThumbColor: AppColors.primary,
                 onChanged: (val) {
                   setState(() {
                     _medToggles[med.id] = val;
@@ -454,13 +516,18 @@ class _MedicationListViewState extends State<MedicationListView> {
                     '10:00 مساءً',
                     style: AppTextStyles.caption.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: isDark ? AppColors.darkText : AppColors.textPrimary,
+                      color: isDark
+                          ? AppColors.darkText
+                          : AppColors.textPrimary,
                     ),
                   ),
                 ],
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
+                ),
                 decoration: BoxDecoration(
                   color: AppColors.statusUpcomingBg,
                   borderRadius: BorderRadius.circular(20),

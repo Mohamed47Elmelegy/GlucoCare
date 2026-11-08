@@ -11,7 +11,6 @@ import '../../domain/entities/medication_type.dart';
 import '../../domain/entities/meal_slot.dart';
 import '../../domain/entities/schedule_type.dart';
 import '../cubit/medication_cubit.dart';
-import '../cubit/medication_state.dart';
 
 class EditMedicationPage extends StatefulWidget {
   final Medication medication;

@@ -176,6 +176,7 @@ class _InsulinReadingsPageState extends State<InsulinReadingsPage> {
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 80),
         child: FloatingActionButton.extended(
+          heroTag: 'insulin-readings-add',
           onPressed: _showAddDialog,
           icon: const Icon(Icons.add),
           label: const Text(

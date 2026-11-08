@@ -21,8 +21,12 @@ class NotificationService {
 
   NotificationService();
 
+  /// Loads the timezone database that scheduling relies on (`tz.local`).
+  /// Isolates that never call [initialize] must call this before scheduling.
+  static void initializeTimeZones() => tz.initializeTimeZones();
+
   Future<void> initialize() async {
-    tz.initializeTimeZones();
+    initializeTimeZones();
 
     // 1. Android Setup
     const AndroidInitializationSettings androidSettings =
@@ -34,14 +38,14 @@ class NotificationService {
         'medication_actions',
         actions: <DarwinNotificationAction>[
           DarwinNotificationAction.plain(
-            'action_taken',
+            NotificationActionHandler.actionTaken,
             '✅ Taken',
             options: <DarwinNotificationActionOption>{
               DarwinNotificationActionOption.foreground,
             },
           ),
           DarwinNotificationAction.plain(
-            'action_snooze',
+            NotificationActionHandler.actionSnooze,
             '⏰ Snooze',
             options: <DarwinNotificationActionOption>{
               DarwinNotificationActionOption.foreground,
@@ -66,13 +70,23 @@ class NotificationService {
 
     await _notificationsPlugin.initialize(
       settings,
-      onDidReceiveNotificationResponse: (NotificationResponse response) {
-        log('Notification Action: ${response.actionId}');
-        // Optional: Local handling if app is already open
-      },
+      // Actions that open the app (iOS) arrive here, in the main isolate.
+      onDidReceiveNotificationResponse: (NotificationResponse response) =>
+          NotificationActionHandler.handleAction(
+            actionId: response.actionId,
+            taskId: response.payload,
+          ),
       onDidReceiveBackgroundNotificationResponse:
-          NotificationActionHandler.onNotificationTapBackground,
+          NotificationActionHandler.onBackgroundResponse,
     );
+  }
+
+  /// The notification response that launched the app from a terminated
+  /// state, or null. Such responses never reach the callbacks above.
+  Future<NotificationResponse?> getLaunchResponse() async {
+    final details = await _notificationsPlugin.getNotificationAppLaunchDetails();
+    if (details == null || !details.didNotificationLaunchApp) return null;
+    return details.notificationResponse;
   }
 
   Future<void> scheduleTaskReminder(IntakeTask task) async {
@@ -184,8 +198,14 @@ class NotificationService {
           priority: Priority.high,
           ticker: 'ticker',
           actions: <AndroidNotificationAction>[
-            AndroidNotificationAction('action_taken', '✅ Taken'),
-            AndroidNotificationAction('action_snooze', '⏰ Snooze'),
+            AndroidNotificationAction(
+              NotificationActionHandler.actionTaken,
+              '✅ Taken',
+            ),
+            AndroidNotificationAction(
+              NotificationActionHandler.actionSnooze,
+              '⏰ Snooze',
+            ),
           ],
         );
 

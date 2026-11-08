@@ -76,6 +76,7 @@ Rules below only cover things that OVERRIDE defaults or encode project decisions
 - **No Freezed. No build_runner.** Use Dart 3+ native features instead:
   - `sealed class` for state unions with exhaustive pattern matching
   - `switch` expressions and records for lightweight data
+- **Only exception:** Hive `TypeAdapter`s for `data/models/` may be generated with `hive_generator` + `build_runner` (the `*.g.dart` files). Never change an existing `typeId` or `@HiveField` index; that corrupts stored data.
 
 ## 3) Domain Layer Purity
 - Domain layer must have ZERO Flutter imports
@@ -88,7 +89,7 @@ Rules below only cover things that OVERRIDE defaults or encode project decisions
 
 ## 5) Error Handling Contract
 - Data layer: catch exceptions and map to typed `Failure` classes
-- Domain layer: return `ApiResult<T>` from use cases and repositories
+- Domain layer: return `Either<Failure, T>` (fpdart) from use cases and repositories
 - Presentation layer: map failures to user-friendly messages and UI states
 
 ## 6) Dependency Injection

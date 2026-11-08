@@ -11,6 +11,8 @@ import '../../domain/entities/medication.dart';
 import '../../domain/entities/medication_type.dart';
 import '../../domain/entities/meal_slot.dart';
 import '../../domain/entities/schedule_type.dart';
+import '../widgets/dose_schedule_card_widget.dart';
+import '../widgets/medication_type_selector_widget.dart';
 import '../cubit/medication_cubit.dart';
 import '../cubit/medication_state.dart';
 
@@ -26,10 +28,16 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
   final _nameController = TextEditingController();
   final _dosageController = TextEditingController(text: '1');
   String _selectedUnit = 'ملجم (mg)';
-  int _frequencyCount = 2;
+  MedicationType _selectedType = MedicationType.pill;
+  List<MealSlot> _doseSlots = MealSlot.forDailyDoses(2);
+  final Map<MealSlot, TimeOfDay> _doseTimes = {
+    for (final slot in MealSlot.values)
+      slot: TimeOfDay(hour: slot.defaultTime.hour, minute: slot.defaultTime.minute),
+  };
   String _mealRelation = 'بعد الأكل';
   final TextEditingController _notesController = TextEditingController();
   final TextEditingController _stockController = TextEditingController(text: '30');
+  final TextEditingController _durationController = TextEditingController();
 
   final List<String> _units = [
     'ملجم (mg)',
@@ -53,26 +61,28 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
     _dosageController.dispose();
     _notesController.dispose();
     _stockController.dispose();
+    _durationController.dispose();
     super.dispose();
   }
 
   void _onSave() {
     if (_formKey.currentState!.validate()) {
+      // Empty duration = ongoing treatment. The validator guarantees a valid
+      // number otherwise.
+      final durationDays = int.tryParse(_durationController.text.trim());
       final newMed = Medication(
         id: const Uuid().v4(),
         name: _nameController.text.trim(),
         dosage: _dosageController.text.trim(),
         unit: _selectedUnit,
-        type: MedicationType.pill,
+        type: _selectedType,
         notes: '${_notesController.text.trim()} • $_mealRelation',
-        mealSlots: [MealSlot.breakfast, MealSlot.dinner],
-        customTimes: {
-          MealSlot.breakfast: const TimeOfDay(hour: 8, minute: 0),
-          MealSlot.dinner: const TimeOfDay(hour: 20, minute: 0),
-        },
-        scheduleType: ScheduleType.daily,
+        mealSlots: _doseSlots,
+        customTimes: {for (final slot in _doseSlots) slot: _doseTimes[slot]!},
+        scheduleType:
+            durationDays == null ? ScheduleType.daily : ScheduleType.fixedDuration,
         startDate: DateTime.now(),
-        durationDays: 30,
+        durationDays: durationDays,
         isActive: true,
       );
 
@@ -224,66 +234,33 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
                 ),
                 const SizedBox(height: 14),
 
-                // Card 3: Frequency Stepper
+                // Card 3: Medication Type
                 _buildCard(
                   isDark: isDark,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'عدد المرات يومياً',
-                            style: AppTextStyles.h3.copyWith(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              color: isDark ? AppColors.darkText : AppColors.textPrimary,
-                            ),
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              color: isDark ? AppColors.darkBackground : AppColors.background,
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(
-                                color: isDark ? AppColors.darkBorder : AppColors.border,
-                              ),
-                            ),
-                            child: Row(
-                              children: [
-                                IconButton(
-                                  icon: const Icon(PhosphorIconsBold.plus, size: 16, color: AppColors.primary),
-                                  onPressed: () => setState(() => _frequencyCount++),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                  child: Text(
-                                    '$_frequencyCount',
-                                    style: AppTextStyles.h3.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                      color: AppColors.primary,
-                                    ),
-                                  ),
-                                ),
-                                IconButton(
-                                  icon: const Icon(PhosphorIconsBold.minus, size: 16, color: AppColors.textSecondary),
-                                  onPressed: () {
-                                    if (_frequencyCount > 1) {
-                                      setState(() => _frequencyCount--);
-                                    }
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                  child: MedicationTypeSelectorWidget(
+                    selected: _selectedType,
+                    onChanged: (type) => setState(() => _selectedType = type),
                   ),
                 ),
                 const SizedBox(height: 14),
 
-                // Card 4: Meal Relation
+                // Card 4: Dose Schedule (count, times, duration)
+                _buildCard(
+                  isDark: isDark,
+                  child: DoseScheduleCardWidget(
+                    slots: _doseSlots,
+                    doseTimes: _doseTimes,
+                    durationController: _durationController,
+                    onDoseCountChanged: (count) => setState(
+                      () => _doseSlots = MealSlot.forDailyDoses(count),
+                    ),
+                    onDoseTimeChanged: (slot, time) =>
+                        setState(() => _doseTimes[slot] = time),
+                  ),
+                ),
+                const SizedBox(height: 14),
+
+                // Card 5: Meal Relation
                 _buildCard(
                   isDark: isDark,
                   child: Column(
@@ -330,7 +307,7 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
                 ),
                 const SizedBox(height: 14),
 
-                // Card 5: Inventory & Notes
+                // Card 6: Inventory & Notes
                 _buildCard(
                   isDark: isDark,
                   child: Column(

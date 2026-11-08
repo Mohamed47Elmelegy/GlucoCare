@@ -17,7 +17,7 @@ class ScheduleAllRemindersUseCase implements UseCase<Either<IntakeFailure, Unit>
     return result.fold(
       (failure) => Left(failure),
       (tasks) async {
-        for (final task in tasks) {
+        for (final task in tasks.where((t) => t.status.needsReminder)) {
           await notificationService.scheduleTaskReminder(task);
         }
         return const Right(unit);
