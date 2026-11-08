@@ -77,7 +77,9 @@ class _InsulinReadingsPageState extends State<InsulinReadingsPage> {
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
                 color: isDark ? AppColors.darkSurface : Colors.white,
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(24),
+                ),
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -97,7 +99,9 @@ class _InsulinReadingsPageState extends State<InsulinReadingsPage> {
                   Text(
                     'تسجيل قراءة سكر جديدة',
                     style: AppTextStyles.h2.copyWith(
-                      color: isDark ? AppColors.darkText : AppColors.textPrimary,
+                      color: isDark
+                          ? AppColors.darkText
+                          : AppColors.textPrimary,
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -112,7 +116,9 @@ class _InsulinReadingsPageState extends State<InsulinReadingsPage> {
                     controller: _readingController,
                     label: 'قيمة السكر (mg/dL)',
                     icon: PhosphorIconsRegular.drop,
-                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                    keyboardType: const TextInputType.numberWithOptions(
+                      decimal: true,
+                    ),
                   ),
                   const SizedBox(height: 14),
                   Container(
@@ -128,14 +134,28 @@ class _InsulinReadingsPageState extends State<InsulinReadingsPage> {
                         isExpanded: true,
                         icon: const Icon(PhosphorIconsBold.caretDown, size: 16),
                         style: AppTextStyles.body.copyWith(
-                          color: isDark ? AppColors.darkText : AppColors.textPrimary,
+                          color: isDark
+                              ? AppColors.darkText
+                              : AppColors.textPrimary,
                           fontSize: 14,
                         ),
                         items: const [
-                          DropdownMenuItem(value: ReadingType.fasting, child: Text('صائم')),
-                          DropdownMenuItem(value: ReadingType.postprandial, child: Text('بعد الأكل')),
-                          DropdownMenuItem(value: ReadingType.beforeSleep, child: Text('قبل النوم')),
-                          DropdownMenuItem(value: ReadingType.hba1c, child: Text('تراكمي')),
+                          DropdownMenuItem(
+                            value: ReadingType.fasting,
+                            child: Text('صائم'),
+                          ),
+                          DropdownMenuItem(
+                            value: ReadingType.postprandial,
+                            child: Text('بعد الأكل'),
+                          ),
+                          DropdownMenuItem(
+                            value: ReadingType.beforeSleep,
+                            child: Text('قبل النوم'),
+                          ),
+                          DropdownMenuItem(
+                            value: ReadingType.hba1c,
+                            child: Text('تراكمي'),
+                          ),
                         ],
                         onChanged: (val) {
                           if (val != null) {
@@ -152,10 +172,7 @@ class _InsulinReadingsPageState extends State<InsulinReadingsPage> {
                     icon: PhosphorIconsRegular.notePencil,
                   ),
                   const SizedBox(height: 24),
-                  AppButton(
-                    text: 'حفظ القراءة',
-                    onPressed: _addReading,
-                  ),
+                  AppButton(text: 'حفظ القراءة', onPressed: _addReading),
                 ],
               ),
             ),
@@ -174,10 +191,15 @@ class _InsulinReadingsPageState extends State<InsulinReadingsPage> {
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 60),
         child: FloatingActionButton(
+          heroTag: 'insulin-readings-list-add',
           onPressed: _showAddDialog,
           backgroundColor: AppColors.primary,
           elevation: 6,
-          child: const Icon(PhosphorIconsBold.plus, color: Colors.white, size: 26),
+          child: const Icon(
+            PhosphorIconsBold.plus,
+            color: Colors.white,
+            size: 26,
+          ),
         ),
       ),
     );

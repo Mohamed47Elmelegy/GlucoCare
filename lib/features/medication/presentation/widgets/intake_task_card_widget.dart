@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../../core/constants/app_strings.dart';
 import '../../../../core/extensions/context_extension.dart';
 import '../../../../core/widgets/premium_card.dart';
 import '../../domain/entities/intake_status.dart';

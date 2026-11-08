@@ -89,7 +89,9 @@ class _DoctorFollowUpPageState extends State<DoctorFollowUpPage> {
             padding: const EdgeInsets.all(24),
             decoration: BoxDecoration(
               color: isDark ? AppColors.darkSurface : Colors.white,
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(24),
+              ),
             ),
             child: SingleChildScrollView(
               child: Column(
@@ -110,7 +112,9 @@ class _DoctorFollowUpPageState extends State<DoctorFollowUpPage> {
                   Text(
                     'إضافة موعد طبيب جديد',
                     style: AppTextStyles.h2.copyWith(
-                      color: isDark ? AppColors.darkText : AppColors.textPrimary,
+                      color: isDark
+                          ? AppColors.darkText
+                          : AppColors.textPrimary,
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -153,7 +157,8 @@ class _DoctorFollowUpPageState extends State<DoctorFollowUpPage> {
                           _appointments.insert(
                             0,
                             DoctorAppointmentItem(
-                              id: DateTime.now().millisecondsSinceEpoch.toString(),
+                              id: DateTime.now().millisecondsSinceEpoch
+                                  .toString(),
                               doctorName: nameCtrl.text,
                               specialty: specCtrl.text.isNotEmpty
                                   ? specCtrl.text
@@ -206,42 +211,55 @@ class _DoctorFollowUpPageState extends State<DoctorFollowUpPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'متابعة الأطباء',
-                      style: AppTextStyles.h1.copyWith(
-                        color: isDark ? AppColors.darkText : AppColors.textPrimary,
-                        fontSize: 24,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'متابعة الأطباء',
+                        style: AppTextStyles.h1.copyWith(
+                          color: isDark
+                              ? AppColors.darkText
+                              : AppColors.textPrimary,
+                          fontSize: 24,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      'إدارة مواعيدك واستشاراتك الطبية',
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.textSecondary,
+                      const SizedBox(height: 2),
+                      Text(
+                        'إدارة مواعيدك واستشاراتك الطبية',
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.textSecondary,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                ElevatedButton.icon(
-                  onPressed: _showAddDoctorSheet,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    elevation: 0,
+                    ],
                   ),
-                  icon: const Icon(PhosphorIconsBold.plus, size: 16),
-                  label: Text(
-                    'إضافة موعد',
-                    style: AppTextStyles.caption.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                ),
+                const SizedBox(width: 12),
+                SizedBox(
+                  width: 120,
+                  child: ElevatedButton.icon(
+                    onPressed: _showAddDoctorSheet,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primary,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 12,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      elevation: 0,
+                    ),
+                    icon: const Icon(PhosphorIconsBold.plus, size: 16),
+                    label: Text(
+                      'إضافة موعد',
+                      style: AppTextStyles.caption.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
@@ -325,7 +343,9 @@ class _DoctorFollowUpPageState extends State<DoctorFollowUpPage> {
                     Text(
                       item.doctorName,
                       style: AppTextStyles.h3.copyWith(
-                        color: isDark ? AppColors.darkText : AppColors.textPrimary,
+                        color: isDark
+                            ? AppColors.darkText
+                            : AppColors.textPrimary,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -340,7 +360,10 @@ class _DoctorFollowUpPageState extends State<DoctorFollowUpPage> {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
+                ),
                 decoration: BoxDecoration(
                   color: AppColors.statusUpcomingBg,
                   borderRadius: BorderRadius.circular(20),
@@ -381,11 +404,7 @@ class _DoctorFollowUpPageState extends State<DoctorFollowUpPage> {
                   ),
                 ),
                 const Spacer(),
-                Container(
-                  width: 1,
-                  height: 14,
-                  color: AppColors.border,
-                ),
+                Container(width: 1, height: 14, color: AppColors.border),
                 const Spacer(),
                 const Icon(
                   PhosphorIconsBold.clock,
@@ -410,7 +429,9 @@ class _DoctorFollowUpPageState extends State<DoctorFollowUpPage> {
             item.notes,
             style: AppTextStyles.body.copyWith(
               fontSize: 13,
-              color: isDark ? AppColors.darkText.withValues(alpha: 0.8) : AppColors.textSecondary,
+              color: isDark
+                  ? AppColors.darkText.withValues(alpha: 0.8)
+                  : AppColors.textSecondary,
             ),
           ),
           const SizedBox(height: 16),
@@ -422,7 +443,9 @@ class _DoctorFollowUpPageState extends State<DoctorFollowUpPage> {
                 child: OutlinedButton.icon(
                   onPressed: () {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('جاري الاتصال بـ ${item.doctorName}...')),
+                      SnackBar(
+                        content: Text('جاري الاتصال بـ ${item.doctorName}...'),
+                      ),
                     );
                   },
                   style: OutlinedButton.styleFrom(
