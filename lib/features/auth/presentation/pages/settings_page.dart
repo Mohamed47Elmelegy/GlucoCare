@@ -34,7 +34,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
     return Scaffold(
       backgroundColor: isDark ? AppColors.darkBackground : AppColors.background,
-      appBar: const AppTopBar(title: 'صحتي'),
+      appBar: const AppTopBar(title: 'صحتي', leading: BackButton()),
       body: BlocBuilder<AuthCubit, AuthState>(
         builder: (context, authState) {
           String userName = 'أحمد محمد';

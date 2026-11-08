@@ -102,25 +102,35 @@ Future<void> init() async {
     NotificationService(),
   );
 
+  final logger = sl<LoggerService>();
+
   // FORCE WIPE old data to solve the Hive schema mismatch TypeErrors.
   await Hive.deleteBoxFromDisk('medications');
   await Hive.deleteBoxFromDisk('medication_history');
 
   final medicationBox = await HiveUtils.openBoxSafely<MedicationModel>(
     HiveBoxes.medications,
+    logger: logger,
   );
-  final userBox = await HiveUtils.openBoxSafely<med.UserModel>(HiveBoxes.users);
+  final userBox = await HiveUtils.openBoxSafely<med.UserModel>(
+    HiveBoxes.users,
+    logger: logger,
+  );
   final doseHistoryBox = await HiveUtils.openBoxSafely<DoseHistoryModel>(
     HiveBoxes.doseHistory,
+    logger: logger,
   );
   final insulinBox = await HiveUtils.openBoxSafely<InsulinReadingModel>(
     HiveBoxes.insulinReadings,
+    logger: logger,
   );
   final labTestBox = await HiveUtils.openBoxSafely<LabTestModel>(
     HiveBoxes.labTests,
+    logger: logger,
   );
   final intakeBox = await HiveUtils.openBoxSafely<IntakeTaskModel>(
     HiveBoxes.intakeTasks,
+    logger: logger,
   );
 
   sl.registerLazySingleton<Box<MedicationModel>>(() => medicationBox);
@@ -148,6 +158,7 @@ Future<void> init() async {
       userBox: sl<Box<med.UserModel>>(),
       insulinReadingsBox: sl<Box<InsulinReadingModel>>(),
       labTestsBox: sl<Box<LabTestModel>>(),
+      intakeTasksBox: sl<Box<IntakeTaskModel>>(),
     ),
   );
   sl.registerLazySingleton<MedicationRemoteDataSource>(

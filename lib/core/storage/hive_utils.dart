@@ -1,14 +1,22 @@
 import 'package:hive_flutter/hive_flutter.dart';
+import '../services/logger_service.dart';
 
 class HiveUtils {
-  /// Safely opens a Hive box, deleting it if a schema mismatch or corruption occurs.
-  static Future<Box<T>> openBoxSafely<T>(String boxName) async {
+  /// Opens a Hive box, reporting any failure (schema mismatch, unknown
+  /// adapter, I/O error) to [logger] and rethrowing it.
+  ///
+  /// The box is never deleted: it holds the user's health records, and an
+  /// open failure is a bug to fix through a migration, not a reason to erase
+  /// data.
+  static Future<Box<T>> openBoxSafely<T>(
+    String boxName, {
+    required LoggerService logger,
+  }) async {
     try {
       return await Hive.openBox<T>(boxName);
-    } catch (e) {
-      // If there's a type mismatch or corruption, wipe the box and start fresh.
-      await Hive.deleteBoxFromDisk(boxName);
-      return await Hive.openBox<T>(boxName);
+    } catch (e, stack) {
+      logger.f('Failed to open Hive box "$boxName"', e, stack);
+      rethrow;
     }
   }
 

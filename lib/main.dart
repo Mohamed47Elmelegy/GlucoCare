@@ -1,20 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
-
+import 'core/di/app_bootstrap.dart';
 import 'core/routes/app_router.dart';
+import 'core/services/notification_action_handler.dart';
 import 'core/services/notification_service.dart';
 import 'core/utils/simple_bloc_observer.dart';
-import 'features/auth/data/models/user_model.dart';
-import 'features/medication/data/models/medication_model.dart';
-import 'features/medication/data/models/medication_schedule_model.dart';
-import 'features/medication/data/models/dose_history_model.dart';
-import 'features/medication/data/models/insulin_reading_model.dart';
-import 'features/lab_tests/data/models/lab_test_model.dart';
-import 'features/medication/data/models/intake_task_model.dart';
 import 'features/lab_tests/presentation/cubit/lab_test_cubit.dart';
 import 'features/medication/presentation/cubit/intake_cubit.dart';
 import 'features/medication/presentation/cubit/medication_cubit.dart';
@@ -31,25 +22,25 @@ import 'l10n/app_localizations.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  // Firebase, Hive adapters and dependencies (shared with the background
+  // notification isolate).
+  await bootstrapApp();
   Bloc.observer = SimpleBlocObserver();
 
-  // Initialize Hive
-  await Hive.initFlutter();
-  Hive.registerAdapter(UserModelAdapter());
-  Hive.registerAdapter(MedicationModelAdapter());
-  Hive.registerAdapter(MedicationScheduleModelAdapter());
-  Hive.registerAdapter(DoseHistoryModelAdapter());
-  Hive.registerAdapter(TimeValueModelAdapter());
-  Hive.registerAdapter(InsulinReadingModelAdapter());
-  Hive.registerAdapter(LabTestModelAdapter());
-  Hive.registerAdapter(IntakeTaskModelAdapter());
-
-  // Dependencies
-  await di.init();
-
   // Initialize Notifications
-  await di.sl<NotificationService>().initialize();
+  final notificationService = di.sl<NotificationService>();
+  await notificationService.initialize();
+  NotificationActionHandler.listenInMainIsolate();
+
+  // A Taken/Snooze tap that launched the app is applied before the UI loads
+  // today's doses, so the first render already reflects it.
+  final launchResponse = await notificationService.getLaunchResponse();
+  if (launchResponse != null) {
+    await NotificationActionHandler.handleAction(
+      actionId: launchResponse.actionId,
+      taskId: launchResponse.payload,
+    );
+  }
 
   runApp(const MyApp());
 }

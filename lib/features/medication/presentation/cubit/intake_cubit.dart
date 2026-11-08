@@ -59,9 +59,9 @@ class IntakeCubit extends Cubit<IntakeState> {
     await tasksResult.fold(
       (failure) async => emit(IntakeFailure(message: failure.message)),
       (tasks) async {
-        // Cancel reminders for tasks already handled
+        // Cancel reminders for tasks already handled (taken or skipped)
         for (final task in tasks) {
-          if (!task.status.isPending) {
+          if (!task.status.needsReminder) {
             await _cancelReminder(task.id);
           }
         }

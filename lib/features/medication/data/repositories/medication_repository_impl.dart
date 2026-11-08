@@ -197,16 +197,30 @@ class MedicationRepositoryImpl implements MedicationRepository {
       if (user == null) return left(const AuthFailure('User not logged in'));
 
       final remoteMedsResult = await remoteDataSource.getMedications(user.id);
-       remoteMedsResult.fold(
-        (failure) => developer.log('Sync Medications failed: ${failure.message}'),
-        (meds) async => await localDataSource.saveAllMedications(meds),
+      final medsFailure = await remoteMedsResult.fold<Future<Failure?>>(
+        (failure) async => failure,
+        (meds) async {
+          await localDataSource.saveAllMedications(meds);
+          return null;
+        },
       );
+      if (medsFailure != null) {
+        developer.log('Sync Medications failed: ${medsFailure.message}');
+        return left(medsFailure);
+      }
 
       final remoteHistoryResult = await remoteDataSource.getAllDoseHistory(user.id);
-      remoteHistoryResult.fold(
-        (failure) => developer.log('Sync History failed: ${failure.message}'),
-        (history) async => await localDataSource.saveAllDoseHistories(history),
+      final historyFailure = await remoteHistoryResult.fold<Future<Failure?>>(
+        (failure) async => failure,
+        (history) async {
+          await localDataSource.saveAllDoseHistories(history);
+          return null;
+        },
       );
+      if (historyFailure != null) {
+        developer.log('Sync History failed: ${historyFailure.message}');
+        return left(historyFailure);
+      }
 
       return right(null);
     } catch (e) {

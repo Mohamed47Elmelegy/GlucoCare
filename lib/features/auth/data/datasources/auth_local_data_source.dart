@@ -16,6 +16,7 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   final Box userBox;
   final Box insulinReadingsBox;
   final Box labTestsBox;
+  final Box intakeTasksBox;
 
   static const String _cachedUserKey = 'CACHED_USER';
 
@@ -26,6 +27,7 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
     required this.userBox,
     required this.insulinReadingsBox,
     required this.labTestsBox,
+    required this.intakeTasksBox,
   });
 
   @override
@@ -46,15 +48,14 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   @override
   Future<void> clearCache() async {
     await secureStorage.delete(key: _cachedUserKey);
-    // Clearing all local Hive boxes instead of deleting from disk to keep them open for reuse
-    try {
-      await medicationsBox.clear();
-      await doseHistoryBox.clear();
-      await userBox.clear();
-      await insulinReadingsBox.clear();
-      await labTestsBox.clear();
-    } catch (e) {
-      // Ignore if boxes are already closed or errors
-    }
+    // Clear (not delete) every box so they stay open for the next user.
+    // Errors propagate: a failed clear would leave this user's health data on
+    // the device, so the caller must find out.
+    await medicationsBox.clear();
+    await doseHistoryBox.clear();
+    await userBox.clear();
+    await insulinReadingsBox.clear();
+    await labTestsBox.clear();
+    await intakeTasksBox.clear();
   }
 }
