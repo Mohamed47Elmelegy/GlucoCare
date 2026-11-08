@@ -172,6 +172,9 @@ class _DoseTimeRow extends StatelessWidget {
               );
               if (picked != null) onPicked(picked);
             },
+            // The app theme's button minimumSize is infinitely wide, which a
+            // Row cannot lay out; size this button to its content instead.
+            style: OutlinedButton.styleFrom(minimumSize: const Size(96, 40)),
             child: Text(time.format(context)),
           ),
         ],
